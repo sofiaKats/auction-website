@@ -4,9 +4,9 @@ class HomeComponent extends Component {
     render() {
         return (
             <div className='HomePage'>
-                <h2>Professional Networking Experience</h2>
+                <p>Ultimate Trading Experience</p>
                 <span>
-                    <p>Simple. Free. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia cum eius sapiente ab iste dolore culpa quae dolorem quis eos.</p>
+                    <h2>Simple. Free. A great new platform to buy and sell any product you want! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia cum eius sapiente ab iste dolore culpa quae dolorem quis eos.</h2>
                 </span>
             </div>
         );
