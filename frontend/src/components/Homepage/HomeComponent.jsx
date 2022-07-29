@@ -6,7 +6,7 @@ class HomeComponent extends Component {
             <div className='HomePage'>
                 <p>Ultimate Trading Experience</p>
                 <span>
-                    <h2>Simple. Free. A great new platform to buy and sell any product you want! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia cum eius sapiente ab iste dolore culpa quae dolorem quis eos.</h2>
+                    <h2>Simple. Free. A fast, and scalable platform to sell or buy products. We use the latest technology so that you can easily and conveniently bid in auctions across the world from the comfort of your own home.</h2>
                 </span>
             </div>
         );

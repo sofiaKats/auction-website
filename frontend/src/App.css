@@ -2,11 +2,6 @@ html, body {
   background-color: #242428;
 }
 
-.navbar-brand {
-  font-weight: 700;
-
-}
-
 .button {
   border: none;
   background-color: transparent;
