@@ -1,38 +1,52 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.button {
+  border: none;
+  background-color: transparent;
   color: white;
+  font-size: 16px;
+  margin: 4px 8px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+.footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:40px;   /* Height of the footer */
+  background:transparent;
+  text-align: center;
+  background-color: rgb(36, 36, 40);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.container-fluid {
+  background-color: rgb(36, 36, 40);
+}
+
+.HomePage {
+  /* color: aliceblue; */
+  font-weight: 600;
+  font-size: 70px;
+  line-height:65px;
+  /* letter-spacing: 10px;
+  text-align: center;
+  text-transform: uppercase; */
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 400%;
+  animation: move 5s ease infinite;
+  background-image: linear-gradient( 68.7deg,  rgba(29,173,235,1) 13.2%, rgba(137,149,250,1) 29.8%, rgba(229,109,212,1) 48.9%, rgba(255,68,128,1) 68.2%, rgba(255,94,0,1) 86.4% );
+}
+
+@keyframes move {
+  0%,100%{
+      background-position: 200% 0%;
   }
-  to {
-    transform: rotate(360deg);
+
+  50%{
+      background-position: 0% 200%;
   }
 }
+
+
+
