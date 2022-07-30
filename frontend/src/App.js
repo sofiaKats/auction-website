@@ -1,8 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import NavBar from './components/Homepage/NavbarComponent.jsx';
-import Footer from './components/Homepage/FooterComponent.jsx';
 import Home from './components/Homepage/HomeComponent.jsx';
 import LogInComponent from './components/SignUp-LogIn/LogInComponent';
 import SignUpComponent from './components/SignUp-LogIn/SignUpComponent';
@@ -14,7 +12,6 @@ function App() {
   return (
      <div>  
       <Router>
-            <NavBar />
             <div className='container-fluid'>
               <Routes>
                 <Route path='/' element={<HomeComponent/>} />
@@ -22,7 +19,6 @@ function App() {
                 <Route path = "/SignUp" element={<SignUpComponent/>} />
               </Routes>
             </div>
-          <Footer />
       </Router>
     </div>
   );

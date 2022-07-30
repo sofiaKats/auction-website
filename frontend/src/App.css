@@ -12,10 +12,14 @@ html, body {
   cursor: pointer;
 }
 
+.button:hover {
+  color: #FF5E03 ;
+}
+
 .footer {
   position:absolute;
   bottom:0;
-  width:100%;
+  width:90%;
   height:40px;   /* Height of the footer */
   background:transparent;
   text-align: center;
