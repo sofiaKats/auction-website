@@ -9,6 +9,7 @@ class SignUpComponent extends Component {
         }
     }
     
+    // sign up form implemented here
     render() {
         return (
             <div className="Auth-form-container">
@@ -53,7 +54,7 @@ class SignUpComponent extends Component {
                 </div>
                 <div className="form-group mt-3">
                   <label>Tax Identification Number (Α.Φ.Μ)</label>
-                  <input type="text" className="form-control mt-1" placeholder="Tax Identification Number" />
+                  <input type="number" className="form-control mt-1" placeholder="Tax Identification Number" />
                 </div>
                 <div className="d-grid gap-2 mt-3">
                   <button type="submit" className="btn btn-dark">

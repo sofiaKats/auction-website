@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import NavBar from './NavbarComponent.jsx';
 import Footer from './FooterComponent.jsx';
 
-class HomeComponent extends Component {
+class WelcomeComponent extends Component {
     render() {
         return (
            <div>
             <NavBar /> 
-            <div className='HomePage'>
+            <div className='WelcomePage'>
                 
                 <p>Ultimate Trading Experience</p>
                 <span>
@@ -20,4 +20,4 @@ class HomeComponent extends Component {
     }
 }
 
-export default HomeComponent;
+export default WelcomeComponent;

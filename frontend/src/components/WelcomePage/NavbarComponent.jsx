@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class NavbarComponent extends Component {
     
@@ -21,8 +21,8 @@ class NavbarComponent extends Component {
                         <div class="LogIn-SignUp">
                             <div class="login" >
                                 <form> 
-                                    <input type="text" placeholder="Username" name="username" />
-                                    <input type="password" placeholder="Password" name="psw" />
+                                    <input type="text" placeholder="Username" />
+                                    <input type="password" placeholder="Password" />
                                     <Link to="/LogIn" class="button">Log In</Link>
                                 </form>
                             </div>
