@@ -22,7 +22,7 @@ class NavbarComponent extends Component {
                             <div class="login" >
                                 <form> 
                                     <input type="text" placeholder="Username" name="username" />
-                                    <input type="text" placeholder="Password" name="psw" />
+                                    <input type="password" placeholder="Password" name="psw" />
                                     <Link to="/LogIn" class="button">Log In</Link>
                                 </form>
                             </div>
