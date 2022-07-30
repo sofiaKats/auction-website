@@ -19,13 +19,25 @@ html, body {
 .LogIn-SignUp {
   margin: 0px auto;
   margin-left: 680px;
-
+  display: flex;
+  justify-content: space-between;
 }
 
 .login {
   float: left;
   margin: 5px auto;
 }
+
+
+input[type=text]{
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+   border-radius: 20px;
+   border: 1px solid rgba(255,94,0,1) 86.4% ;
+   color: #242428;
+   height: 30px;
+   padding-left: 10px;
+  }
 
 .footer {
   position:absolute;
