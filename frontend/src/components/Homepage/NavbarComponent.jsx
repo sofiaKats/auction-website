@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import Auth from '../SignUp-LogIn/Auth.js';
 
 class NavbarComponent extends Component {
     
