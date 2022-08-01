@@ -12,7 +12,6 @@ class NavbarComponent extends Component {
     }
     
     render() {
-        const { navigation } = this.props;
         return (
             <div>
                 <header>
@@ -21,8 +20,8 @@ class NavbarComponent extends Component {
                         <div class="LogIn-SignUp">
                             <div class="login" >
                                 <form> 
-                                    <input type="text" placeholder="Username" />
-                                    <input type="password" placeholder="Password" />
+                                    <input type="text" placeholder="Username" required />
+                                    <input type="password" placeholder="Password" required />
                                     <Link to="/LogIn" class="button">Log In</Link>
                                 </form>
                             </div>
