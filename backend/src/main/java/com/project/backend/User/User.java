@@ -21,18 +21,19 @@ import java.util.Collections;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private Long phone;
-    private String address;
-    private String geographical_location;
-    private Long tax_Identification_Number;
+    @Column(nullable = false) private Long id;
+    @Column(nullable = false) private String username;
+    @Column(nullable = false) private String firstName;
+    @Column(nullable = false) private String lastName;
+    @Column(nullable = false) private String email;
+    @Column(nullable = false) private String password;
+    @Column(nullable = false) private Long phone;
+    @Column(nullable = false) private String address;
+    @Column(nullable = false) private String geographical_location;
+    @Column(nullable = false) private Long tax_Identification_Number;
+    @Column(nullable = false) private String userCode;
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;  // User or Admin
+    @Column(nullable = false) private UserRole userRole;  // User or Admin
     private Boolean locked = false;
     private Boolean enabled = false;
 
