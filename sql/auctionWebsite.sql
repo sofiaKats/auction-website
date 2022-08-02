@@ -27,7 +27,9 @@ CREATE TABLE IF NOT EXISTS auctionweb.user (
   phone INT NOT NULL,
   address  VARCHAR(45) NOT NULL,
   geographical_location  VARCHAR(45) NOT NULL,
-  tax_identification_number  VARCHAR(45) NOT NULL,
+  tax_identification_number  INT NOT NULL,
   user_role  VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id)
-  )
+  PRIMARY KEY (id))
+  engine=InnoDB;
+
+  -- CREATE TABLE IF NOT EXISTS user (id INT NOT NULL AUTO_INCREMENT, email VARCHAR(45) NOT NULL, firstname VARCHAR(45) NOT NULL, lastname  VARCHAR(45) NOT NULL, username  VARCHAR(45) NOT NULL, password  VARCHAR(45) NOT NULL, phone INT NOT NULL, address  VARCHAR(45) NOT NULL, geographical_location  VARCHAR(45) NOT NULL, tax_identification_number  INT NOT NULL, user_code  INT NOT NULL, user_role  VARCHAR(45) NOT NULL, PRIMARY KEY (id)  )
