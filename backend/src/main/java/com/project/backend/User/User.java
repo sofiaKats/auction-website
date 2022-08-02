@@ -1,9 +1,6 @@
 package com.project.backend.User;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,25 +12,25 @@ import java.util.Collections;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+//@EqualsAndHashCode
 @Entity
+@Data
 @Table(name = "user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false) private Long id;
-    @Column(nullable = false) private String username;
-    @Column(nullable = false) private String firstName;
-    @Column(nullable = false) private String lastName;
-    @Column(nullable = false) private String email;
-    @Column(nullable = false) private String password;
-    @Column(nullable = false) private Long phone;
-    @Column(nullable = false) private String address;
-    @Column(nullable = false) private String geographical_location;
-    @Column(nullable = false) private Long tax_Identification_Number;
-    @Column(nullable = false) private String userCode;
+    @Column(name="id", nullable = false) private Long id;
+    @Column(name="username", nullable = false) private String username;
+    @Column(name="firstname", nullable = false) private String firstName;
+    @Column(name="lastname", nullable = false) private String lastName;
+    @Column(name="email", nullable = false) private String email;
+    @Column(name="password", nullable = false) private String password;
+    @Column(name="phone", nullable = false) private Long phone;
+    @Column(name="address", nullable = false) private String address;
+    @Column(name="geographical_location", nullable = false) private String geographical_location;
+    @Column(name="tax_identification_number", nullable = false) private Long tax_Identification_Number;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false) private UserRole userRole;  // User or Admin
+    @Column(name="user_role", nullable = false) private UserRole userRole;  // User or Admin
     private Boolean locked = false;
     private Boolean enabled = false;
 

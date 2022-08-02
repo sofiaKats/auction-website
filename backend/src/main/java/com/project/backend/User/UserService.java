@@ -19,7 +19,6 @@ public class UserService implements UserDetailsService {
     }
 
     public User addUser(User user) {
-        user.setUserCode(UUID.randomUUID().toString());
         return userRepository.save(user);
     }
 
@@ -30,9 +29,9 @@ public class UserService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG = "User with email %s not found";
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository
-                .findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, username)));
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
     }
 }

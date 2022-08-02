@@ -1,6 +1,8 @@
 package com.project.backend.Security;
 
+import com.project.backend.User.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,8 +29,7 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/user/all");
+        return (web) -> web.ignoring().antMatchers("/user/all", "/user/add");
     }
-
 
 }
