@@ -32,7 +32,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name="user_role", nullable = false) private UserRole userRole;  // User or Admin
     private Boolean locked = false;
-    private Boolean enabled = false;
 
     public User(String username, String firstName, String lastName, String email, String password, Long phone, String address, String geographical_location, Long tax_Identification_Number, UserRole userRole) {
         this.username = username;
@@ -89,6 +88,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
+
 }
