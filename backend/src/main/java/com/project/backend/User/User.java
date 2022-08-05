@@ -54,6 +54,6 @@ public class User{
         this.address = address;
         this.geographical_location = geographical_location;
         this.tax_Identification_Number = tax_Identification_Number;
-        this.roles = roles;
+        this.roles =  new ArrayList<>();
     }
 }
