@@ -39,9 +39,9 @@ public class UserController {
         return  ResponseEntity.ok().body(userService.findAllUsers());
     }
 
-    @PostMapping("/saveUser")
+    @PostMapping("/signup")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/saveUser").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/user/signup").toUriString());
         return  ResponseEntity.created(uri).body(userService.addUser(user));
     }
 
@@ -106,12 +106,12 @@ public class UserController {
 //        return ResponseEntity.ok().build();
 //    }
 }
-
-@Data
-class RoleToUserForm {
-    private String username;
-    private String roleName;
-}
+//
+//@Data
+//class RoleToUserForm {
+//    private String username;
+//    private String roleName;
+//}
 
 
 

@@ -20,16 +20,6 @@ import static javax.persistence.FetchType.EAGER;
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name="id", nullable = false) private Long id;
-//    @Column(name="username", nullable = false) private String username;
-//    @Column(name="firstname", nullable = false) private String firstName;
-//    @Column(name="lastname", nullable = false) private String lastName;
-//    @Column(name="email", nullable = false) private String email;
-//    @Column(name="password", nullable = false) private String password;
-//    @Column(name="phone", nullable = false) private Long phone;
-//    @Column(name="address", nullable = false) private String address;
-//    @Column(name="geographical_location", nullable = false) private String geographical_location;
-//    @Column(name="tax_identification_number", nullable = false) private Long tax_Identification_Number;
     private Long id;
     private String username;
     private String firstName;
@@ -43,7 +33,7 @@ public class User{
     @ManyToMany(fetch = EAGER)
     private Collection<Role> roles = new ArrayList<>();
 
-    public User(Long id, String username, String firstName, String lastName, String email, String password, Long phone, String address, String geographical_location, Long tax_Identification_Number, Collection<Role> roles) {
+    public User(Long id, String username, String firstName, String lastName, String email, String password, Long phone, String address, String geographical_location, Long tax_Identification_Number) {
         this.id = id;
         this.username = username;
         this.firstName = firstName;
@@ -54,6 +44,7 @@ public class User{
         this.address = address;
         this.geographical_location = geographical_location;
         this.tax_Identification_Number = tax_Identification_Number;
+        UserService userService;
         this.roles =  new ArrayList<>();
     }
 }
