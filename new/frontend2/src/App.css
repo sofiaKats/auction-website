@@ -78,13 +78,6 @@ html, body {
   border: 50px solid;
 }
 
-.LogIn-SignUp {
-  margin: 0px auto;
-  margin-left: 680px;
-  display: flex;
-  justify-content: space-between;
-}
-
 .Auth-form-container {
   display: flex;
   justify-content: center;
