@@ -95,8 +95,8 @@ export default class Login extends Component {
                   <label>Password</label>
                   <input type="password" className="form-control mt-1" placeholder="Password" value={this.state.password} onChange={this.onChangePassword} required/>
                 </div>
-                <div className="form-group">
-                  <button className="btn btn-dark btn-block" >Log In</button>
+                <div className="form-group mt-3">
+                  <button className="form-control btn btn-dark btn-block mt-1" >Log In</button>
                 </div>
 
                 {this.state.message && (

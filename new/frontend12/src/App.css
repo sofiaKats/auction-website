@@ -69,6 +69,7 @@ html, body {
   color: #FF5E03 ;
 }
 
+
 .Auth-form-container-LogIn {
   display:flex;
   justify-content: center;
@@ -76,13 +77,6 @@ html, body {
   width: auto;
   height: auto;
   border: 50px solid;
-}
-
-.LogIn-SignUp {
-  margin: 0px auto;
-  margin-left: 680px;
-  display: flex;
-  justify-content: space-between;
 }
 
 .Auth-form-container {

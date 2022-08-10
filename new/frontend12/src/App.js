@@ -77,13 +77,13 @@ class App extends Component {
 
           {/* if the user is logged in, then show log out option */}
           {currentUser ? (
-            <div className="LogIn-SignUp navbar-nav ml-auto">
+            <div className="navbar-nav ml-auto">
               <li className="nav-item"><Link to={"/profile"} className="nav-link">{currentUser.username}</Link></li>
               <li className="nav-item"><a href="/login" className="nav-link" onClick={this.logOut}>Log Out</a></li>
             </div>
           ) : (  
             //if there's no active user, either Log in or Sign up
-            <div class="LogIn-SignUp" className="navbar-nav ml-auto">
+            <div className="navbar-nav ml-auto">
               <li className="login-class">
                 <Link to={"/login"} className="btn btn-outline-light my-2 my-sm-0">Log In</Link></li>
 

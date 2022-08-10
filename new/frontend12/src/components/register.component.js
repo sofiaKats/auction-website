@@ -196,8 +196,8 @@ export default class Register extends Component {
                    <input type="number" className="form-control mt-1" placeholder="Tax Identification Number" value={this.state.tax_Identification_Number} onChange={this.onChangeTaxIdentNum}  required />
                  </div>
 
-                <div className="form-group">
-                   <button type="submit" className="btn btn-dark btn-block"> Submit</button>
+                <div className="form-group mt-3">
+                   <button type="submit" className="form-control btn btn-dark btn-block mt-1"> Submit</button>
                 </div>
               </div>
             )}
