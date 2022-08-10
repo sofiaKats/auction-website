@@ -51,7 +51,7 @@ const App = () => {
         <Link to={"/"} className="navbar-brand">Auction Bay</Link>
         <div className="navbar-nav mr-auto">
           {/* mporei kai na to kaneis delete auto */}
-          <li className="nav-item"> <Link to={"/home"} className="nav-link"> Home </Link> </li>
+          {/* <li className="nav-item"> <Link to={"/home"} className="nav-link"> Home </Link> </li> */}
 
           {showAdminBoard && (
             <li className="nav-item"> <Link to={"/admin"} className="nav-link"> Admin Board </Link> </li>

@@ -119,9 +119,15 @@ const Register = () => {
     setMessage("");
     setSuccessful(false);
 
-    form.current.validateAll();
 
+    form.current.validateAll();
+    //if all the input is given by the user
     if (checkBtn.current.context._errors.length === 0) {
+      if(password !== verify_password) {
+        setMessage("Passwords do not match");
+        setSuccessful(false);
+        return;
+      }
       AuthService.register(
         username,
         firstName,
