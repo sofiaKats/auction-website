@@ -6,16 +6,6 @@ import CheckButton from "react-validation/build/button";
 
 import AuthService from "../services/auth.service";
 
-// const required = (value) => {
-//   if (!value) {
-//     return (
-//       <div className="alert alert-danger" role="alert">
-//         This field is required!
-//       </div>
-//     );
-//   }
-// };
-
 const Login = () => {
   let navigate = useNavigate();
 
@@ -24,7 +14,6 @@ const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const onChangeUsername = (e) => {
@@ -41,7 +30,6 @@ const Login = () => {
     e.preventDefault();
 
     setMessage("");
-    // setLoading(true);
 
     form.current.validateAll();
 
@@ -59,12 +47,9 @@ const Login = () => {
             error.message ||
             error.toString();
 
-          // setLoading(false);
           setMessage(resMessage);
         }
       );
-    } else {
-      // setLoading(false);
     }
   };
 
