@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -77,13 +77,13 @@ class App extends Component {
 
           {/* if the user is logged in, then show log out option */}
           {currentUser ? (
-            <div className="LogIn-SignUp navbar-nav ml-auto">
+            <div className="navbar-nav ml-auto">
               <li className="nav-item"><Link to={"/profile"} className="nav-link">{currentUser.username}</Link></li>
               <li className="nav-item"><a href="/login" className="nav-link" onClick={this.logOut}>Log Out</a></li>
             </div>
           ) : (  
             //if there's no active user, either Log in or Sign up
-            <div class="LogIn-SignUp" className="navbar-nav ml-auto">
+            <div className="navbar-nav ml-auto">
               <li className="login-class">
                 <Link to={"/login"} className="btn btn-outline-light my-2 my-sm-0">Log In</Link></li>
 
@@ -95,21 +95,14 @@ class App extends Component {
         </nav>
 
         <div className='container-fluid'>
-          <Routes>
-            <Route path='/' element={<Home/>} />
-            <Route path='/home' element={<Home/>} />
-            <Route path = '/login' element={<Login/>} />
-            <Route path = '/register' element={<Register/>} />
-            <Route path='/profile' element={<Profile/>} />
-            <Route path='/user' element={<BoardUser/>} />
-            <Route path='/mod' element={<BoardModerator/>} />
-            {/* <Route exact path={["/", "/home"]} component={Home} />
+          <Switch>
+            <Route exact path={["/", "/home"]} component={Home} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
             <Route path="/user" component={BoardUser} />
-            <Route path="/mod" component={BoardModerator} /> */}
-          </Routes>
+            <Route path="/mod" component={BoardModerator} />
+          </Switch>
         </div>
 
         { /*<AuthVerify logOut={this.logOut}/> */ }
