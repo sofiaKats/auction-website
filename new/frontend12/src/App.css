@@ -1,6 +1,17 @@
+/* CSS Reset for total control over all padding / margins */
+* {
+  padding: 0;
+  margin: 0;
+  display: border-box;
+  
+}
+
+
 html, body {
   background-color: #242428;
+  /* color: white; */
 }
+
 .card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
@@ -56,9 +67,12 @@ html, body {
   }
 }
 
+.profile_container {
+  color: white;
+}
+
 .container-fluid {
   background-color: #242428;
-  
 }
 
 .login-class {
@@ -76,15 +90,17 @@ html, body {
   width: auto;
   height: auto;
   border: 50px solid;
+   padding-left: 9%;
+  padding-right: 9%;
 }
-
+/* 
 .Auth-form-container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: auto;
   height: auto;
-}
+} */
 
 .Auth-form {
   width: 420px;
@@ -97,10 +113,10 @@ html, body {
   padding-right: 5%;
 }
 
-.Auth-form-content {
+/* .Auth-form-content {
   padding-left: 12%;
   padding-right: 12%;
-}
+} */
 
 .Auth-form-title {
   text-align: center;

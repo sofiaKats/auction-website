@@ -5,7 +5,7 @@ const Profile = () => {
   const currentUser = AuthService.getCurrentUser();
 
   return (
-    <div className="container">
+    <div className="profile_container">
       <header className="jumbotron">
         <h3>
           <strong>{currentUser.username}</strong> Profile
