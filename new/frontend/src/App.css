@@ -1,7 +1,18 @@
+/* CSS Reset for total control over all padding / margins */
+* {
+  padding: 0;
+  margin: 0;
+  display: border-box;
+  
+}
+
+
 html, body {
   background-color: #242428;
+  /* color: white; */
 }
-/* .card-container.card {
+
+.card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
 }
@@ -27,10 +38,10 @@ html, body {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-} */
+}
 
 .WelcomePage {
-  border: solid 50px transparent;
+  border: solid 70px transparent;
   /* color: aliceblue; */
   font-weight: 600;
   font-size: 70px;
@@ -56,9 +67,12 @@ html, body {
   }
 }
 
+.profile_container {
+  color: white;
+}
+
 .container-fluid {
   background-color: #242428;
-  
 }
 
 .login-class {
@@ -76,6 +90,8 @@ html, body {
   width: auto;
   height: auto;
   border: 50px solid;
+  padding-left: 9%;
+  padding-right: 9%;
 }
 
 .Auth-form-container {
@@ -84,6 +100,12 @@ html, body {
   align-items: center;
   width: auto;
   height: auto;
+  padding-left: 9%;
+  padding-right: 9%;
+}
+
+.navbar-nav-custom {
+  margin-left: 980px;
 }
 
 .Auth-form {
@@ -93,11 +115,8 @@ html, body {
   padding-bottom: 20px;
   border-radius: 8px;
   background-color: white;
-}
-
-.Auth-form-content {
-  padding-left: 12%;
-  padding-right: 12%;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .Auth-form-title {
