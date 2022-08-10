@@ -1,121 +1,98 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
 
-import Login from "./components/login.component";
-import Register from "./components/register.component";
-import Home from "./components/home.component";
-import Profile from "./components/profile.component";
-import BoardUser from "./components/board-user.component";
-import BoardModerator from "./components/board-moderator.component";
-// import BoardAdmin from "./components/board-admin.component";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import BoardUser from "./components/BoardUser";
+import BoardModerator from "./components/BoardModerator";
+import BoardAdmin from "./components/BoardAdmin";
 
-// import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.logOut = this.logOut.bind(this);
+const App = () => {
+  // const [showModeratorBoard, setShowModeratorBoard] = useState(false);
+  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [currentUser, setCurrentUser] = useState(undefined);
 
-    this.state = {
-      showModeratorBoard: false,
-      currentUser: undefined,
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const user = AuthService.getCurrentUser();
 
     if (user) {
-      this.setState({
-        currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
-      });
+      setCurrentUser(user);
+      // setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
+      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
-    
+
     EventBus.on("logout", () => {
-      this.logOut();
+      logOut();
     });
-  }
 
-  componentWillUnmount() {
-    EventBus.remove("logout");
-  }
+    return () => {
+      EventBus.remove("logout");
+    };
+  }, []);
 
-  logOut() {
+  const logOut = () => {
     AuthService.logout();
-    this.setState({
-      showModeratorBoard: false,
-      currentUser: undefined,
-    });
-  }
+    // setShowModeratorBoard(false);
+    setShowAdminBoard(false);
+    setCurrentUser(undefined);
+  };
 
-  render() {
-    const { currentUser, showModeratorBoard } = this.state;
+  return (
+    <div>
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <Link to={"/"} className="navbar-brand">Auction Bay</Link>
+        <div className="navbar-nav mr-auto">
+          {/* mporei kai na to kaneis delete auto */}
+          <li className="nav-item"> <Link to={"/home"} className="nav-link"> Home </Link> </li>
 
-    return (
-      <div>
-        {/* NAVBAR HTML CODE */}
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <Link to={"/"} className="navbar-brand">Auction Bay</Link>
-          <div className="navbar-nav mr-auto">
-            {/* !!!!! home needs to be doneee!!! */}
-            {/* <li className="nav-item"> <Link to={"/home"} className="nav-link"> Home</Link></li> */}
-
-            {showModeratorBoard && (
-              <li className="nav-item"> <Link to={"/mod"} className="nav-link">Moderator Board</Link> </li>
-            )}
-
-            {currentUser && (
-              <li className="nav-item"> <Link to={"/user"} className="nav-link">User</Link> </li>
-            )}
-          </div>
-
-          {/* if the user is logged in, then show log out option */}
-          {currentUser ? (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item"><Link to={"/profile"} className="nav-link">{currentUser.username}</Link></li>
-              <li className="nav-item"><a href="/login" className="nav-link" onClick={this.logOut}>Log Out</a></li>
-            </div>
-          ) : (  
-            //if there's no active user, either Log in or Sign up
-            <div className="navbar-nav ml-auto">
-              <li className="login-class">
-                <Link to={"/login"} className="btn btn-outline-light my-2 my-sm-0">Log In</Link></li>
-
-              <li className="nav-item">
-                <Link to={"/register"} className="btn btn-outline-light my-2 my-sm-0">Sign Up</Link>
-              </li>
-            </div>
+          {showAdminBoard && (
+            <li className="nav-item"> <Link to={"/admin"} className="nav-link"> Admin Board </Link> </li>
           )}
-        </nav>
 
-        <div className='container-fluid'>
-          <Routes>
-            <Route path='/' element={<Home/>} />
-            <Route path='/home' element={<Home/>} />
-            <Route path = '/login' element={<Login/>} />
-            <Route path = '/register' element={<Register/>} />
-            <Route path='/profile' element={<Profile/>} />
-            <Route path='/user' element={<BoardUser/>} />
-            <Route path='/mod' element={<BoardModerator/>} />
-            {/* <Route exact path={["/", "/home"]} component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/profile" component={Profile} />
-            <Route path="/user" component={BoardUser} />
-            <Route path="/mod" component={BoardModerator} /> */}
-          </Routes>
+          {currentUser && (
+            <li className="nav-item"> <Link to={"/user"} className="nav-link"> User </Link> </li>
+          )}
         </div>
 
-        { /*<AuthVerify logOut={this.logOut}/> */ }
+        {currentUser ? (
+          <div className="navbar-nav ml-auto">
+            <li className="nav-item">  <Link to={"/profile"} className="nav-link"> {currentUser.username} </Link> </li>
+            <li className="nav-item"> <a href="/login" className="nav-link" onClick={logOut}>Log Out  </a> </li>
+          </div>
+        ) : (
+          <div className="navbar-nav ml-auto">
+            <li className="login-class">
+              <Link to={"/login"} className="btn btn-outline-light my-2 my-sm-0"> Log In</Link> </li>
+
+            <li className="nav-item">
+              <Link to={"/register"} className="btn btn-outline-light my-2 my-sm-0">Sign Up </Link> </li>
+          </div>
+        )}
+      </nav>
+
+      <div className="container-fluid">
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/home" element={<Home/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register/>} />
+          <Route path="/profile" element={<Profile/>} />
+          <Route path="/user" element={<BoardUser/>} />
+          <Route path="/mod" element={<BoardModerator/>} />
+          <Route path="/admin" element={<BoardAdmin/>} />
+        </Routes>
       </div>
-    );
-  }
-}
+
+    </div>
+  );
+};
 
 export default App;

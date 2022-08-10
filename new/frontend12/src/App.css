@@ -1,7 +1,7 @@
 html, body {
   background-color: #242428;
 }
-/* .card-container.card {
+.card-container.card {
   max-width: 350px !important;
   padding: 40px 40px;
 }
@@ -27,7 +27,7 @@ html, body {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-} */
+}
 
 .WelcomePage {
   border: solid 50px transparent;
@@ -69,7 +69,6 @@ html, body {
   color: #FF5E03 ;
 }
 
-
 .Auth-form-container-LogIn {
   display:flex;
   justify-content: center;
@@ -94,6 +93,8 @@ html, body {
   padding-bottom: 20px;
   border-radius: 8px;
   background-color: white;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .Auth-form-content {
