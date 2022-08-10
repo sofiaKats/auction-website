@@ -90,17 +90,23 @@ html, body {
   width: auto;
   height: auto;
   border: 50px solid;
-   padding-left: 9%;
+  padding-left: 9%;
   padding-right: 9%;
 }
-/* 
+
 .Auth-form-container {
   display: flex;
   justify-content: center;
   align-items: center;
   width: auto;
   height: auto;
-} */
+  padding-left: 9%;
+  padding-right: 9%;
+}
+
+.navbar-nav-custom {
+  margin-left: 980px;
+}
 
 .Auth-form {
   width: 420px;
@@ -112,11 +118,6 @@ html, body {
   padding-left: 5%;
   padding-right: 5%;
 }
-
-/* .Auth-form-content {
-  padding-left: 12%;
-  padding-right: 12%;
-} */
 
 .Auth-form-title {
   text-align: center;

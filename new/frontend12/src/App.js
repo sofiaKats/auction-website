@@ -63,17 +63,17 @@ const App = () => {
         </div>
 
         {currentUser ? (
-          <div className="navbar-nav ml-auto">
+          <div className="navbar-nav navbar-nav-custom ml-auto">
             <li className="nav-item">  <Link to={"/profile"} className="nav-link"> {currentUser.username} </Link> </li>
             <li className="nav-item"> <a href="/login" className="nav-link" onClick={logOut}>Log Out  </a> </li>
           </div>
         ) : (
-          <div className="navbar-nav ml-auto">
+          <div className="navbar-nav navbar-nav-custom ml-auto">
             <li className="login-class">
-              <Link to={"/login"} className="btn btn-outline-light my-2 my-sm-0"> Log In</Link> </li>
+              <Link to={"/login"} className="btn btn-outline-light my-2 my-sm-0">Log In</Link> </li>
 
             <li className="nav-item">
-              <Link to={"/register"} className="btn btn-outline-light my-2 my-sm-0">Sign Up </Link> </li>
+              <Link to={"/register"} className="btn btn-outline-light my-2 my-sm-0">Sign Up</Link> </li>
           </div>
         )}
       </nav>
