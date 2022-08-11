@@ -107,10 +107,11 @@ public class AuthController {
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
+            // mporei kai na einai gia delete auto to kommati
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "mod":
-                        Role modRole = roleRepository.findByName(Roles.ROLE_MODERATOR)
+                    case "admin":
+                        Role modRole = roleRepository.findByName(Roles.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
 
