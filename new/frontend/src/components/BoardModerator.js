@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import UserService from "../services/user.service";
+import TestService from "../services/test.service";
 import EventBus from "../common/EventBus";
 
 const BoardModerator = () => {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    UserService.getModeratorBoard().then(
+    TestService.getModeratorBoard().then(
       (response) => {
         setContent(response.data);
       },
