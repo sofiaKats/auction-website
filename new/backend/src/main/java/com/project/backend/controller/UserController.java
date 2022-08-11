@@ -18,6 +18,10 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     //return all users
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
