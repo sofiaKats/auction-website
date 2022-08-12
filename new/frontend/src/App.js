@@ -10,7 +10,7 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
-import BoardModerator from "./components/BoardModerator";
+// import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 
 import EventBus from "./common/EventBus";
@@ -63,7 +63,7 @@ const App = () => {
         </div>
 
         {currentUser ? (
-          <div className="navbar-nav navbar-nav-custom ml-auto">
+          <div className="navbar-nav ml-auto">
             <li className="nav-item">  <Link to={"/profile"} className="nav-link"> {currentUser.username} </Link> </li>
             <li className="nav-item"> <a href="/login" className="nav-link" onClick={logOut}>Log Out  </a> </li>
           </div>
@@ -86,7 +86,7 @@ const App = () => {
           <Route path="/register" element={<Register/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/user" element={<BoardUser/>} />
-          <Route path="/mod" element={<BoardModerator/>} />
+          {/* <Route path="/mod" element={<BoardModerator/>} /> */}
           <Route path="/admin" element={<BoardAdmin/>} />
         </Routes>
       </div>
