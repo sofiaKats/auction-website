@@ -5,7 +5,7 @@ import UserService from "../services/user.service";
 // import EventBus from "../common/EventBus";
 
 const BoardAdmin = () => {
-  const [content, setContent] = useState("");
+  // const [content, setContent] = useState("");
   const [users, setUsers] = useState([]);
 
   const init = () => {
@@ -66,7 +66,6 @@ const BoardAdmin = () => {
     // </div>
     <div className="AdminBoard-container">
       <h3>New User Registration Requests</h3>
-      <h3>{content}</h3>
       <hr/>
       <div className="custom-table">
         <table className="table table-bordered table-striped">
