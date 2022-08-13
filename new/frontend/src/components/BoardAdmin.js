@@ -84,7 +84,13 @@ const BoardAdmin = () => {
                 <td>{user.id}</td>
                 <td>{user.username}</td>
                 <td>
-                  <button className="btn btn-danger ml-2" onClick={() => {
+                <button className="btn btn-info" onClick={() => {
+                    handleDelete(user.id);
+                  }}>User Info</button>
+                <button className="btn btn-success" onClick={() => {
+                    handleDelete(user.id);
+                  }}>Accept</button>
+                  <button className="btn btn-danger" onClick={() => {
                     handleDelete(user.id);
                   }}>Delete</button>
                 </td>
