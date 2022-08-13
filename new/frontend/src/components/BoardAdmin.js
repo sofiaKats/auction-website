@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import UserService from "../services/user.service";
+// import UserInfo from "./UserInfo";
 // import TestService from "../services/test.service";
 // import EventBus from "../common/EventBus";
 
 const BoardAdmin = () => {
   // const [content, setContent] = useState("");
   const [users, setUsers] = useState([]);
+  // const [userInfo, setUserInfo] = useState([]);
 
   const init = () => {
     UserService.getAllUsers()
@@ -34,6 +37,22 @@ const BoardAdmin = () => {
         console.log('Something went wrong', error);
       })
   }
+
+  // const handleFindUser = (id) => {
+  //   return (
+  //     <div>
+  //       {/* <UserInfo */}
+  //     </div>
+  //   );
+    // UserService.getUserById(id)
+    // .then(response => {
+    //   console.log('user found successfully', response.data);
+    //   setUserInfo(response.data);
+    // })
+    // .catch(error => {
+    //   console.log('Something went wrong', error);
+    // })
+  // }
 
 
   // useEffect(() => {
@@ -83,9 +102,7 @@ const BoardAdmin = () => {
                 <td>{user.id}</td>
                 <td>{user.username}</td>
                 <td>
-                <button className="btn btn-info" onClick={() => {
-                    handleDelete(user.id);
-                  }}>User Info</button>
+                <Link to={`/userinfo/${user.id}`} className="btn btn-info">User Info</Link>
                 <button className="btn btn-success" onClick={() => {
                     handleDelete(user.id);
                   }}>Accept</button>
