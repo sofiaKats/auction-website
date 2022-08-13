@@ -102,7 +102,7 @@ const BoardAdmin = () => {
                 <td>{user.id}</td>
                 <td>{user.username}</td>
                 <td>
-                <Link to={`/userinfo/${user.id}`} className="btn btn-info">User Info</Link>
+                <Link to={`/userinfo/${user.id}`} className="btn btn-info">Details</Link>
                 <button className="btn btn-success" onClick={() => {
                     handleDelete(user.id);
                   }}>Accept</button>

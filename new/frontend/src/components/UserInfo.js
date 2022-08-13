@@ -22,7 +22,7 @@ const UserInfo = () => {
     return(
     <div className="Auth-form-container-LogIn">
         <div className="Auth-form">
-        <h3 className="Auth-form-title"><strong>{userInfo.username}</strong> Profile</h3>
+        <h3 className="Auth-form-title"><strong>{userInfo.username}</strong> Details </h3>
           <div className="form-group mt-3">
             <label><strong>Id:</strong> {userInfo.id}</label>
           </div>
