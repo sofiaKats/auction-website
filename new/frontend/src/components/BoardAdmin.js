@@ -9,7 +9,9 @@ import UserService from "../services/user.service";
 const BoardAdmin = () => {
   // const [content, setContent] = useState("");
   const [users, setUsers] = useState([]);
+  // const [isHidden, setIsHidden] = useState(false);
   // const [userInfo, setUserInfo] = useState([]);
+  
 
   const init = () => {
     UserService.getAllUsers()
@@ -37,6 +39,11 @@ const BoardAdmin = () => {
         console.log('Something went wrong', error);
       })
   }
+
+  // // user is hidden
+  // if (isHidden === true) {
+  //   return null;
+  // }
 
   // const handleFindUser = (id) => {
   //   return (
@@ -103,12 +110,8 @@ const BoardAdmin = () => {
                 <td>{user.username}</td>
                 <td>
                 <Link to={`/userinfo/${user.id}`} className="btn btn-info">Details</Link>
-                <button className="btn btn-success" onClick={() => {
-                    handleDelete(user.id);
-                  }}>Accept</button>
-                  <button className="btn btn-danger" onClick={() => {
-                    handleDelete(user.id);
-                  }}>Delete</button>
+                <button className="btn btn-success" onClick={() => { handleDelete(user.id); }}>Accept</button>
+                <button className="btn btn-danger" onClick={() => { handleDelete(user.id); }}>Delete</button>
                 </td>
               </tr>
             ))
