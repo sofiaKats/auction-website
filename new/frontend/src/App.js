@@ -63,6 +63,9 @@ const App = () => {
           )}
         </div>
 
+          {/* an 8eleis na exei ksexwrista page o ka8enas tote edw!! px
+          na exei ena page o user pou na mhn exei o admin kai antistrofa, 
+          currentUser && showAdminBoard ? (...) <--auto shmainei oti einai o admin */}
         {currentUser ? (
           <div className="navbar-nav ml-auto">
             {/* PAEI STO HOME PAGE!!! H sto admin page */}
