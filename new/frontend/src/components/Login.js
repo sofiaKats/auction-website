@@ -36,7 +36,11 @@ const Login = () => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(username, password).then(
         () => {
-          navigate("/profile");
+          if(username === "@ozzyosbourne")
+            navigate("/admin");
+          else 
+            navigate("/user");
+          
           window.location.reload();
         },
         (error) => {
