@@ -47,17 +47,21 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LogInRequest loginRequest) {
 
+        //authenticate valid login request
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
+        //generate token for logged in user, 30 minutes
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
+        // receive role of logged in user
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
+        // send user info, received @ currentUser service function in frontend
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
@@ -102,11 +106,13 @@ public class AuthController {
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
+        //default role: all new member are ROLE_USER
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(Roles.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
+            //error checking
             // mporei kai na einai gia delete auto to kommati
             strRoles.forEach(role -> {
                 switch (role) {
@@ -124,6 +130,7 @@ public class AuthController {
             });
         }
 
+        //setting roles and saving user to database
         user.setRoles(roles);
         userRepository.save(user);
 
