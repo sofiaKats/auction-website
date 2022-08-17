@@ -25,6 +25,7 @@ public class User {
     @JoinTable(  name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    //custom constructor implementation (roles not initialized yet when user object created)
     public User(String username, String firstName, String lastName, String email, String password, Long phone, String address, String geographical_location, Long tax_Identification_Number) {
         this.username = username;
         this.firstName = firstName;
