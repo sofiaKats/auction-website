@@ -1,5 +1,5 @@
 -- admin password: letmein user password:letuserin
--- source C:\Users\sofia\Desktop\auction-website\sql\auctionWebsite.sql
+-- source C:\Users\sofia\Desktop\auction-website\new\sql\auctionWebsite.sql
 INSERT INTO roles (id, name) VALUES (1 , 'ROLE_USER'); 
 INSERT INTO roles (id, name) VALUES (2 , 'ROLE_ADMIN'); 
 INSERT INTO users (id , email, first_name, last_name, username, password, phone, address, geographical_location, tax_identification_number) VALUES (1,'ozzyosbourne@gmail.com', 'ozzy', 'osbourne', '@ozzyosbourne', '$2a$10$JxK1WXYzMV.IoY4UhlJ7KuxzVG75z7VN12CylUxLMnCNeBrcJExba', '698346683', '58 hollywood blvd', 'Los Angeles CA','21325535' );
