@@ -23,12 +23,17 @@ const acceptUserById = (UserId) => {
     return axios.put(API_URL + '/admin-acceptance/' + UserId);
 }
 
+// const getValidatedUserById = (UserId) => {
+//     return axios.get(API_URL + '/findValidatedUser/' + UserId);
+// }
+
 const UserService = {
     getUserById,
     getAllUsers,
     deleteUserById,
     getAllUsersCustom,
     acceptUserById,
+    // getValidatedUserById,
   };
   
   export default UserService;

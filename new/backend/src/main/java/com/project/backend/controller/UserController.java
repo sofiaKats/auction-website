@@ -9,8 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 //@CrossOrigin(origins = "http://localhost:3000")
@@ -65,6 +64,18 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User not exist with id :" + id));
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    // get user by id and check if user is validated @ frontend
+//    @RequestMapping("/users/findValidatedUser/{username}")
+//    @ResponseBody
+//    public Map<String, Boolean> getValidatedUserById(@PathVariable String Username) {
+//        Optional<User> user = userRepository.findByUsername(Username);
+//        if (!user.isAdmin_accepted()) //user not accepted yet by admin
+//            return Collections.singletonMap("accepted", false);
+//
+//        //else the user is already accepted by admin
+//        return Collections.singletonMap("accepted", true);
+//    }
 
     // delete user
     @DeleteMapping("/users/delete/{id}")

@@ -33,6 +33,7 @@ const BoardAdmin = () => {
     UserService.acceptUserById(id)
     .then(response => {
       console.log('user accepted successfully', response.data);
+      // console.log('!!!!!!!! RESPONSE DATA !!!!!!', response.data.email); //works fine
       init();
     })
     .catch(error => {

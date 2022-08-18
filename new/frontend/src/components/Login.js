@@ -5,6 +5,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
 import AuthService from "../services/auth.service";
+// import UserService from "../services/user.service";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -30,6 +31,10 @@ const Login = () => {
     e.preventDefault();
 
     setMessage("");
+
+    // if(username !== "@ozzyosbourne") {
+    //   UserService.getAllUsers();
+    // }
 
     form.current.validateAll();
 
