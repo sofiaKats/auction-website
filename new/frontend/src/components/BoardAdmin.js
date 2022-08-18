@@ -14,7 +14,7 @@ const BoardAdmin = () => {
   
 
   const init = () => {
-    UserService.getAllUsers()
+    UserService.getAllUsersCustom()
       .then(response => {
         console.log('Printing user data', response.data);
         setUsers(response.data);
@@ -27,6 +27,18 @@ const BoardAdmin = () => {
   useEffect(() => {
     init();
   }, []);
+
+  // DELETE response.data from console.log AFTERWARDS!!!!!
+  const handleAccept = (id) => {
+    UserService.acceptUserById(id)
+    .then(response => {
+      console.log('user accepted successfully', response.data);
+      init();
+    })
+    .catch(error => {
+      console.log('Something went wrong', error);
+    })
+  }
 
   const handleDelete = (id) => {
     console.log('Printing id', id);
@@ -110,7 +122,7 @@ const BoardAdmin = () => {
                 <td>{user.username}</td>
                 <td>
                 <Link to={`/userinfo/${user.id}`} className="btn btn-info">Details</Link>
-                <button className="btn btn-success" onClick={() => { handleDelete(user.id); }}>Accept</button>
+                <button className="btn btn-success" onClick={() => { handleAccept(user.id); }}>Accept</button>
                 <button className="btn btn-danger" onClick={() => { handleDelete(user.id); }}>Delete</button>
                 </td>
               </tr>
