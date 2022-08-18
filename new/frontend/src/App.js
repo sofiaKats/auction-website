@@ -59,7 +59,7 @@ const App = () => {
           )}
 
           {currentUser && (
-            <li className="nav-item"> <Link to={"/user"} className="nav-link"> User </Link> </li>
+            <li className="nav-item"> <Link to={"/frontpage"} className="nav-link"> Front Page </Link> </li>
           )}
         </div>
 
@@ -68,6 +68,8 @@ const App = () => {
           currentUser && showAdminBoard ? (...) <--auto shmainei oti einai o admin */}
         {currentUser ? (
           <div className="navbar-nav ml-auto">
+            <li className="nav-item">  <Link to={"/manageauctions"} className="nav-link"> Manage Auctions </Link> </li>
+            <li className="nav-item">  <Link to={"/explorepage"} className="nav-link"> Explore Page </Link> </li>
             <li className="nav-item">  <Link to={"/profile"} className="nav-link"> {currentUser.username} </Link> </li>
             <li className="nav-item"> <a href="/login" className="nav-link" onClick={logOut}>Log Out  </a> </li>
           </div>
@@ -89,7 +91,7 @@ const App = () => {
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
           <Route path="/profile" element={<Profile/>} />
-          <Route path="/user" element={<BoardUser/>} />
+          <Route path="/frontpage" element={<BoardUser/>} />
           {/* <Route path="/mod" element={<BoardModerator/>} /> */}
           <Route path="/admin" element={<BoardAdmin/>} />
           <Route path="/userinfo/:id" element={<UserInfo/>} />
