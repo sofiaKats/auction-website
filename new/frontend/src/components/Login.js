@@ -39,7 +39,7 @@ const Login = () => {
           if(username === "@ozzyosbourne")
             navigate("/admin");
           else 
-            navigate("/user");
+            navigate("/frontpage");
           
           window.location.reload();
         },
