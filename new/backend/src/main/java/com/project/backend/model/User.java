@@ -24,6 +24,8 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(  name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+//    @Transient
+    private boolean admin_accepted; // flag to check if the admin accepted the sign up request
 
     //custom constructor implementation (roles not initialized yet when user object created)
     public User(String username, String firstName, String lastName, String email, String password, Long phone, String address, String geographical_location, Long tax_Identification_Number) {
@@ -36,5 +38,6 @@ public class User {
         this.address = address;
         this.geographical_location = geographical_location;
         this.tax_Identification_Number = tax_Identification_Number;
+        this.admin_accepted = false;
     }
 }
