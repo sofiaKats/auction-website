@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -28,6 +29,33 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userRepository.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PutMapping("/users/admin-acceptance/{id}")
+    public ResponseEntity<User> UserAcceptance(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not exist with id :" + id));
+        user.setAdmin_accepted(true); //user is now accepted by admin
+
+        return new ResponseEntity<>(userRepository.save(user), HttpStatus.OK);
+    }
+
+    //return all users
+    @GetMapping("/users/custom/all")
+    public ResponseEntity<List<User>> getAllUsersCustom() {
+        List<User> users = userRepository.findAll();
+        List<User> customUsers = new ArrayList<User>();
+        //iterate through all users in database and list
+        // all users that the admin hasn't accepted yet
+        // on admin page
+        for (int i = 0; i < users.size(); i++) {
+            if (!users.get(i).isAdmin_accepted()) { //false: admin hasn't accepted sign up request yet
+//                System.out.println("User with username: " + users.get(i).getUsername() +
+//                        " has flag: " + users.get(i).isAdmin_accepted());
+                customUsers.add(users.get(i));
+            }
+        }
+        return new ResponseEntity<>(customUsers, HttpStatus.OK);
     }
 
     // get user by id rest api
