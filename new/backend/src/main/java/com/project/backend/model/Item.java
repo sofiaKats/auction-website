@@ -15,10 +15,10 @@ public class Item {
     Long ItemID;
     String Name;
     // Category
-    String Currently;
-    String Buy_Price;
-    String First_Bid;
-    String Number_of_Bids;
+    Float Currently;
+    Float Buy_Price;
+    Float First_Bid;
+    Integer Number_of_Bids;
     //Bids
     //Location
     String Country;
@@ -27,7 +27,7 @@ public class Item {
     // Seller
     String Description;
 
-    public Item( String name, String currently, String buy_Price, String first_Bid, String number_of_Bids, String country, String started, String ends, String description) {
+        public Item( String name, Float currently, Float buy_Price, Float first_Bid, Integer number_of_Bids, String country, String started, String ends, String description) {
         Name = name;
         Currently = currently;
         Buy_Price = buy_Price;
