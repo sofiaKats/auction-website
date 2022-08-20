@@ -59,7 +59,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS auctionweb.item ;
 
 CREATE TABLE IF NOT EXISTS auctionweb.item (
-  itemid BIGINT NOT NULL AUTO_INCREMENT,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   buy_price float,
   country VARCHAR(255),
   currently float,
@@ -69,7 +69,18 @@ CREATE TABLE IF NOT EXISTS auctionweb.item (
   name VARCHAR(255),
   number_of_bids INT,
   started VARCHAR(255),
-  PRIMARY KEY (itemid))
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table AuctionWeb.category
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS auctionweb.category ;
+
+CREATE TABLE IF NOT EXISTS auctionweb.category (
+  item_id BIGINT NOT NULL, INDEX(item_id), -- this is MUL Key
+  category VARCHAR(255)
+  )
 ENGINE = InnoDB;
 
 
