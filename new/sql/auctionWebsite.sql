@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS auctionweb.users (
   address  VARCHAR(255),
   geographical_location  VARCHAR(255),
   tax_identification_number BIGINT,
+  admin_accepted bit(1) NOT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -52,4 +53,23 @@ CREATE TABLE IF NOT EXISTS auctionweb.user_roles (
   role_id INT NOT NULL)
 ENGINE = InnoDB;
 
-  -- CREATE TABLE IF NOT EXISTS user (id INT NOT NULL AUTO_INCREMENT, email VARCHAR(255) NOT NULL, firstname VARCHAR(255) NOT NULL, lastname  VARCHAR(255) NOT NULL, username  VARCHAR(255) NOT NULL, password  VARCHAR(255) NOT NULL, phone INT NOT NULL, address  VARCHAR(255) NOT NULL, geographical_location  VARCHAR(255) NOT NULL, tax_identification_number  INT NOT NULL, user_code  INT NOT NULL, user_role  VARCHAR(255) NOT NULL, PRIMARY KEY (id)  )
+-- -----------------------------------------------------
+-- Table AuctionWeb.item
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS auctionweb.item ;
+
+CREATE TABLE IF NOT EXISTS auctionweb.item (
+  itemid BIGINT NOT NULL AUTO_INCREMENT,
+  buy_price float,
+  country VARCHAR(255),
+  currently float,
+  description VARCHAR(255),
+  ends VARCHAR(255),
+  first_bid float,
+  name VARCHAR(255),
+  number_of_bids INT,
+  started VARCHAR(255),
+  PRIMARY KEY (itemid))
+ENGINE = InnoDB;
+
+
