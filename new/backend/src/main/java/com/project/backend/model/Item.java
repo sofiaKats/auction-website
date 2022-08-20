@@ -6,15 +6,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data @Setter @Getter @Entity @NoArgsConstructor
 @Table(name = "item")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long ItemID;
+    Long id;
     String Name;
     // Category
+    @ElementCollection
+    @CollectionTable(name = "category")
+    private List<String> Category;
     Float Currently;
     Float Buy_Price;
     Float First_Bid;
