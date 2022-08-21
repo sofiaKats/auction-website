@@ -50,7 +50,45 @@ DROP TABLE IF EXISTS auctionweb.user_roles ;
 
 CREATE TABLE IF NOT EXISTS auctionweb.user_roles (
   user_id BIGINT NOT NULL,
-  role_id INT NOT NULL)
+  role_id INT NOT NULL,
+  PRIMARY KEY (user_id, role_id))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table AuctionWeb.seller
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS auctionweb.seller ;
+
+CREATE TABLE IF NOT EXISTS auctionweb.seller (
+  id BIGINT NOT NULL,
+  rating float,
+  user_id BIGINT, INDEX(user_id), -- this is MUL Key
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table AuctionWeb.bidder
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS auctionweb.bidder ;
+
+CREATE TABLE IF NOT EXISTS auctionweb.bidder (
+  id BIGINT NOT NULL,
+  country VARCHAR(255),
+  location VARCHAR(255),
+  rating float,
+  user_id BIGINT, INDEX(user_id), -- this is MUL Key
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table AuctionWeb.users_items
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS auctionweb.users_items ;
+
+CREATE TABLE IF NOT EXISTS auctionweb.users_items (
+  user_id BIGINT NOT NULL, INDEX(user_id), -- this is MUL Key
+  items_id BIGINT NOT NULL,
+  PRIMARY KEY (items_id))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -72,6 +110,7 @@ CREATE TABLE IF NOT EXISTS auctionweb.item (
   longitude double,
   latitude double,
   location VARCHAR(255),
+  user_id BIGINT, INDEX(user_id), -- this is MUL Key
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
@@ -82,8 +121,30 @@ DROP TABLE IF EXISTS auctionweb.category ;
 
 CREATE TABLE IF NOT EXISTS auctionweb.category (
   item_id BIGINT NOT NULL, INDEX(item_id), -- this is MUL Key
-  category VARCHAR(255)
-  )
+  category VARCHAR(255)) 
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table AuctionWeb.bid
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS auctionweb.bid ;
 
+CREATE TABLE IF NOT EXISTS auctionweb.bid (
+  id BIGINT NOT NULL,
+  amount double,
+  time datetime,
+  bidder_id BIGINT, INDEX(bidder_id), -- this is MUL Key
+  item_id BIGINT, INDEX(item_id), -- this is MUL Key 
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table AuctionWeb.item_bids
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS auctionweb.item_bids ;
+
+CREATE TABLE IF NOT EXISTS auctionweb.item_bids (
+  bids_id BIGINT NOT NULL,
+  item_id BIGINT NOT NULL, INDEX(item_id), -- this is MUL Key
+  PRIMARY KEY (bids_id)) 
+ENGINE = InnoDB;
