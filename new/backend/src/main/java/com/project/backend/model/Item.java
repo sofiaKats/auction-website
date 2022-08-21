@@ -26,6 +26,12 @@ public class Item {
     //Bids
     String Location;
     Double Longitude;
+    Double Latitude;
+    String Country;
+    Timestamp Started;
+    Timestamp Ends;
+    // Seller
+    String Description;
 
     public Item(String name, Double currently, Double buy_Price, Double first_Bid, Integer number_of_Bids, String location, String country, Timestamp started, Timestamp ends, String description) {
         Name = name;
@@ -39,12 +45,4 @@ public class Item {
         Ends = ends;
         Description = description;
     }
-
-    Double Latitude;
-    String Country;
-    Timestamp Started;
-    Timestamp Ends;
-    // Seller
-    String Description;
-
 }
