@@ -60,15 +60,18 @@ DROP TABLE IF EXISTS auctionweb.item ;
 
 CREATE TABLE IF NOT EXISTS auctionweb.item (
   id BIGINT NOT NULL AUTO_INCREMENT,
-  buy_price float,
+  buy_price double,
   country VARCHAR(255),
-  currently float,
+  currently double,
   description VARCHAR(255),
-  ends VARCHAR(255),
-  first_bid float,
+  ends datetime,
+  first_bid double,
   name VARCHAR(255),
   number_of_bids INT,
-  started VARCHAR(255),
+  started datetime,
+  longitude double,
+  latitude double,
+  location VARCHAR(255),
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 

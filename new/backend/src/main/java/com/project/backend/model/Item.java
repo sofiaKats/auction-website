@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data @Setter @Getter @Entity @NoArgsConstructor
@@ -15,31 +16,35 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String Name;
-    // Category
     @ElementCollection
     @CollectionTable(name = "category")
     private List<String> Category;
-    Float Currently;
-    Float Buy_Price;
-    Float First_Bid;
+    Double Currently;
+    Double Buy_Price;
+    Double First_Bid;
     Integer Number_of_Bids;
     //Bids
-    //Location
-    String Country;
-    String Started;
-    String Ends;
-    // Seller
-    String Description;
+    String Location;
+    Double Longitude;
 
-        public Item( String name, Float currently, Float buy_Price, Float first_Bid, Integer number_of_Bids, String country, String started, String ends, String description) {
+    public Item(String name, Double currently, Double buy_Price, Double first_Bid, Integer number_of_Bids, String location, String country, Timestamp started, Timestamp ends, String description) {
         Name = name;
         Currently = currently;
         Buy_Price = buy_Price;
         First_Bid = first_Bid;
         Number_of_Bids = number_of_Bids;
+        Location = location;
         Country = country;
         Started = started;
         Ends = ends;
         Description = description;
     }
+
+    Double Latitude;
+    String Country;
+    Timestamp Started;
+    Timestamp Ends;
+    // Seller
+    String Description;
+
 }
