@@ -1,9 +1,13 @@
 package com.project.backend.model;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data @Getter @Setter @Entity @NoArgsConstructor
@@ -26,6 +30,17 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 //    @Transient
     private boolean admin_accepted; // flag to check if the admin accepted the sign up request
+
+    // user is a seller, user is a bidder
+    @OneToOne(mappedBy = "user")
+    private Bidder bidder;
+    @OneToOne(mappedBy = "user")
+    private Seller seller;
+
+    //user has many items
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany
+    List<Item> items = new ArrayList<Item>();
 
     //custom constructor implementation (roles not initialized yet when user object created)
     public User(String username, String firstName, String lastName, String email, String password, Long phone, String address, String geographical_location, Long tax_Identification_Number) {

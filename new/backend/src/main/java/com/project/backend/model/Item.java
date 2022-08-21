@@ -4,10 +4,15 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data @Setter @Getter @Entity @NoArgsConstructor
 @Table(name = "item")
@@ -15,6 +20,8 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @ManyToOne //now item entity has user_id in sql
+    private User user;
     String Name;
     @ElementCollection
     @CollectionTable(name = "category")
@@ -23,14 +30,15 @@ public class Item {
     Double Buy_Price;
     Double First_Bid;
     Integer Number_of_Bids;
-    //Bids
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany
+    List<Bid> Bids = new ArrayList<Bid>();
     String Location;
     Double Longitude;
     Double Latitude;
     String Country;
     Timestamp Started;
     Timestamp Ends;
-    // Seller
     String Description;
 
     public Item(String name, Double currently, Double buy_Price, Double first_Bid, Integer number_of_Bids, String location, String country, Timestamp started, Timestamp ends, String description) {
