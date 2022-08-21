@@ -11,6 +11,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 // import BoardModerator from "./components/BoardModerator";
+import ManageAuctions from "./components/ManageAuctions";
 import BoardAdmin from "./components/BoardAdmin";
 import UserInfo from "./components/UserInfo";
 
@@ -69,7 +70,6 @@ const App = () => {
         {currentUser ? (
           <div className="navbar-nav ml-auto">
             <li className="nav-item">  <Link to={"/manageauctions"} className="nav-link"> Manage Auctions </Link> </li>
-            <li className="nav-item">  <Link to={"/explorepage"} className="nav-link"> Explore Page </Link> </li>
             <li className="nav-item">  <Link to={"/profile"} className="nav-link"> {currentUser.username} </Link> </li>
             <li className="nav-item"> <a href="/login" className="nav-link" onClick={logOut}>Log Out  </a> </li>
           </div>
@@ -92,7 +92,7 @@ const App = () => {
           <Route path="/register" element={<Register/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/frontpage" element={<BoardUser/>} />
-          {/* <Route path="/mod" element={<BoardModerator/>} /> */}
+          <Route path="/manageauctions" element={<ManageAuctions/>} />
           <Route path="/admin" element={<BoardAdmin/>} />
           <Route path="/userinfo/:id" element={<UserInfo/>} />
         </Routes>
