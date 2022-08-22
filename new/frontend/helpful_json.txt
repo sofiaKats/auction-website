@@ -1,0 +1,35 @@
+{
+    "id": "1",
+    "name": "Vintage 2003 House of 1000 Corpses Movie Promo Shirt Sz Large Rob Zombie Horror",
+    "currently": "134.45",
+    "buy_Price": "50.00",
+    "first_Bid": "1.00",
+    "number_of_Bids": "4",
+    "location": "Los Angeles CA",
+    "country": "USA",
+    "description": "GOD OF THUNDER AND ROCK N ROLL"
+}
+
+{
+    "id": "2",
+    "name": "Vintage Barbie Doll First Issue Titian Ponytail",
+    "currently": "200.45",
+    "buy_Price": "20.00",
+    "first_Bid": "0.99",
+    "number_of_Bids": "2",
+    "location": "Los Angeles CA",
+    "country": "USA",
+    "description": "VINTAGE BARBIE DOLL 1961 #5 FIRST TITIAN REDHEADS MADE."
+}
+
+{
+    "id": "3",
+    "name": "Alice Cooper Constictor Pic Picture Disc LP Teenage Frankenstein He’s Back 12”",
+    "currently": "99.45",
+    "buy_Price": "50.00",
+    "first_Bid": "0.99",
+    "number_of_Bids": "12",
+    "location": "Los Angeles CA",
+    "country": "USA",
+    "description": "im a Teenage Frankenstein"
+}

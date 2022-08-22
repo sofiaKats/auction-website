@@ -83,13 +83,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table AuctionWeb.users_items
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS auctionweb.users_items ;
+-- DROP TABLE IF EXISTS auctionweb.users_items ;
 
-CREATE TABLE IF NOT EXISTS auctionweb.users_items (
-  user_id BIGINT NOT NULL, INDEX(user_id), -- this is MUL Key
-  items_id BIGINT NOT NULL,
-  PRIMARY KEY (items_id))
-ENGINE = InnoDB;
+-- CREATE TABLE IF NOT EXISTS auctionweb.users_items (
+--   user_id BIGINT NOT NULL, INDEX(user_id), -- this is MUL Key
+--   items_id BIGINT NOT NULL,
+--   PRIMARY KEY (items_id))
+-- ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table AuctionWeb.item
@@ -98,6 +98,7 @@ DROP TABLE IF EXISTS auctionweb.item ;
 
 CREATE TABLE IF NOT EXISTS auctionweb.item (
   id BIGINT NOT NULL AUTO_INCREMENT,
+  user_id BIGINT,
   buy_price double,
   country VARCHAR(255),
   currently double,
@@ -110,7 +111,7 @@ CREATE TABLE IF NOT EXISTS auctionweb.item (
   longitude double,
   latitude double,
   location VARCHAR(255),
-  user_id BIGINT, INDEX(user_id), -- this is MUL Key
+  -- user_id BIGINT, INDEX(user_id), -- this is MUL Key
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
