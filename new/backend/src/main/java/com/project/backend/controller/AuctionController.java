@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -18,6 +19,21 @@ public class AuctionController {
     private ItemRepository itemRepository;
 
     public AuctionController(ItemRepository itemRepository) { this.itemRepository = itemRepository; }
+
+    // returns active auctions that a specific user has created
+    @GetMapping("/all/{user_id}")
+    public ResponseEntity<List<Item>> getAllItemsWithUserId(@PathVariable("user_id") Long user_id) {
+        List<Item> items = new ArrayList<Item>();
+        List<Item> all_items = itemRepository.findAll();
+        //making sure item with user_id=<given user_id> exists before appending
+        //it to the list, else just return an empty list
+        for (int i = 0; i < all_items.size(); i++) {
+            if(all_items.get(i).getUserId() == user_id) {
+                items.add(all_items.get(i));
+            }
+        }
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Item>> getAllItems() {
@@ -32,14 +48,13 @@ public class AuctionController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Item> addItem(@RequestBody Item item) {
+    @PostMapping("/add/{user_id}")
+    public ResponseEntity<Item> addItem(@RequestBody Item item, @PathVariable("user_id") Long user_id) {
         Item newItem = new Item(item.getName(),
                                 item.getCurrently(),item.getBuy_Price(),
                                 item.getFirst_Bid(), item.getNumber_of_Bids(),
                                 item.getLocation(), item.getCountry(),
-                                item.getStarted(), item.getEnds(),
-                                item.getDescription());
+                                item.getDescription(), user_id);
         itemRepository.save(newItem);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
