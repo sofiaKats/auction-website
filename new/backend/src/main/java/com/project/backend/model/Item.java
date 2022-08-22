@@ -18,8 +18,9 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @ManyToOne //now item entity has user_id in sql
-    private User user;
+//    @ManyToOne //now item entity has user_id in sql
+//    private User user;
+    Long userId;
     String Name;
     @ElementCollection
     @CollectionTable(name = "category")
@@ -39,7 +40,7 @@ public class Item {
     Timestamp Ends;
     String Description;
 
-    public Item(String name, Double currently, Double buy_Price, Double first_Bid, Integer number_of_Bids, String location, String country, Timestamp started, Timestamp ends, String description) {
+    public Item(String name, Double currently, Double buy_Price, Double first_Bid, Integer number_of_Bids, String location, String country, String description, Long user_id) {
         Name = name;
         Currently = currently;
         Buy_Price = buy_Price;
@@ -47,8 +48,7 @@ public class Item {
         Number_of_Bids = number_of_Bids;
         Location = location;
         Country = country;
-        Started = started;
-        Ends = ends;
         Description = description;
+        this.userId = user_id;
     }
 }

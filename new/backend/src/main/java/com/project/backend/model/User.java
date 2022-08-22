@@ -38,9 +38,9 @@ public class User {
     private Seller seller;
 
     //user has many items
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany
-    List<Item> items = new ArrayList<Item>();
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @OneToMany
+//    List<Item> items = new ArrayList<Item>();
 
     //custom constructor implementation (roles not initialized yet when user object created)
     public User(String username, String firstName, String lastName, String email, String password, Long phone, String address, String geographical_location, Long tax_Identification_Number) {
