@@ -69,7 +69,7 @@ const App = () => {
           currentUser && showAdminBoard ? (...) <--auto shmainei oti einai o admin */}
         {currentUser ? (
           <div className="navbar-nav ml-auto">
-            <li className="nav-item">  <Link to={"/manageauctions"} className="nav-link"> Manage Auctions </Link> </li>
+            <li className="nav-item">  <Link to={`/manageauctions/${currentUser.id}`} className="nav-link"> Manage Auctions </Link> </li>
             <li className="nav-item">  <Link to={"/profile"} className="nav-link"> {currentUser.username} </Link> </li>
             <li className="nav-item"> <a href="/login" className="nav-link" onClick={logOut}>Log Out  </a> </li>
           </div>
@@ -92,7 +92,7 @@ const App = () => {
           <Route path="/register" element={<Register/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/frontpage" element={<BoardUser/>} />
-          <Route path="/manageauctions" element={<ManageAuctions/>} />
+          <Route path="/manageauctions/:id" element={<ManageAuctions/>} />
           <Route path="/admin" element={<BoardAdmin/>} />
           <Route path="/userinfo/:id" element={<UserInfo/>} />
         </Routes>

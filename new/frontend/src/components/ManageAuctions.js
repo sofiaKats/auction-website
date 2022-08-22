@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AuctionService from "../services/auction.service";
 
 const ManageAuctions = () => {
 
   const [items, setItems] = useState([]);
   const [message, setMessage] = useState("");
+  const { id } = useParams();  //fetch id parameter from url
 
   useEffect(() => {
-    AuctionService.getAllItems().then(
+    AuctionService.getAllItems(id).then(
       (response) => {
         //calculate size of response data
         var count = Object.keys(response.data).length;
         // console.log("ITEMS:!!!", items);
         // if (console.count(response.data)) {
         if (count) {
-          console.log('MPHKAA!!');
-          setMessage(" ");
+          // console.log('MPHKAA!!');
+          setMessage("Your Auctions:");
           setItems(response.data);
         }
         else {
@@ -38,7 +39,7 @@ const ManageAuctions = () => {
           //       }
       }
     )
-  }, []);
+  }, [id]);
 
   return (
     <div className="manage-auctions">
@@ -46,63 +47,21 @@ const ManageAuctions = () => {
       <div className="message">
           <h3>{message}</h3>
       </div>
+
       <div className="row">
-        {
-          items.map(item => (
-            <div className="column">
-              <div className="card">
-                <h3>{item.Name}</h3>
-                <p>{item.Currently}</p>
-                <p>Some text</p>
-              </div>
+      {
+        items.map((item, index)=> (
+          <div className="column" key = {index}>
+            <div className="card">
+              <h3>{item.name}</h3>
+              <p>Current Highest Bid: {item.currently} $</p>
+              <p>by user: {item.user_id}</p>
+              <p>{item.longitude}</p>
             </div>
-          ))
-        }
+          </div>
+        ))
+      }
       </div>
-      {/* <div className="row">
-        <div className="column">
-          <div className="card">
-            <h3>Card 1</h3>
-            <p>Some text</p>
-            <p>Some text</p>
-          </div>
-        </div>
-        <div className="column">
-          <div className="card">
-            <h3>Card 2</h3>
-            <p>Some text</p>
-            <p>Some text</p>
-          </div>
-        </div>
-        <div className="column">
-          <div className="card">
-            <h3>Card 3</h3>
-            <p>Some text</p>
-            <p>Some text</p>
-          </div>
-        </div>
-        <div className="column">
-          <div className="card">
-            <h3>Card 4</h3>
-            <p>Some text</p>
-            <p>Some text</p>
-          </div>
-        </div>
-        <div className="column">
-          <div className="card">
-            <h3>Card 5</h3>
-            <p>Some text</p>
-            <p>Some text</p>
-          </div>
-        </div>
-        <div className="column">
-          <div className="card">
-            <h3>Card 6</h3>
-            <p>Some text</p>
-            <p>Some text</p>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
