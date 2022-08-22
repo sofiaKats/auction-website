@@ -1,6 +1,5 @@
-import React from "react";
-// , { useState, useEffect }
-// import TestService from "../services/user.service";
+import React, { useState, useEffect } from "react";
+import AuctionService from "../services/auction.service";
 
 const Home = () => {
   // const [content, setContent] = useState("");
@@ -20,6 +19,33 @@ const Home = () => {
   //     }
   //   );
   // }, []);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    AuctionService.getAllItems().then(
+      (response) => {
+        //calculate size of response data
+        var count = Object.keys(response.data).length;
+        if (count) {
+          setItems(response.data);
+        }
+      },
+      (error) => {
+        const _items =
+        (error.response &&
+        error.response.data &&
+        error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+        console.log('Something went wrong', _items);
+
+          // if (error.response && error.response.status === 401) {
+          //         EventBus.dispatch("logout");
+          //       }
+      }
+    )
+  }, []);
 
   return (
     <div className="container">
@@ -33,6 +59,22 @@ const Home = () => {
             </span>
         </div>
         {/* <Footer /> */}
+        <div className="manage-auctions">
+          <div className="row">
+          {
+            items.map((item, index)=> (
+              <div className="column" key = {index}>
+                <div className="card-custom">
+                  <h3>{item.name}</h3>
+                  <p>Current Highest Bid: {item.currently} $</p>
+                  <p>by user: {item.userId}</p>
+                  <p>{item.longitude}</p>
+                </div>
+              </div>
+            ))
+          }
+          </div>
+        </div>
     </div>
   );
 };

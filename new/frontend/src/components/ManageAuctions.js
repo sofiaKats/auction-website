@@ -9,7 +9,7 @@ const ManageAuctions = () => {
   const { id } = useParams();  //fetch id parameter from url
 
   useEffect(() => {
-    AuctionService.getAllItems(id).then(
+    AuctionService.getAllItemsWithUserId(id).then(
       (response) => {
         //calculate size of response data
         var count = Object.keys(response.data).length;
@@ -52,10 +52,10 @@ const ManageAuctions = () => {
       {
         items.map((item, index)=> (
           <div className="column" key = {index}>
-            <div className="card">
+            <div className="card-custom">
               <h3>{item.name}</h3>
               <p>Current Highest Bid: {item.currently} $</p>
-              <p>by user: {item.user_id}</p>
+              <p>by user: {item.userId}</p>
               <p>{item.longitude}</p>
             </div>
           </div>
