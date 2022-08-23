@@ -6,7 +6,7 @@ const ManageAuctions = () => {
 
   const [items, setItems] = useState([]);
   const [message, setMessage] = useState("");
-  const { id } = useParams();  //fetch id parameter from url
+  const { id } = useParams();  //fetch user_id parameter from url
 
   useEffect(() => {
     AuctionService.getAllItemsWithUserId(id).then(
@@ -43,7 +43,7 @@ const ManageAuctions = () => {
 
   return (
     <div className="manage-auctions">
-      <Link to = "/add-auction" className = "btn btn-custom btn-light mb-2" > Add New Auction </Link>
+      <Link to={`/add-auction/${id}`} className = "btn btn-custom btn-light mb-2" > Add New Auction </Link>
       <div className="message">
           <h3>{message}</h3>
       </div>

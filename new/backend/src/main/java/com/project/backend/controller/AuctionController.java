@@ -50,9 +50,7 @@ public class AuctionController {
 
     @PostMapping("/add/{user_id}")
     public ResponseEntity<Item> addItem(@RequestBody Item item, @PathVariable("user_id") Long user_id) {
-        Item newItem = new Item(item.getName(),
-                                item.getCurrently(),item.getBuy_Price(),
-                                item.getFirst_Bid(), item.getNumber_of_Bids(),
+        Item newItem = new Item(item.getName(), item.getBuy_Price(),
                                 item.getLocation(), item.getCountry(),
                                 item.getDescription(), user_id);
         itemRepository.save(newItem);

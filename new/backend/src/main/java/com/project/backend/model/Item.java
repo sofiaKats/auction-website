@@ -40,15 +40,16 @@ public class Item {
     Timestamp Ends;
     String Description;
 
-    public Item(String name, Double currently, Double buy_Price, Double first_Bid, Integer number_of_Bids, String location, String country, String description, Long user_id) {
+    public Item(String name, Double buy_Price, String location, String country, String description, Long user_id) {
         Name = name;
-        Currently = currently;
+        this.Currently = 0.01;
+        this.First_Bid = 0.01;
         Buy_Price = buy_Price;
-        First_Bid = first_Bid;
-        Number_of_Bids = number_of_Bids;
         Location = location;
         Country = country;
         Description = description;
         this.userId = user_id;
+        this.Number_of_Bids = 0;
+
     }
 }
