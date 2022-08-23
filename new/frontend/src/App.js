@@ -15,6 +15,7 @@ import ManageAuctions from "./components/ManageAuctions";
 import BoardAdmin from "./components/BoardAdmin";
 import UserInfo from "./components/UserInfo";
 import CreateAuction from "./components/CreateAuction";
+import ViewAuction from "./components/ViewAuction";
 
 import EventBus from "./common/EventBus";
 
@@ -97,6 +98,7 @@ const App = () => {
           <Route path="/admin" element={<BoardAdmin/>} />
           <Route path="/userinfo/:id" element={<UserInfo/>} />
           <Route path="/add-auction/:id" element={<CreateAuction/>} />
+          <Route path="/auction-details/:id" element={<ViewAuction/>} />
         </Routes>
       </div>
 

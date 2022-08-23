@@ -249,4 +249,16 @@ th {
   color: #686875;
 }
 
+.img {
+  width:20%;
+}
+
+.align-div{
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  left: 5px;
+  width: 100%;
+}
+
 /***************************************************************************************/
