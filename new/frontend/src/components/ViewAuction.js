@@ -34,10 +34,10 @@ const ViewAuction = () => {
             <p></p>
             <p></p>
             <p></p>
-            <h4>Auction Details:</h4>
-            <p><b>Auction Id:</b> {AuctionInfo.id}</p>
-            <p><b>Current Price/Highest Bid:</b> {AuctionInfo.currently}   <b>Number of Bids:</b> {AuctionInfo.number_of_Bids}</p>
-            <p><b>Buy Price:</b>{AuctionInfo.buy_Price}</p>
+            <h4>Auction Listing Details:</h4>
+            <p><b>Item Id:</b> {AuctionInfo.id}</p>
+            <p><b>Current Price/Highest Bid:</b> {AuctionInfo.currently}$   <b>Number of Bids:</b> {AuctionInfo.number_of_Bids}</p>
+            <p><b>Buy Price:</b>{AuctionInfo.buy_Price}$</p>
             <p><b>Location of Item:</b> {AuctionInfo.location}    <b>Country of Item:</b> {AuctionInfo.country}</p>
             <p><b>Latitude:</b> {AuctionInfo.latitude}   <b>Longitude:</b> {AuctionInfo.longitude}</p>
             <p><b>Auction Started At:</b> {AuctionInfo.started}    <b>Auction Ends At:</b> {AuctionInfo.ends}</p>
