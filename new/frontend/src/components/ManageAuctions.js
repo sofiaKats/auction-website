@@ -53,6 +53,7 @@ const ManageAuctions = () => {
         items.map((item, index)=> (
           <div className="column" key = {index}>
             <div className="card-custom">
+            {/* <img src="img_avatar.png" alt="Avatar" style="width:100%"> */}
               <h3>{item.name}</h3>
               <p>Current Highest Bid: {item.currently} $</p>
               <p>by user: {item.userId}</p>
