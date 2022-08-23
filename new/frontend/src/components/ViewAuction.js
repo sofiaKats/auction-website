@@ -23,6 +23,38 @@ const ViewAuction = () => {
         })
         }, [id]);
     
+    const handleDelete = (id) => {
+        console.log('Printing id @ delete', id);
+        AuctionService.deleteItemById(id)
+        .then(response => {
+            console.log('auction listing deleted successfully', response.data);
+        })
+        .catch(error => {
+            console.log('Something went wrong', error);
+        })
+    }
+
+    // oloklhro neo component
+    const handleUpdate = (Item) => {
+        console.log('Printing id @ update', Item.id);
+        // AuctionService.updateAuction(
+        //     // name,
+        //     // buyPrice,
+        //     // location,
+        //     // country,
+        //     // description,
+        //     // id,
+        //     // category, 
+        //     // latitude,
+        //     // longitude, 
+        // )
+        // .then(response => {
+        //     console.log('auction listing deleted successfully', response.data);
+        // })
+        // .catch(error => {
+        //     console.log('Something went wrong', error);
+        // })
+    }
 
     return(
         <div className="card">
@@ -36,17 +68,21 @@ const ViewAuction = () => {
             <p></p>
             <h4>Auction Listing Details:</h4>
             <p><b>Item Id:</b> {AuctionInfo.id}</p>
-            <p><b>Current Price/Highest Bid:</b> {AuctionInfo.currently}$   <b>Number of Bids:</b> {AuctionInfo.number_of_Bids}</p>
+            <p><b>Current Price/Highest Bid:</b> {AuctionInfo.currently}$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Number of Bids:</b> {AuctionInfo.number_of_Bids}</p>
             <p><b>Buy Price:</b>{AuctionInfo.buy_Price}$</p>
-            <p><b>Location of Item:</b> {AuctionInfo.location}    <b>Country of Item:</b> {AuctionInfo.country}</p>
-            <p><b>Latitude:</b> {AuctionInfo.latitude}   <b>Longitude:</b> {AuctionInfo.longitude}</p>
-            <p><b>Auction Started At:</b> {AuctionInfo.started}    <b>Auction Ends At:</b> {AuctionInfo.ends}</p>
+            <p><b>Location of Item:</b> {AuctionInfo.location}  &nbsp;&nbsp;&nbsp;&nbsp;  <b>Country of Item:</b> {AuctionInfo.country}</p>
+            <p><b>Latitude:</b> {AuctionInfo.latitude}   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <b>Longitude:</b> {AuctionInfo.longitude}</p>
+            <p><b>Auction Started At:</b> {AuctionInfo.started}   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <b>Auction Ends At:</b> {AuctionInfo.ends}</p>
             <p><b>Description:</b> {AuctionInfo.description}</p>
             <p><b>Item Categories:</b></p>
               <ul>
                 {AuctionInfo.category &&
                   AuctionInfo.category.map((category, index) => <li key={index}>{category}</li>)}
               </ul>
+              {/* to edit 8elei pros8hkh formas gia na ginontai edit ta info!!!!! */}
+              <button className="btn btn-primary btn-info" onClick={() => { handleUpdate(AuctionInfo); }}>Start Auction</button>
+              <button className="btn btn-dark btn-info" onClick={() => { handleUpdate(AuctionInfo); }}>Edit Listing</button>
+              <button className="btn btn-danger btn-info" onClick={() => { handleDelete(AuctionInfo.id); }}>Delete Listing</button>
         </div>
         </div>
     );
