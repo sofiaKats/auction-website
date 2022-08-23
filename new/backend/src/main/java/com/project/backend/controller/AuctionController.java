@@ -4,12 +4,13 @@ import com.project.backend.Repo.ItemRepository;
 import com.project.backend.exception.ResourceNotFoundException;
 import com.project.backend.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.Valid;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -21,6 +22,7 @@ public class AuctionController {
     public AuctionController(ItemRepository itemRepository) { this.itemRepository = itemRepository; }
 
     // returns active auctions that a specific user has created
+//    @Query("select u from item u where u.user_id = :user_id")
     @GetMapping("/all/{user_id}")
     public ResponseEntity<List<Item>> getAllItemsWithUserId(@PathVariable("user_id") Long user_id) {
         List<Item> items = new ArrayList<Item>();
@@ -49,10 +51,11 @@ public class AuctionController {
     }
 
     @PostMapping("/add/{user_id}")
-    public ResponseEntity<Item> addItem(@RequestBody Item item, @PathVariable("user_id") Long user_id) {
-        Item newItem = new Item(item.getName(), item.getBuy_Price(),
+    public ResponseEntity<Item> addItem(@Valid @RequestBody Item item, @PathVariable("user_id") Long user_id) {
+        item.setId(new Random().nextLong());
+        Item newItem = new Item(item.getId(), item.getName(), item.getBuy_Price(),
                                 item.getLocation(), item.getCountry(),
-                                item.getDescription(), user_id);
+                                item.getDescription(), user_id, item.getCategories(), item.getLatitude(), item.getLongitude());
         itemRepository.save(newItem);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }

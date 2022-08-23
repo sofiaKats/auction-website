@@ -108,8 +108,9 @@ CREATE TABLE IF NOT EXISTS auctionweb.item (
   name VARCHAR(255),
   number_of_bids INT,
   started datetime,
-  longitude double,
-  latitude double,
+  longitude VARCHAR(255),
+  latitude VARCHAR(255),
+  categories VARCHAR(255),
   location VARCHAR(255),
   -- user_id BIGINT, INDEX(user_id), -- this is MUL Key
   PRIMARY KEY (id))

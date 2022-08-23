@@ -33,3 +33,29 @@
     "country": "USA",
     "description": "im a Teenage Frankenstein"
 }
+
+{
+    "id": "4",
+    "name": "90's Denim Buckled Up Romper ",
+    "currently": "42.00",
+    "buy_Price": "55.00",
+    "first_Bid": "0.99",
+    "category":  ["clothes", "denim"],
+    "number_of_Bids": "2",
+    "location": "Los Angeles CA",
+    "country": "USA",
+    "description": "Denim romper with buckle straps, front pockets, and adjustable back buckle! Side zip. "
+}
+
+{
+    "id": "5",
+    "name": "Babydoll Lingerie Top ",
+    "currently": "42.00",
+    "buy_Price": "55.00",
+    "first_Bid": "0.99",
+    "category":  ["clothes", "Babydoll", "Lingerie"],
+    "number_of_Bids": "3",
+    "location": "Los Angeles CA",
+    "country": "USA",
+    "description": "Ivory rie top with empire waist, high slits, and lace trim!"
+}

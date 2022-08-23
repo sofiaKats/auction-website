@@ -10,9 +10,23 @@ const getAllItems = () => {
     return axios.get(API_URL + '/all');
 }
 
+const addAuction = (name, buy_Price, location, country, description, UserId, categories, latitude, longitude) => {
+    return axios.post(API_URL + '/add/' + UserId, {
+        name,
+        buy_Price,
+        location,
+        country,
+        description,
+        categories,
+        latitude,
+        longitude
+      });
+};
+
 const AuctionService = {
     getAllItemsWithUserId,
     getAllItems,
+    addAuction,
   };
   
   export default AuctionService;
