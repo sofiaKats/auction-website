@@ -43,6 +43,20 @@ public class AuctionController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
+    @GetMapping("/active/all")
+    public  ResponseEntity<List<Item>> getAllActiveItems() {
+        List<Item> active_items = new ArrayList<Item>();
+        List<Item> all_items = itemRepository.findAll();
+        // find all listings that have been started by the user
+        // and return them in a list
+        for (int i = 0; i < all_items.size(); i++) {
+            if(all_items.get(i).getIsActive() == true) {
+                active_items.add(all_items.get(i));
+            }
+        }
+        return new ResponseEntity<>(active_items, HttpStatus.OK);
+    }
+
     @GetMapping("/find/{id}")
     public ResponseEntity<Item> getAuctionById(@PathVariable("id") Long id) {
         Item item = itemRepository.findById(id)
