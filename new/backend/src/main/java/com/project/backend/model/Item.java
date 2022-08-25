@@ -41,6 +41,7 @@ public class Item {
     Timestamp Started;
     Timestamp Ends;
     String Description;
+    Boolean isActive; // check if user started listing
 
     public Item(Long Id, String name, Double buy_Price, String location, String country, String description, Long user_id,String categories, String latitude, String longitude) {
         this.id = Id;
@@ -58,5 +59,6 @@ public class Item {
         this.Category = categs;
         this.Latitude = latitude;
         this.Longitude = longitude;
+        this.isActive = false;
     }
 }
