@@ -18,6 +18,9 @@ const ViewAuction = () => {
         .then(response => {
         //   console.log('user found successfully', response.data);
           setAuctionInfo(response.data);
+
+          // a boolean in sql database is stored as bit(1) type with values either 0x00 or 0x01
+          // thus cannot be displayed as string, so we use another variable to display the value
           if(AuctionInfo.isActive) setIs_active("true");
           else setIs_active("false");
         })
@@ -26,11 +29,23 @@ const ViewAuction = () => {
         })
         }, [id, AuctionInfo]);
     
+
+    
     const handleDelete = (id) => {
         console.log('Printing id @ delete', id);
         AuctionService.deleteItemById(id)
         .then(response => {
             console.log('auction listing deleted successfully', response.data);
+        })
+        .catch(error => {
+            console.log('Something went wrong', error);
+        })
+    }
+
+    const handleStartAuction = (id) => { 
+        AuctionService.startAuction(id)
+        .then(response => {
+            console.log('auction listing started successfully', response.data);
         })
         .catch(error => {
             console.log('Something went wrong', error);
@@ -83,8 +98,8 @@ const ViewAuction = () => {
                 {AuctionInfo.category &&
                   AuctionInfo.category.map((category, index) => <li key={index}>{category}</li>)}
               </ul>
-              {/* to edit 8elei pros8hkh formas gia na ginontai edit ta info!!!!! */}
-              <button className="btn btn-primary btn-info" onClick={() => { handleUpdate(AuctionInfo); }}>Start Auction</button>
+              <button className="btn btn-primary btn-info" onClick={() => { handleStartAuction(id); }}>Start Auction</button>
+              {/* link 8elei edw */}
               <button className="btn btn-dark btn-info" onClick={() => { handleUpdate(AuctionInfo); }}>Edit Listing</button>
               <button className="btn btn-danger btn-info" onClick={() => { handleDelete(AuctionInfo.id); }}>Delete Listing</button>
         </div>

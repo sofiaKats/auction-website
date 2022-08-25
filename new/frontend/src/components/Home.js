@@ -21,7 +21,6 @@ const Home = () => {
   //   );
   // }, []);
   const [items, setItems] = useState([]);
-  const [is_active, setIs_active] = useState("");
 
   useEffect(() => {
     AuctionService.getAllActiveItems().then(
@@ -30,8 +29,6 @@ const Home = () => {
         var count = Object.keys(response.data).length;
         if (count) {
           setItems(response.data);
-          if(items.isActive) setIs_active("true");
-          else setIs_active("false");
         }
       },
       (error) => {
@@ -72,7 +69,6 @@ const Home = () => {
                   {/* <img src="img_avatar.png" alt="Avatar" style="width:100%"> */}
                   <h3>{item.name}</h3>
                   <p>Current Highest Bid: {item.currently} $</p>
-                  <p>Is Listing Active?: {is_active}</p>
                   <div className="form-group mt-3">
                     <Link to={`/auction-details/${item.id}`} className = "form-control btn btn-dark btn-block mt-1" > View Details </Link>
                   </div>

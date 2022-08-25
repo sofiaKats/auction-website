@@ -35,6 +35,10 @@ const addAuction = (name, buy_Price, location, country, description, UserId, cat
       });
 };
 
+const startAuction = (id) => {
+    return axios.put(API_URL + '/start/' + id);
+}
+
 const updateAuction = (name, buy_Price, location, country, description, UserId, categories, latitude, longitude) => {
     return axios.put(API_URL + '/update', {
         name,
@@ -56,6 +60,7 @@ const AuctionService = {
     deleteItemById,
     updateAuction,
     getAllActiveItems,
+    startAuction,
   };
   
   export default AuctionService;

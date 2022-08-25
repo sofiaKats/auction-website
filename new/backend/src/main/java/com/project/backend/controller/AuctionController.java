@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
 import java.util.*;
 
 @CrossOrigin(origins = "*")
@@ -55,6 +56,26 @@ public class AuctionController {
             }
         }
         return new ResponseEntity<>(active_items, HttpStatus.OK);
+    }
+
+    @PutMapping("/start/{id}")
+    public ResponseEntity<Item> startAuction(@PathVariable("id") Long id) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Auction not exist with id :" + id));
+        item.setIsActive(true); // auction listing is now up and running
+
+        // so we update started and ends value as well
+        Timestamp starts = new Timestamp(System.currentTimeMillis());
+        item.setStarted(starts);
+        // need to use calendar in order to add time to a timestamp value
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.HOUR, 168); // every auction listing last for 7 days
+        Timestamp ends = new Timestamp(calendar.getTimeInMillis());
+        item.setEnds(ends);
+
+        itemRepository.save(item);
+        return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
     @GetMapping("/find/{id}")
