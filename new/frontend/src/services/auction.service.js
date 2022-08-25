@@ -10,6 +10,10 @@ const getAllItems = () => {
     return axios.get(API_URL + '/all');
 }
 
+const getAllActiveItems = () => {
+    return axios.get(API_URL + '/active/all');
+}
+
 const findAuctionById = (id) => {
     return axios.get(API_URL + '/find/' + id);
 }
@@ -51,6 +55,7 @@ const AuctionService = {
     findAuctionById,
     deleteItemById,
     updateAuction,
+    getAllActiveItems,
   };
   
   export default AuctionService;

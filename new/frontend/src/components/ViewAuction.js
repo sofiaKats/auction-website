@@ -7,6 +7,7 @@ import AuctionService from "../services/auction.service";
 
 const ViewAuction = () => {
     const [AuctionInfo, setAuctionInfo] = useState("");
+    const [is_active, setIs_active] = useState("");
     // const [image, setImage] = useState("");
     const { id } = useParams();  //fetch auction id parameter from url
 
@@ -17,11 +18,13 @@ const ViewAuction = () => {
         .then(response => {
         //   console.log('user found successfully', response.data);
           setAuctionInfo(response.data);
+          if(AuctionInfo.isActive) setIs_active("true");
+          else setIs_active("false");
         })
         .catch(error => {
           console.log('Something went wrong', error);
         })
-        }, [id]);
+        }, [id, AuctionInfo]);
     
     const handleDelete = (id) => {
         console.log('Printing id @ delete', id);
@@ -73,6 +76,7 @@ const ViewAuction = () => {
             <p><b>Location of Item:</b> {AuctionInfo.location}  &nbsp;&nbsp;&nbsp;&nbsp;  <b>Country of Item:</b> {AuctionInfo.country}</p>
             <p><b>Latitude:</b> {AuctionInfo.latitude}   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <b>Longitude:</b> {AuctionInfo.longitude}</p>
             <p><b>Auction Started At:</b> {AuctionInfo.started}   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <b>Auction Ends At:</b> {AuctionInfo.ends}</p>
+            <p><b>Is Listing Active?:</b> { is_active}</p>
             <p><b>Description:</b> {AuctionInfo.description}</p>
             <p><b>Item Categories:</b></p>
               <ul>
