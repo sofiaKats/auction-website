@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import AuctionService from "../services/auction.service";
 // import Barbie from "../images/barbie.jpg";
 
@@ -52,28 +52,6 @@ const ViewAuction = () => {
         })
     }
 
-    // oloklhro neo component
-    const handleUpdate = (Item) => {
-        console.log('Printing id @ update', Item.id);
-        // AuctionService.updateAuction(
-        //     // name,
-        //     // buyPrice,
-        //     // location,
-        //     // country,
-        //     // description,
-        //     // id,
-        //     // category, 
-        //     // latitude,
-        //     // longitude, 
-        // )
-        // .then(response => {
-        //     console.log('auction listing deleted successfully', response.data);
-        // })
-        // .catch(error => {
-        //     console.log('Something went wrong', error);
-        // })
-    }
-
     return(
         <div className="card">
         {/* <div className="align-div">
@@ -99,9 +77,8 @@ const ViewAuction = () => {
                   AuctionInfo.category.map((category, index) => <li key={index}>{category}</li>)}
               </ul>
               <button className="btn btn-primary btn-info" onClick={() => { handleStartAuction(id); }}>Start Auction</button>
-              {/* link 8elei edw */}
-              <button className="btn btn-dark btn-info" onClick={() => { handleUpdate(AuctionInfo); }}>Edit Listing</button>
-              <button className="btn btn-danger btn-info" onClick={() => { handleDelete(AuctionInfo.id); }}>Delete Listing</button>
+              <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
+              <button className="btn btn-danger btn-info" onClick={() => { handleDelete(id); }}>Delete Listing</button>
         </div>
         </div>
     );
