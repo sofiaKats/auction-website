@@ -98,6 +98,7 @@ function EditAuction() {
             category, 
             latitude,
             longitude, 
+            id,
           ).then(
             (response) => {
               setMessage("Auction Listing Edited Successfully!");

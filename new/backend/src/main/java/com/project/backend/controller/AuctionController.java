@@ -95,9 +95,21 @@ public class AuctionController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Item> updateAuction(@RequestBody Item item) {
-        itemRepository.save(item);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Item> updateAuction(@RequestBody Item item, @PathVariable("id") Long id) {
+        Item oldItem = itemRepository.getById(id);
+        oldItem.setName(item.getName());
+        oldItem.setCategories(item.getCategories());
+//        List<String> categs = Arrays.asList(oldItem.getCategories().replaceAll("[\\[\\](){}]","").split("\\s*,\\s*"));
+//        oldItem.setCategory(categs);
+        oldItem.setBuy_Price(item.getBuy_Price());
+        oldItem.setLocation(item.getLocation());
+        oldItem.setCountry(item.getCountry());
+        oldItem.setDescription(item.getDescription());
+        oldItem.setLatitude(item.getLatitude());
+        oldItem.setLongitude(item.getLongitude());
+
+        itemRepository.save(oldItem);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
