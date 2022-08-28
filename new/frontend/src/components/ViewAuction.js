@@ -9,6 +9,7 @@ import UserService from "../services/user.service";
 
 
 const ViewAuction = () => {
+    const [currentUserId, setCurrentUserId] = useState(undefined);
     const [userInfo, setUserInfo] = useState("");
     const [AuctionInfo, setAuctionInfo] = useState("");
     const [is_active, setIs_active] = useState("");
@@ -24,6 +25,7 @@ const ViewAuction = () => {
         // get current user to check if certain button should be displayed
         const currentUser = AuthService.getCurrentUser();
         if (currentUser) { 
+            setCurrentUserId(currentUser.id);
             // if the id of the current user is the same as userId from auction
             // if the auction is from the same user who is viewing the auction details at the moment
             if(currentUser.id === AuctionInfo.userId) 
@@ -69,7 +71,7 @@ const ViewAuction = () => {
         // 
         if(AuctionInfo.isActive && AuctionInfo.hasBids) {
             setMessage("You cannot delete this listing anymore since it's active and someone has placed a bid!");
-            setSuccessful(true);
+            setSuccessful(false);
         }
         else {
             setSuccessful(false);
@@ -124,16 +126,15 @@ const ViewAuction = () => {
                 </ul>
 
                 {/* JSX expression */}
+                {/* if the person who visited auction details, is the creator of the auction */}
                 {sameIdFlag ? (
                     <div>
-                        <button className="btn btn-primary btn-info" onClick={() => { handleStartAuction(id); }}>Start Auction</button>
+                        <button className="btn btn-success " onClick={() => { handleStartAuction(id); }}>Start Auction</button>
                         <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
                         <button className="btn btn-danger btn-info" onClick={() => { handleDelete(AuctionInfo , id, AuctionInfo.userId); }}>Delete Listing</button>
-                        {/* koumpi gia bids!!! */}
                     </div>
                 ) : (
-                    // EDW 8ELEI MONO GIA BIDS!!!!
-                    <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
+                    <Link to={`/bid/${id}/${currentUserId}`} className="btn btn-primary btn-info">Bid</Link>
                 )}
 
                 {message && (
