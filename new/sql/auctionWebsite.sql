@@ -113,6 +113,7 @@ CREATE TABLE IF NOT EXISTS auctionweb.item (
   categories VARCHAR(255),
   location VARCHAR(255),
   is_active bit(1),
+  has_bids bit(1),
   -- user_id BIGINT, INDEX(user_id), -- this is MUL Key
   PRIMARY KEY (id))
 ENGINE = InnoDB;

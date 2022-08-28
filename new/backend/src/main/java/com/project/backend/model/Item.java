@@ -42,6 +42,7 @@ public class Item {
     Timestamp Ends;
     String Description;
     Boolean isActive; // check if user started listing
+    Boolean hasBids;  // check if listing has any bids
 
     public Item(Long Id, String name, Double buy_Price, String location, String country, String description, Long user_id,String categories, String latitude, String longitude) {
         this.id = Id;
@@ -60,5 +61,6 @@ public class Item {
         this.Latitude = latitude;
         this.Longitude = longitude;
         this.isActive = false;
+        this.hasBids = false;
     }
 }
