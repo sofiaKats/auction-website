@@ -26,6 +26,7 @@ function EditAuction() {
     const [message, setMessage] = useState("");
     const [AuctionInfo, setAuctionInfo] = useState("");
 
+
     // now that we have the id of the auction, find auction in backend 
     // and print all the info below in the placeholders
     useEffect(() => {
@@ -98,7 +99,7 @@ function EditAuction() {
             category, 
             latitude,
             longitude, 
-            id,
+            id
           ).then(
             (response) => {
               setMessage("Auction Listing Edited Successfully!");

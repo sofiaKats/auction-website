@@ -40,7 +40,7 @@ const startAuction = (id) => {
 }
 
 const updateAuction = (name, buy_Price, location, country, description, categories, latitude, longitude, id) => {
-    return axios.put(API_URL + '/update/'+ id, {
+    return axios.put(API_URL + '/update/'+ id , {
         name,
         buy_Price,
         location,
