@@ -147,7 +147,7 @@ const CreateAuction = () => {
               <div className="form-group mt-3">
                 <label>Category</label>
                 <label>Separate more than one categories with comma.</label>
-                <label className="create-auction-label">two or more word categories are separated with `-` and not space (e.g denim-jacket).</label>
+                <label className="create-auction-label">two or more words separated by space and not comma `,` will count as one category. (e.g denim jeans ).</label>
                 <Input type="text" className="form-control mt-1" placeholder="Category" value={category} onChange={onChangeCategory} required />
               </div>
               <div className="form-group mt-3">
