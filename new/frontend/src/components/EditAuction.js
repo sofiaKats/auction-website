@@ -84,6 +84,12 @@ function EditAuction() {
     
         setMessage("");
         setSuccessful(false);
+
+        if(AuctionInfo.isActive && AuctionInfo.hasBids) {
+          setMessage("You cannot delete this listing anymore since it's active and someone has placed a bid!");
+          setSuccessful(false);
+          return;
+        }
     
         form.current.validateAll();
         //if all the input is given by the user
