@@ -1,7 +1,9 @@
 package com.project.backend.controller;
 
+import com.project.backend.Repo.BidRepository;
 import com.project.backend.Repo.ItemRepository;
 import com.project.backend.exception.ResourceNotFoundException;
+import com.project.backend.model.Bid;
 import com.project.backend.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
@@ -19,11 +21,18 @@ import java.util.*;
 public class AuctionController {
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private BidRepository bidRepository;
 
-    public AuctionController(ItemRepository itemRepository) { this.itemRepository = itemRepository; }
+    public AuctionController(ItemRepository itemRepository, BidRepository bidRepository) {
+        this.itemRepository = itemRepository;
+        this.bidRepository = bidRepository;
+    }
 
+    // PRINT DATA FUNCTIONS (GET)
+
+    // !!! FOR AUCTIONS !!!
     // returns active auctions that a specific user has created
-//    @Query("select u from item u where u.user_id = :user_id")
     @GetMapping("/all/{user_id}")
     public ResponseEntity<List<Item>> getAllItemsWithUserId(@PathVariable("user_id") Long user_id) {
         List<Item> items = new ArrayList<Item>();
@@ -43,6 +52,14 @@ public class AuctionController {
         List<Item> items = itemRepository.findAll();
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
+
+    // !!! FOR BIDS !!!
+    @GetMapping("/bids/all/{item_id}")
+    public ResponseEntity<List<Bid>> getAllBids(@PathVariable("item_id") Long item_id) {
+        
+    }
+
+    // START AUCTION FUNCTIONS
 
     @GetMapping("/active/all")
     public  ResponseEntity<List<Item>> getAllActiveItems() {
@@ -78,12 +95,16 @@ public class AuctionController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
+    // SEARCH FUNCTIONS
+
     @GetMapping("/find/{id}")
     public ResponseEntity<Item> getAuctionById(@PathVariable("id") Long id) {
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Auction not exist with id :" + id));
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
+
+    // CREATE FUNCTIONS (POST)
 
     @PostMapping("/add/{user_id}")
     public ResponseEntity<Item> addItem(@Valid @RequestBody Item item, @PathVariable("user_id") Long user_id) {
@@ -94,6 +115,8 @@ public class AuctionController {
         itemRepository.save(newItem);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
+
+    // UPDATE FUNCTIONS (PUT)
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Item> updateAuction(@RequestBody Item item, @PathVariable("id") Long id) {
@@ -112,6 +135,8 @@ public class AuctionController {
         itemRepository.save(oldItem);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
+
+    // DELETE FUNCTIONS (DELETE)
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAuction(@PathVariable("id") Long id) {

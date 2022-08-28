@@ -31,9 +31,9 @@ public class Item {
     Double Buy_Price;
     Double First_Bid;
     Integer Number_of_Bids;
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany
-    List<Bid> Bids = new ArrayList<Bid>();
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @OneToMany
+//    List<Bid> Bids = new ArrayList<Bid>();
     String Location;
     String Longitude;
     String Latitude;

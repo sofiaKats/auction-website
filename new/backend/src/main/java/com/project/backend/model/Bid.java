@@ -10,10 +10,10 @@ public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    Long item_id; // what item the bid belongs to
+    Long user_id; // who placed the bid
     Timestamp Time;
     Double Amount;
-    @ManyToOne
-    private Item item;
     @OneToOne(cascade = CascadeType.ALL)
     private Bidder bidder;
 }

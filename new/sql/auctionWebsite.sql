@@ -137,18 +137,19 @@ CREATE TABLE IF NOT EXISTS auctionweb.bid (
   id BIGINT NOT NULL,
   amount double,
   time datetime,
+  item_id BIGINT,
+  user_id BIGINT,
   bidder_id BIGINT, INDEX(bidder_id), -- this is MUL Key
-  item_id BIGINT, INDEX(item_id), -- this is MUL Key 
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table AuctionWeb.item_bids
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS auctionweb.item_bids ;
+-- DROP TABLE IF EXISTS auctionweb.item_bids ;
 
-CREATE TABLE IF NOT EXISTS auctionweb.item_bids (
-  bids_id BIGINT NOT NULL,
-  item_id BIGINT NOT NULL, INDEX(item_id), -- this is MUL Key
-  PRIMARY KEY (bids_id)) 
-ENGINE = InnoDB;
+-- CREATE TABLE IF NOT EXISTS auctionweb.item_bids (
+--   bids_id BIGINT NOT NULL,
+--   item_id BIGINT NOT NULL, INDEX(item_id), -- this is MUL Key
+--   PRIMARY KEY (bids_id)) 
+-- ENGINE = InnoDB;
