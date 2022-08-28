@@ -2,20 +2,34 @@ import React, {useState, useEffect} from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import AuctionService from "../services/auction.service";
+import AuthService from "../services/auth.service";
+import UserService from "../services/user.service";
 // import Barbie from "../images/barbie.jpg";
 
 
 
 const ViewAuction = () => {
+    const [userInfo, setUserInfo] = useState("");
     const [AuctionInfo, setAuctionInfo] = useState("");
     const [is_active, setIs_active] = useState("");
+    const [sameIdFlag, setsameIdFlag] = useState(false);
     // const [image, setImage] = useState("");
     const { id } = useParams();  //fetch auction id parameter from url
     let navigate = useNavigate();
 
-    // now that we have the id of the auction, find auction in backend 
-    // and print all the info below
+    
     useEffect(() => {
+        // get current user to check if certain button should be displayed
+        const currentUser = AuthService.getCurrentUser();
+        if (currentUser) { 
+            // if the id of the current user is the same as userId from auction
+            // if the auction is from the same user who is viewing the auction details at the moment
+            if(currentUser.id === AuctionInfo.userId) 
+                setsameIdFlag(true);
+        }
+
+        // now that we have the id of the auction, find auction in backend 
+        // and print all the info below
         AuctionService.findAuctionById(id)
         .then(response => {
         //   console.log('user found successfully', response.data);
@@ -29,6 +43,19 @@ const ViewAuction = () => {
         .catch(error => {
           console.log('Something went wrong', error);
         })
+
+        // making sure AuctionInfo is defined
+        if(AuctionInfo) {
+            // find user who owns auction, used only to print username at auction details
+            UserService.getUserById(AuctionInfo.userId)
+            .then(response => {
+                //   console.log('user found successfully', response.data);
+                setUserInfo(response.data);
+            })
+            .catch(error => {
+                console.log('Something went wrong', error);
+            })
+        }
         }, [id, AuctionInfo]);
     
 
@@ -68,6 +95,7 @@ const ViewAuction = () => {
             <p></p>
             <p></p>
             <h4>Auction Listing Details:</h4>
+            <p><strong><b>Listing Created By:</b> {userInfo.username}</strong></p>
             <p><b>Item Id:</b> {AuctionInfo.id}</p>
             <p><b>Current Price/Highest Bid:</b> {AuctionInfo.currently}$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Number of Bids:</b> {AuctionInfo.number_of_Bids}</p>
             <p><b>Buy Price:</b>{AuctionInfo.buy_Price}$</p>
@@ -81,9 +109,19 @@ const ViewAuction = () => {
                 {AuctionInfo.category &&
                   AuctionInfo.category.map((category, index) => <li key={index}>{category}</li>)}
               </ul>
-              <button className="btn btn-primary btn-info" onClick={() => { handleStartAuction(id); }}>Start Auction</button>
-              <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
-              <button className="btn btn-danger btn-info" onClick={() => { handleDelete(id, AuctionInfo.userId); }}>Delete Listing</button>
+
+             {/* JSX expression */}
+              {sameIdFlag ? (
+                <div>
+                    <button className="btn btn-primary btn-info" onClick={() => { handleStartAuction(id); }}>Start Auction</button>
+                    <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
+                    <button className="btn btn-danger btn-info" onClick={() => { handleDelete(id, AuctionInfo.userId); }}>Delete Listing</button>
+                    {/* koumpi gia bids!!! */}
+                </div>
+              ) : (
+                // EDW 8ELEI MONO GIA BIDS!!!!
+                <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
+              )}
         </div>
         </div>
     );

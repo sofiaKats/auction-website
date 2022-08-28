@@ -70,6 +70,7 @@ const App = () => {
           {/* an 8eleis na exei ksexwrista page o ka8enas tote edw!! px
           na exei ena page o user pou na mhn exei o admin kai antistrofa, 
           currentUser && showAdminBoard ? (...) <--auto shmainei oti einai o admin */}
+          {/*  embed expressions in JSX  */}
         {currentUser ? (
           <div className="navbar-nav ml-auto">
             <li className="nav-item">  <Link to={`/manageauctions/${currentUser.id}`} className="nav-link"> Manage Auctions </Link> </li>
