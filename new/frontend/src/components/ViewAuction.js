@@ -37,10 +37,10 @@ const ViewAuction = () => {
         // DELETE THESE !
         console.log('Printing id @ delete', id);
         console.log('Printing id @ delete', user_id);
+        navigate(`/manageauctions/${user_id}`);
         AuctionService.deleteItemById(id)
         .then(response => {
             console.log('auction listing deleted successfully', response.data);
-            navigate(`/manageauctions/${user_id}`);
         })
         .catch(error => {
             console.log('Something went wrong', error);
