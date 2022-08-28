@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { useParams, Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import AuctionService from "../services/auction.service";
 // import Barbie from "../images/barbie.jpg";
 
@@ -10,6 +11,7 @@ const ViewAuction = () => {
     const [is_active, setIs_active] = useState("");
     // const [image, setImage] = useState("");
     const { id } = useParams();  //fetch auction id parameter from url
+    let navigate = useNavigate();
 
     // now that we have the id of the auction, find auction in backend 
     // and print all the info below
@@ -31,11 +33,14 @@ const ViewAuction = () => {
     
 
     
-    const handleDelete = (id) => {
+    const handleDelete = (id, user_id) => {
+        // DELETE THESE !
         console.log('Printing id @ delete', id);
+        console.log('Printing id @ delete', user_id);
         AuctionService.deleteItemById(id)
         .then(response => {
             console.log('auction listing deleted successfully', response.data);
+            navigate(`/manageauctions/${user_id}`);
         })
         .catch(error => {
             console.log('Something went wrong', error);
@@ -78,7 +83,7 @@ const ViewAuction = () => {
               </ul>
               <button className="btn btn-primary btn-info" onClick={() => { handleStartAuction(id); }}>Start Auction</button>
               <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
-              <button className="btn btn-danger btn-info" onClick={() => { handleDelete(id); }}>Delete Listing</button>
+              <button className="btn btn-danger btn-info" onClick={() => { handleDelete(id, AuctionInfo.userId); }}>Delete Listing</button>
         </div>
         </div>
     );
