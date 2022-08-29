@@ -6,6 +6,10 @@ const getAllItemsWithUserId = (UserId) => {
     return axios.get(API_URL + '/all/' + UserId);
 }
 
+const getAllBids = (item_id) => {
+    return axios.get(API_URL + '/bids/all/'+ item_id);
+}
+
 const getAllItems = () => {
     return axios.get(API_URL + '/all');
 }
@@ -20,6 +24,13 @@ const findAuctionById = (id) => {
 
 const deleteItemById = (id) => {
     return axios.delete(API_URL + '/delete/' + id);
+}
+
+// /bids/add/{item_id}/{user_id}
+const addBid = (amount, item_id, user_id) => {
+    return axios.post(API_URL + '/bids/add/' + item_id + '/' + user_id, {
+        amount
+    });
 }
 
 const addAuction = (name, buy_Price, location, country, description, UserId, categories, latitude, longitude) => {
@@ -61,6 +72,8 @@ const AuctionService = {
     updateAuction,
     getAllActiveItems,
     startAuction,
+    getAllBids,
+    addBid,
   };
   
   export default AuctionService;
