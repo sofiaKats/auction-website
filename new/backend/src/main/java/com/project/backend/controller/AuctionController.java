@@ -35,15 +35,16 @@ public class AuctionController {
     // returns active auctions that a specific user has created
     @GetMapping("/all/{user_id}")
     public ResponseEntity<List<Item>> getAllItemsWithUserId(@PathVariable("user_id") Long user_id) {
-        List<Item> items = new ArrayList<Item>();
-        List<Item> all_items = itemRepository.findAll();
-        //making sure item with user_id=<given user_id> exists before appending
-        //it to the list, else just return an empty list
-        for (int i = 0; i < all_items.size(); i++) {
-            if(all_items.get(i).getUserId() == user_id) {
-                items.add(all_items.get(i));
-            }
-        }
+//        List<Item> items = new ArrayList<Item>();
+//        List<Item> all_items = itemRepository.findAll();
+//        //making sure item with user_id=<given user_id> exists before appending
+//        //it to the list, else just return an empty list
+//        for (int i = 0; i < all_items.size(); i++) {
+//            if(all_items.get(i).getUserId() == user_id) {
+//                items.add(all_items.get(i));
+//            }
+//        }
+        List<Item> items = itemRepository.findByUserId(user_id);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
@@ -65,15 +66,16 @@ public class AuctionController {
 
     @GetMapping("/active/all")
     public  ResponseEntity<List<Item>> getAllActiveItems() {
-        List<Item> active_items = new ArrayList<Item>();
-        List<Item> all_items = itemRepository.findAll();
-        // find all listings that have been started by the user
-        // and return them in a list
-        for (int i = 0; i < all_items.size(); i++) {
-            if(all_items.get(i).getIsActive() == true) {
-                active_items.add(all_items.get(i));
-            }
-        }
+//        List<Item> active_items = new ArrayList<Item>();
+//        List<Item> all_items = itemRepository.findAll();
+//        // find all listings that have been started by the user
+//        // and return them in a list
+//        for (int i = 0; i < all_items.size(); i++) {
+//            if(all_items.get(i).getIsActive() == true) {
+//                active_items.add(all_items.get(i));
+//            }
+//        }
+        List<Item> active_items = itemRepository.findAllActiveItems();
         return new ResponseEntity<>(active_items, HttpStatus.OK);
     }
 

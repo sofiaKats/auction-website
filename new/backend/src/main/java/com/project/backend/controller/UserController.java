@@ -42,19 +42,20 @@ public class UserController {
     //return all users
     @GetMapping("/users/custom/all")
     public ResponseEntity<List<User>> getAllUsersCustom() {
-        List<User> users = userRepository.findAll();
-        List<User> customUsers = new ArrayList<User>();
-        //iterate through all users in database and list
-        // all users that the admin hasn't accepted yet
-        // on admin page
-        for (int i = 0; i < users.size(); i++) {
-            if (!users.get(i).isAdmin_accepted()) { //false: admin hasn't accepted sign up request yet
-//                System.out.println("User with username: " + users.get(i).getUsername() +
-//                        " has flag: " + users.get(i).isAdmin_accepted());
-                customUsers.add(users.get(i));
-            }
-        }
-        return new ResponseEntity<>(customUsers, HttpStatus.OK);
+//        List<User> users = userRepository.findAll();
+//        List<User> customUsers = new ArrayList<User>();
+//        //iterate through all users in database and list
+//        // all users that the admin hasn't accepted yet
+//        // on admin page
+//        for (int i = 0; i < users.size(); i++) {
+//            if (!users.get(i).isAdmin_accepted()) { //false: admin hasn't accepted sign up request yet
+////                System.out.println("User with username: " + users.get(i).getUsername() +
+////                        " has flag: " + users.get(i).isAdmin_accepted());
+//                customUsers.add(users.get(i));
+//            }
+//        }
+        List<User> inactiveUsers = userRepository.findAllInactiveUsers();
+        return new ResponseEntity<>(inactiveUsers, HttpStatus.OK);
     }
 
     // get user by id rest api
