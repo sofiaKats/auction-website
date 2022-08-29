@@ -120,6 +120,10 @@ public class AuctionController {
 
     @PostMapping("/bids/add/{item_id}/{user_id}")
     public ResponseEntity<Bid> addBid(@Valid @RequestBody Bid bid, @PathVariable("user_id") Long user_id, @PathVariable("item_id") Long item_id) {
+        // from now on item has bids!
+        Item item = itemRepository.getById(item_id);
+        item.setHasBids(true);
+
         bid.setId(new Random().nextLong());
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Bid newBid = new Bid(bid.getId(), item_id, user_id, time, bid.getAmount(), bid.getUsername());
