@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface BidRepository extends JpaRepository<Bid, Long> {
 
-    @Query("SELECT h FROM bid h WHERE h.item_id=?1")
-    List<Bid> getAllByUserId(Long item_id);
+    @Query("SELECT record FROM Bid record WHERE record.item_id=?1")
+    List<Bid> findByItemId(Long item_id);
 }

@@ -12,8 +12,8 @@ public class Bidder {
     Float Rating;
     String Country;
     String Location;
-    @OneToOne(mappedBy = "bidder")
-    Bid bid;
+//    @OneToOne(mappedBy = "bidder")
+//    Bid bid;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

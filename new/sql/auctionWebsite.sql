@@ -134,12 +134,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS auctionweb.bid ;
 
 CREATE TABLE IF NOT EXISTS auctionweb.bid (
-  id BIGINT NOT NULL,
+  id BIGINT NOT NULL AUTO_INCREMENT,
   amount double,
   time datetime,
   item_id BIGINT,
   user_id BIGINT,
-  bidder_id BIGINT, INDEX(bidder_id), -- this is MUL Key
+  -- bidder_id BIGINT, INDEX(bidder_id), -- this is MUL Key
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 

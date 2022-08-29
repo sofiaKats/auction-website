@@ -56,7 +56,9 @@ public class AuctionController {
     // !!! FOR BIDS !!!
     @GetMapping("/bids/all/{item_id}")
     public ResponseEntity<List<Bid>> getAllBids(@PathVariable("item_id") Long item_id) {
-        
+        List<Bid> bids = bidRepository.findByItemId(item_id);
+//        List<Bid> bids = new ArrayList<Bid>();
+        return new ResponseEntity<>(bids, HttpStatus.OK);
     }
 
     // START AUCTION FUNCTIONS
@@ -114,6 +116,15 @@ public class AuctionController {
                                 item.getDescription(), user_id, item.getCategories(), item.getLatitude(), item.getLongitude());
         itemRepository.save(newItem);
         return new ResponseEntity<>(item, HttpStatus.OK);
+    }
+
+    @PostMapping("/bids/add/{item_id}/{user_id}")
+    public ResponseEntity<Bid> addBid(@Valid @RequestBody Bid bid, @PathVariable("user_id") Long user_id, @PathVariable("item_id") Long item_id) {
+        bid.setId(new Random().nextLong());
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Bid newBid = new Bid(bid.getId(), item_id, user_id, time, bid.getAmount());
+        bidRepository.save(newBid);
+        return new ResponseEntity<>(bid, HttpStatus.OK);
     }
 
     // UPDATE FUNCTIONS (PUT)
