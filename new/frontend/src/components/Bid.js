@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import CheckButton from "react-validation/build/button";
 import { FormGroup } from "react-bootstrap";
 import AuctionService from "../services/auction.service";
-// import UserService from '../services/user.service';
+import AuthService from "../services/auth.service";
 
 function Bid() {
     const form = useRef();
@@ -14,6 +14,7 @@ function Bid() {
     const [bids, setBids] = useState([]);
     // const [userInfo, setUserInfo] = useState("");
     const [amount, setAmount] = useState("");
+    const [username, setUsername] = useState("");
     const [isChecked, setIsChecked] = useState(false);
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
@@ -25,8 +26,15 @@ function Bid() {
       };
 
     useEffect(() => {
+      // whenever a user bids, we want their username to be stored
+        const currentUser = AuthService.getCurrentUser();
+        if (currentUser) { 
+            setUsername(currentUser.username);
+        }
+
         // console.log('item_id params:', item_id);
         // console.log('user_id params', user_id);
+        // display all bids made for this product
         AuctionService.getAllBids(item_id)
         .then(response => {
             setBids(response.data);
@@ -49,7 +57,8 @@ function Bid() {
           AuctionService.addBid (
             amount,
             item_id,
-            user_id
+            user_id,
+            username
           ).then(
             (response) => {
               setMessage("Bid Placed Successfully!");
@@ -77,7 +86,7 @@ function Bid() {
             <div className="Auth-form-container">
             <div className="Auth-form">
             <Form onSubmit={handlePlaceBid} ref={form}>
-                <h3 className="Auth-form-title">Edit Auction</h3>
+                <h3 className="Auth-form-title">Bid</h3>
                 {!successful && (
                     <div>
                     <div className="form-group mt-3">
@@ -122,7 +131,7 @@ function Bid() {
                 <thead className="thead-light">
                     <tr>
                     <th>Bid Id:</th>
-                    <th>Bid Placed User With Id By:</th>
+                    <th>Bid Placed By:</th>
                     <th>Time:</th>
                     <th>Amount:</th>
                     </tr>
@@ -132,7 +141,7 @@ function Bid() {
                     bids.map(bid => (
                     <tr key={bid.id}>
                         <td>{bid.id}</td>
-                        <td>{bid.user_id}</td>
+                        <td>{bid.username}</td>
                         <td>{bid.time}</td>
                         <td>{bid.amount}</td>
                     </tr>

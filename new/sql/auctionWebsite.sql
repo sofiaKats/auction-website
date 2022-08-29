@@ -139,6 +139,7 @@ CREATE TABLE IF NOT EXISTS auctionweb.bid (
   time datetime,
   item_id BIGINT,
   user_id BIGINT,
+  username VARCHAR(255),
   -- bidder_id BIGINT, INDEX(bidder_id), -- this is MUL Key
   PRIMARY KEY (id))
 ENGINE = InnoDB;

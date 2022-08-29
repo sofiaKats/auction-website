@@ -122,7 +122,7 @@ public class AuctionController {
     public ResponseEntity<Bid> addBid(@Valid @RequestBody Bid bid, @PathVariable("user_id") Long user_id, @PathVariable("item_id") Long item_id) {
         bid.setId(new Random().nextLong());
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        Bid newBid = new Bid(bid.getId(), item_id, user_id, time, bid.getAmount());
+        Bid newBid = new Bid(bid.getId(), item_id, user_id, time, bid.getAmount(), bid.getUsername());
         bidRepository.save(newBid);
         return new ResponseEntity<>(bid, HttpStatus.OK);
     }

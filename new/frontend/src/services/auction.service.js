@@ -27,9 +27,10 @@ const deleteItemById = (id) => {
 }
 
 // /bids/add/{item_id}/{user_id}
-const addBid = (amount, item_id, user_id) => {
+const addBid = (amount, item_id, user_id, username) => {
     return axios.post(API_URL + '/bids/add/' + item_id + '/' + user_id, {
-        amount
+        amount,
+        username
     });
 }
 
