@@ -6,7 +6,9 @@ import com.project.backend.exception.ResourceNotFoundException;
 import com.project.backend.model.Bid;
 import com.project.backend.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,15 +37,6 @@ public class AuctionController {
     // returns active auctions that a specific user has created
     @GetMapping("/all/{user_id}")
     public ResponseEntity<List<Item>> getAllItemsWithUserId(@PathVariable("user_id") Long user_id) {
-//        List<Item> items = new ArrayList<Item>();
-//        List<Item> all_items = itemRepository.findAll();
-//        //making sure item with user_id=<given user_id> exists before appending
-//        //it to the list, else just return an empty list
-//        for (int i = 0; i < all_items.size(); i++) {
-//            if(all_items.get(i).getUserId() == user_id) {
-//                items.add(all_items.get(i));
-//            }
-//        }
         List<Item> items = itemRepository.findByUserId(user_id);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
@@ -58,7 +51,6 @@ public class AuctionController {
     @GetMapping("/bids/all/{item_id}")
     public ResponseEntity<List<Bid>> getAllBids(@PathVariable("item_id") Long item_id) {
         List<Bid> bids = bidRepository.findByItemId(item_id);
-//        List<Bid> bids = new ArrayList<Bid>();
         return new ResponseEntity<>(bids, HttpStatus.OK);
     }
 
@@ -77,6 +69,51 @@ public class AuctionController {
 //        }
         List<Item> active_items = itemRepository.findAllActiveItems();
         return new ResponseEntity<>(active_items, HttpStatus.OK);
+    }
+
+    @GetMapping("/active/page/all")
+    public ResponseEntity<Map<String, Object>> getAllActiveItemsPaged(
+            @RequestParam(required = false) String description,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size
+    ) {
+        try {
+            List<Item> items = new ArrayList<Item>();
+            Pageable paging = PageRequest.of(page, size);
+
+            Page<Item> pageItems;
+//            System.out.println("DESCRIPTION: " + description);
+            if (description == null)
+            {
+//                System.out.println("MPAINW 11111 !");
+                pageItems = itemRepository.findAll(paging);
+            }
+            else
+            {
+//                System.out.println("MPAINW 22222 !");
+                pageItems = itemRepository.findByDescription(description, paging);
+//                System.out.println("MPAINW 333333 !");
+            }
+
+            items = pageItems.getContent();
+            List<Item> active_items = new ArrayList<Item>();
+            // find all listings that have been started by the user
+            // and return them in a list
+            for (int i = 0; i < items.size(); i++) {
+                if(items.get(i).getIsActive() == true) {
+                    active_items.add(items.get(i));
+                }
+            }
+//            System.out.println("items: " + active_items);
+            Map<String, Object> response = new HashMap<>();
+            response.put("items", active_items);
+            response.put("currentPage", pageItems.getNumber());
+            response.put("totalItems", pageItems.getTotalElements());
+            response.put("totalPages", pageItems.getTotalPages());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/start/{id}")

@@ -15,8 +15,8 @@ public class Bid {
     Timestamp Time;
     Double Amount;
     String username; // represents the username of the user who placed the bid
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private Bidder bidder;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Bidder bidder;
 
     public Bid(Long id, Long item_id, Long user_id, Timestamp time, Double amount, String username) {
         this.id = id;

@@ -2,63 +2,105 @@ import React, { useState, useEffect } from "react";
 import AuctionService from "../services/auction.service";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
+// import Input from "react-validation/build/input";
 import { Pagination } from "@mui/material";
 
-
+// pagination component customization
 const useStyles = makeStyles(() => ({
   ul: {
     "& .MuiPaginationItem-root": {
-      color: "#fff"
+      color: "#fff",
+      backgroundColor: '#a9aeb3',
     }
   }
 }));
 
 const Home = () => {
-  // const [content, setContent] = useState("");
+  const [items, setItems] = useState([]);
+  // pagination component customization
+  const classes = useStyles();
+  const [searchDescription, setSearchDescription] = useState("");
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+  const [pageSize, setPageSize] = useState(3);
+
+  const pageSizes = [3, 6, 9];
+
+  const onChangeSearchDescription = (e) => {
+    const searchDescription = e.target.value;
+    setSearchDescription(searchDescription);
+  };
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+
+  const handlePageSizeChange = (event) => {
+    setPageSize(event.target.value);
+    setPage(1);
+  };
+
+  const getRequestParams = (searchDescription, page, pageSize) => {
+    let params = {};
+    if (searchDescription) {
+      params["description"] = searchDescription;
+    }
+    if (page) {
+      params["page"] = page - 1;
+    }
+    if (pageSize) {
+      params["size"] = pageSize;
+    }
+    return params;
+  };
+
+  const retrieveItems = () => {
+    const params = getRequestParams(searchDescription, page, pageSize);
+    // console.log("PARAMS!", params);
+
+    AuctionService.getAllActivePagedItems(params)
+      .then((response) => {
+        const { items, totalPages } = response.data;
+
+        setItems(items);
+        setCount(totalPages);
+
+        // console.log("DESCRIPTION:", searchDescription );
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   // useEffect(() => {
-  //   TestService.getPublicContent().then(
+  //   AuctionService.getAllActiveItems().then(
   //     (response) => {
-  //       setContent(response.data);
+  //       //calculate size of response data
+  //       var count = Object.keys(response.data).length;
+  //       if (count) {
+  //         setItems(response.data);
+  //       }
   //     },
   //     (error) => {
-  //       const _content =
-  //         (error.response && error.response.data) ||
-  //         error.message ||
-  //         error.toString();
+  //       const _items =
+  //       (error.response &&
+  //       error.response.data &&
+  //       error.response.data.message) ||
+  //       error.message ||
+  //       error.toString();
 
-  //       setContent(_content);
+  //       console.log('Something went wrong', _items);
+
+  //         // if (error.response && error.response.status === 401) {
+  //         //         EventBus.dispatch("logout");
+  //         //       }
   //     }
-  //   );
-  // }, []);
-  const [items, setItems] = useState([]);
-  const classes = useStyles();
+  //   )
+    
+  // }, [items]);
 
-  useEffect(() => {
-    AuctionService.getAllActiveItems().then(
-      (response) => {
-        //calculate size of response data
-        var count = Object.keys(response.data).length;
-        if (count) {
-          setItems(response.data);
-        }
-      },
-      (error) => {
-        const _items =
-        (error.response &&
-        error.response.data &&
-        error.response.data.message) ||
-        error.message ||
-        error.toString();
-
-        console.log('Something went wrong', _items);
-
-          // if (error.response && error.response.status === 401) {
-          //         EventBus.dispatch("logout");
-          //       }
-      }
-    )
-  }, [items]);
+  useEffect(retrieveItems, [searchDescription ,page, pageSize]);
 
   return (
     <div className="container">
@@ -72,14 +114,14 @@ const Home = () => {
               type="text"
               className="form-control"
               placeholder="Search by Category, Description, Price or Location"
-              // value={searchTitle}
-              // onChange={this.onChangeSearchTitle}
+              value={searchDescription}
+              onChange={onChangeSearchDescription}
             />
             <div className="input-group-append">
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                // onClick={this.retrieveTutorials}
+                onClick={retrieveItems}
               >
                 Search
               </button>
@@ -93,26 +135,26 @@ const Home = () => {
                 <h2>Simple. Free. A fast, and scalable platform to sell or buy products. We use the latest technology so that you can easily and conveniently bid in auctions across the world from the comfort of your own home.</h2>
             </span>
         </div>
-        <div className="mt-3">
+        <div className="pages mt-3">
           {"Items per Page: "}
-          {/* <select onChange={handlePageSizeChange} value={pageSize}>
+          <select onChange={handlePageSizeChange} value={pageSize}>
             {pageSizes.map((size) => (
               <option key={size} value={size}>
                 {size}
               </option>
             ))}
-          </select> */}
+          </select>
 
           <Pagination
             className="pagination my-3"
-            // count={count}
-            // page={page}
+            count={count}
+            page={page}
             classes={{ ul: classes.ul }}
             siblingCount={1}
             boundaryCount={1}
             variant="outlined"
             shape="rounded"
-            // onChange={handlePageChange}
+            onChange={handlePageChange}
           />
         </div>
         {/* <Footer /> */}
