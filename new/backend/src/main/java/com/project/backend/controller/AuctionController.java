@@ -72,28 +72,17 @@ public class AuctionController {
     }
 
     @GetMapping("/active/page/all")
-    public ResponseEntity<Map<String, Object>> getAllActiveItemsPaged(
-            @RequestParam(required = false) String description,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size
-    ) {
+    public ResponseEntity<Map<String, Object>> getAllActiveItemsPaged( @RequestParam(required = false) String description, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size )
+    {
         try {
             List<Item> items = new ArrayList<Item>();
             Pageable paging = PageRequest.of(page, size);
 
             Page<Item> pageItems;
-//            System.out.println("DESCRIPTION: " + description);
             if (description == null)
-            {
-//                System.out.println("MPAINW 11111 !");
                 pageItems = itemRepository.findAll(paging);
-            }
             else
-            {
-//                System.out.println("MPAINW 22222 !");
                 pageItems = itemRepository.findByDescription(description, paging);
-//                System.out.println("MPAINW 333333 !");
-            }
 
             items = pageItems.getContent();
             List<Item> active_items = new ArrayList<Item>();
@@ -104,7 +93,7 @@ public class AuctionController {
                     active_items.add(items.get(i));
                 }
             }
-//            System.out.println("items: " + active_items);
+
             Map<String, Object> response = new HashMap<>();
             response.put("items", active_items);
             response.put("currentPage", pageItems.getNumber());
