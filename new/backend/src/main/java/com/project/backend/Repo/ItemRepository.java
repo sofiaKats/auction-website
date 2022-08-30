@@ -32,7 +32,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     public Page<Item> findByLocation(String location, Pageable pageable);
     public Page<Item> findByCategories(String categories, Pageable pageable);
 
-    @Query(value = "SELECT * FROM Item record WHERE record.Description LIKE %:keyword%", nativeQuery = true)
+    @Query(value = "SELECT * FROM Item WHERE Description LIKE %:keyword% or Location LIKE %:keyword%", nativeQuery = true)
     public Page<Item> findByDescription(@Param("keyword") String description, Pageable pageable);
 
     @Query("SELECT record FROM Item record WHERE record.Buy_Price=?1")
