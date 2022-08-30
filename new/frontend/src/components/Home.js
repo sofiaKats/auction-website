@@ -19,16 +19,17 @@ const Home = () => {
   const [items, setItems] = useState([]);
   // pagination component customization
   const classes = useStyles();
-  const [searchDescription, setSearchDescription] = useState("");
+  // user can search anything included on a category, description or location
+  const [searchAnything, setSearchAnything] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [pageSize, setPageSize] = useState(3);
 
   const pageSizes = [3, 6, 9];
 
-  const onChangeSearchDescription = (e) => {
-    const searchDescription = e.target.value;
-    setSearchDescription(searchDescription);
+  const onChangeSearchAnything = (e) => {
+    const searchAnything = e.target.value;
+    setSearchAnything(searchAnything);
   };
 
   const handlePageChange = (event, value) => {
@@ -40,10 +41,10 @@ const Home = () => {
     setPage(1);
   };
 
-  const getRequestParams = (searchDescription, page, pageSize) => {
+  const getRequestParams = (searchAnything, page, pageSize) => {
     let params = {};
-    if (searchDescription) {
-      params["description"] = searchDescription;
+    if (searchAnything) {
+      params["description"] = searchAnything;
     }
     if (page) {
       params["page"] = page - 1;
@@ -55,7 +56,7 @@ const Home = () => {
   };
 
   const retrieveItems = () => {
-    const params = getRequestParams(searchDescription, page, pageSize);
+    const params = getRequestParams(searchAnything, page, pageSize);
     // console.log("PARAMS!", params);
 
     AuctionService.getAllActivePagedItems(params)
@@ -100,7 +101,7 @@ const Home = () => {
     
   // }, [items]);
 
-  useEffect(retrieveItems, [searchDescription ,page, pageSize]);
+  useEffect(retrieveItems, [searchAnything ,page, pageSize]);
 
   return (
     <div className="container">
@@ -114,8 +115,8 @@ const Home = () => {
               type="text"
               className="form-control"
               placeholder="Search by Category, Description, Price or Location"
-              value={searchDescription}
-              onChange={onChangeSearchDescription}
+              value={searchAnything}
+              onChange={onChangeSearchAnything}
             />
             <div className="input-group-append">
               <button
