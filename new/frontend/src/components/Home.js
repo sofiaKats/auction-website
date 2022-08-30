@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import AuctionService from "../services/auction.service";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-// import Input from "react-validation/build/input";
 import { Pagination } from "@mui/material";
 
 // pagination component customization
@@ -105,27 +104,14 @@ const Home = () => {
 
   return (
     <div className="container">
-      {/* <header className="jumbotron">
-        <h3>{content}</h3>
-      </header> */}
       <div className="list row">
         <div className="col-md-16">
           <div className="input-group mb-8">
-            <input
-              type="text"
-              className="form-control"
+            <input type="text" className="form-control"
               placeholder="Search by Category, Description, Price or Location"
-              value={searchAnything}
-              onChange={onChangeSearchAnything}
-            />
+              value={searchAnything} onChange={onChangeSearchAnything} />
             <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={retrieveItems}
-              >
-                Search
-              </button>
+              <button className="btn btn-outline-secondary" type="button" onClick={retrieveItems} >Search</button>
               </div>
             </div>
           </div>
@@ -146,17 +132,8 @@ const Home = () => {
             ))}
           </select>
 
-          <Pagination
-            className="pagination my-3"
-            count={count}
-            page={page}
-            classes={{ ul: classes.ul }}
-            siblingCount={1}
-            boundaryCount={1}
-            variant="outlined"
-            shape="rounded"
-            onChange={handlePageChange}
-          />
+          <Pagination className="pagination my-3" count={count} page={page} classes={{ ul: classes.ul }}
+            siblingCount={1} boundaryCount={1} variant="outlined" shape="rounded" onChange={handlePageChange} />
         </div>
         {/* <Footer /> */}
         <div className="manage-auctions">
