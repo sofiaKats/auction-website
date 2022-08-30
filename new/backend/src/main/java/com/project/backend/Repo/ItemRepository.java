@@ -32,7 +32,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     public Page<Item> findByLocation(String location, Pageable pageable);
     public Page<Item> findByCategories(String categories, Pageable pageable);
 
-    @Query(value = "SELECT * FROM Item WHERE Description LIKE %:keyword% or Location LIKE %:keyword%", nativeQuery = true)
+    // leaving name as is bc JPA won't "understand" and query will not work
+    @Query(value = "SELECT * FROM Item WHERE Description LIKE %:keyword% or Location LIKE %:keyword% or categories LIKE %:keyword%", nativeQuery = true)
     public Page<Item> findByDescription(@Param("keyword") String description, Pageable pageable);
 
     @Query("SELECT record FROM Item record WHERE record.Buy_Price=?1")
