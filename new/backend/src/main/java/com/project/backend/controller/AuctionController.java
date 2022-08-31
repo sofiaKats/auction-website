@@ -71,6 +71,22 @@ public class AuctionController {
         return new ResponseEntity<>(active_items, HttpStatus.OK);
     }
 
+    @GetMapping("/search/categories")
+    public ResponseEntity<List<String>> getAllCategories() {
+        List<String> categories = new ArrayList<String>();
+        List<Item> active_items = itemRepository.findAllActiveItems();
+        // for all the active item listings
+        for (int i = 0; i < active_items.size(); i++) {
+            // and for each category that belongs to this item (from categories list)
+            for (int j = 0; j < active_items.get(i).getCategory().size(); j++) {
+                //add every single category on the list
+                categories.add(active_items.get(i).getCategory().get(j));
+            }
+        }
+//        System.out.println("Categories!! " +  categories );
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
     @GetMapping("/active/page/all")
     public ResponseEntity<Map<String, Object>> getAllActiveItemsPaged( @RequestParam(required = false) String description, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size )
     {

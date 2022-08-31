@@ -20,6 +20,7 @@ const Home = () => {
   const classes = useStyles();
   // user can search anything included on a category, description or location
   const [searchAnything, setSearchAnything] = useState("");
+  const [searchCategories, setSearchCategories] = useState("");
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [pageSize, setPageSize] = useState(3);
@@ -73,6 +74,38 @@ const Home = () => {
       });
   };
 
+  // const getAllCategories = useCallback( () => {
+  //     AuctionService.getAllCategories()
+  //     .then((response) => {
+  //       setSearchCategories(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  //   }, [],);
+
+  const SearchByCategory = (category) => {
+    // setSearchAnything(category);
+    
+    const params = getRequestParams(category, page, pageSize);
+    // console.log("PARAMS!", params);
+
+    AuctionService.getAllActivePagedItems(params)
+      .then((response) => {
+        const { items, totalPages } = response.data;
+
+        setItems(items);
+        setCount(totalPages);
+
+        // console.log("DESCRIPTION:", searchDescription );
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   // useEffect(() => {
   //   AuctionService.getAllActiveItems().then(
   //     (response) => {
@@ -100,19 +133,58 @@ const Home = () => {
     
   // }, [items]);
 
-  useEffect(retrieveItems, [searchAnything ,page, pageSize]);
+  // useEffect(retrieveItems, [searchAnything ,page, pageSize]);
+
+  useEffect(() => {
+    // search for items to be displayed on page
+    const params = getRequestParams(searchAnything, page, pageSize);
+    // console.log("PARAMS!", params);
+
+    AuctionService.getAllActivePagedItems(params)
+      .then((response) => {
+        const { items, totalPages } = response.data;
+
+        setItems(items);
+        setCount(totalPages);
+
+        // console.log("DESCRIPTION:", searchDescription );
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+    // get all available categories from active listings
+    AuctionService.getAllCategories()
+    .then((response) => {
+      setSearchCategories(response.data);
+      console.log(response.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }, [searchAnything ,page, pageSize]);
+
 
   return (
     <div className="container">
       <div className="list row">
         <div className="col-md-16">
           <div className="input-group mb-8">
+              <div className="sec-center"> 	
+                <input className="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+                <label className="for-dropdown" htmlFor="dropdown">Search Categories <i className="uil uil-arrow-down"></i></label>
+                <div className="section-dropdown"> 
+                  {searchCategories &&
+                      searchCategories.map((category, index) => 
+                      <button key={index} className="uil uil-arrow-right" type="button" onClick={() => { SearchByCategory(category); }} >{category}</button>
+                      )}
+                </div>
+            </div>
             <input type="text" className="form-control"
               placeholder="Search by Category, Description, Price or Location"
               value={searchAnything} onChange={onChangeSearchAnything} />
-            <div className="input-group-append">
-              <button className="btn btn-outline-secondary" type="button" onClick={retrieveItems} >Search</button>
-              </div>
+            <button className="btn btn-outline-secondary" type="button" onClick={retrieveItems} >Search</button>
             </div>
           </div>
         </div>

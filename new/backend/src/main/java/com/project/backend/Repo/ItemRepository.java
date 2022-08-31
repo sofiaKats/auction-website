@@ -38,4 +38,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query("SELECT record FROM Item record WHERE record.Buy_Price=?1")
     public Page<Item> findByBuyPrice(Double Buy_Price, Pageable pageable);
+
 }

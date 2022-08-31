@@ -18,6 +18,10 @@ const getAllActiveItems = () => {
     return axios.get(API_URL + '/active/all');
 }
 
+const getAllCategories = () => {
+    return axios.get(API_URL + '/search/categories');
+}
+
 const getAllActivePagedItems = (params) => {
     return axios.get(API_URL + '/active/page/all', {
         params
@@ -82,6 +86,7 @@ const AuctionService = {
     getAllBids,
     addBid,
     getAllActivePagedItems,
+    getAllCategories,
   };
   
   export default AuctionService;
