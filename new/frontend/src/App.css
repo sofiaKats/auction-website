@@ -417,10 +417,10 @@ a {
     -ms-flex-pack: distribute;
 }
 
-a:hover {
+/* a:hover {
   color: #102770;
   background-color: #ffeba7;
-}
+} */
 
 a .uil {
   font-size: 22px;
