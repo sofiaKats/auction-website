@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import AuctionService from "../services/auction.service";
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+// import worldGeoJSON from 'geojson-world-map';
 // import Barbie from "../images/barbie.jpg";
 
 
@@ -17,6 +19,7 @@ const ViewAuction = () => {
     const [sameIdFlag, setsameIdFlag] = useState(false);
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
+    const position = [ 34.052235, -118.243683];
     // const [image, setImage] = useState("");
     const { id } = useParams();  //fetch auction id parameter from url
     let navigate = useNavigate();
@@ -127,6 +130,38 @@ const ViewAuction = () => {
                     AuctionInfo.category.map((category, index) => <li key={index}>{category}</li>)}
                 </ul>
 
+                <p><b>Item's Location:</b></p>
+                <MapContainer
+                    center={position}
+                    zoom={6}
+                    maxZoom={10}
+                    attributionControl={true}
+                    zoomControl={true}
+                    doubleClickZoom={true}
+                    scrollWheelZoom={true}
+                    dragging={true}
+                    animate={true}
+                    easeLinearity={0.35}
+                >
+                    {/* <GeoJSON
+                    data={worldGeoJSON}
+                    style={() => ({
+                        color: '#4a83ec',
+                        weight: 0.5,
+                        fillColor: "#1a1d62",
+                        fillOpacity: 1,
+                    })}
+                    /> */}
+                     <TileLayer
+                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      />
+                    <Marker position={position}>
+                    <Popup>
+                        Popup for any custom information.
+                    </Popup>
+                    </Marker>
+                </MapContainer>
                 
                 {/* JSX expression */}
                 {/* if the user is not a visitor allow bids/start auction etc */}
