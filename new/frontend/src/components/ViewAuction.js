@@ -19,14 +19,13 @@ const ViewAuction = () => {
     const [sameIdFlag, setsameIdFlag] = useState(false);
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
-    const position = [ 34.052235, -118.243683];
+    // const position = [ 34.052235, -118.243683];
     // flag to check if owner of item has given longitude and latitude
     const [hasLongitudeAndLatitude, setHasLongitudeAndLatitude] = useState(false);
     // const [image, setImage] = useState("");
     const { id } = useParams();  //fetch auction id parameter from url
     let navigate = useNavigate();
 
-    
     useEffect(() => {
         // get current user to check if certain button should be displayed
         const currentUser = AuthService.getCurrentUser();
@@ -137,37 +136,37 @@ const ViewAuction = () => {
 
                 <p><b>Item's Location:</b></p>
                 {hasLongitudeAndLatitude && (
-                      <MapContainer
-                            center={position}
-                            zoom={6}
-                            maxZoom={10}
-                            attributionControl={true}
-                            zoomControl={true}
-                            doubleClickZoom={true}
-                            scrollWheelZoom={true}
-                            dragging={true}
-                            animate={true}
-                            easeLinearity={0.35}
-                        >
-                            {/* <GeoJSON
-                            data={worldGeoJSON}
-                            style={() => ({
-                                color: '#4a83ec',
-                                weight: 0.5,
-                                fillColor: "#1a1d62",
-                                fillOpacity: 1,
-                            })}
-                            /> */}
-                            <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                />
-                            <Marker position={position}>
-                            <Popup>
-                                Popup for any custom information.
-                            </Popup>
-                            </Marker>
-                        </MapContainer>
+                    <MapContainer
+                      center={[AuctionInfo.longitude, AuctionInfo.latitude]}
+                      zoom={6}
+                      maxZoom={10}
+                      attributionControl={true}
+                      zoomControl={true}
+                      doubleClickZoom={true}
+                      scrollWheelZoom={true}
+                      dragging={true}
+                      animate={true}
+                      easeLinearity={0.35}
+                    >
+                      {/* <GeoJSON
+                      data={worldGeoJSON}
+                        style={() => ({
+                            color: '#4a83ec',
+                            weight: 0.5,
+                            fillColor: "#1a1d62",
+                            fillOpacity: 1,
+                        })}
+                      /> */}
+                      <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={[AuctionInfo.longitude, AuctionInfo.latitude]}>
+                          <Popup>
+                              Popup for any custom information.
+                          </Popup>
+                        </Marker>
+                    </MapContainer>
                 )}
                 {/* JSX expression */}
                 {/* if the user is not a visitor allow bids/start auction etc */}
