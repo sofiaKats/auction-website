@@ -14,12 +14,16 @@ INSERT INTO item (id, user_id, buy_price, country, currently, description, first
 INSERT INTO category (item_id, category) VALUES (1, 'album');
 INSERT INTO category (item_id, category) VALUES (1, 'music');
 INSERT INTO category (item_id, category) VALUES (1, 'alice cooper');
-INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids) VALUES (2, 2, null, 'USA', 0.01, 'Ivory rie top with empire waist, high slits, and lace trim!', 0.01,'Babydoll Lingerie Top', 0, null, null, '30 W 20 E', '50 N 80 S', 'babydoll, dress, vintage, shop tunnel vision', 'Los Angeles CA', false, false);
+INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids) VALUES (2, 2, null, 'USA', 0.01, 'Ivory rie top with empire waist, high slits, and lace trim!', 0.01,'Babydoll Lingerie Top', 0, null, null, '34.052235', '-118.243683', 'babydoll, dress, vintage, shop tunnel vision', 'Los Angeles CA', false, false);
 INSERT INTO category (item_id, category) VALUES (2, 'babydoll');
 INSERT INTO category (item_id, category) VALUES (2, 'vintage');
 INSERT INTO category (item_id, category) VALUES (2, 'shop tunnel vision');
 INSERT INTO category (item_id, category) VALUES (2, 'dress');
-INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids) VALUES (3, 1, 134.67, 'USA', 0.01, 'VINTAGE BARBIE DOLL 1961 #5 FIRST TITIAN REDHEADS MADE.', 0.01,'Vintage Barbie Doll First Issue Titian Ponytail', 0, null, null, '98 W 48 E', '79 N 68 S', 'barbie, vintage, dolls', 'Los Angeles CA', false, false);
+INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids) VALUES (3, 1, 134.67, 'USA', 0.01, 'VINTAGE BARBIE DOLL 1961 #5 FIRST TITIAN REDHEADS MADE.', 0.01,'Vintage Barbie Doll First Issue Titian Ponytail', 0, null, null, '38.246639', '21.734573', 'barbie, vintage, dolls', 'Los Angeles CA', false, false);
 INSERT INTO category (item_id, category) VALUES (3, 'vintage');
 INSERT INTO category (item_id, category) VALUES (3, 'barbie');
 INSERT INTO category (item_id, category) VALUES (3, 'dolls');
+INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids) VALUES (4, 2, null, 'Germany', 0.01, 'Good Condition, has some years, of use, color has faded some places but not noticable.', 0.01,'Black Bike', 0, null, null, '52.520008', '13.404954', 'bicycle, bike, black', 'Berlin', false, false);
+INSERT INTO category (item_id, category) VALUES (4, 'bicycle');
+INSERT INTO category (item_id, category) VALUES (4, 'bike');
+INSERT INTO category (item_id, category) VALUES (4, 'black');
