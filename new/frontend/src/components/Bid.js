@@ -52,7 +52,7 @@ function Bid() {
         setSuccessful(false);
 
         form.current.validateAll();
-        //if all the input is given by the user
+        //if all the input is given by the user, and amount is not null
         if ((checkBtn.current.context._errors.length === 0) && amount) {
           AuctionService.addBid (
             amount,
