@@ -19,7 +19,6 @@ const ViewAuction = () => {
     const [sameIdFlag, setsameIdFlag] = useState(false);
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
-    // const position = [ 34.052235, -118.243683];
     // flag to check if owner of item has given longitude and latitude
     const [hasLongitudeAndLatitude, setHasLongitudeAndLatitude] = useState(false);
     // const [image, setImage] = useState("");
