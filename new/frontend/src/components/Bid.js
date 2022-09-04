@@ -53,7 +53,7 @@ function Bid() {
 
         form.current.validateAll();
         //if all the input is given by the user
-        if (checkBtn.current.context._errors.length === 0) {
+        if ((checkBtn.current.context._errors.length === 0) && amount) {
           AuctionService.addBid (
             amount,
             item_id,
@@ -88,18 +88,14 @@ function Bid() {
             <Form onSubmit={handlePlaceBid} ref={form}>
                 <h3 className="Auth-form-title">Bid</h3>
                 {!successful && (
-                    <div>
                     <div className="form-group mt-3">
-                        <FormGroup>
+                      <FormGroup>
                         <label>Amount</label>
-                        <Input type="number" name="pmInput" id="pmInput" className="form-control mt-1" placeholder="Amount"  value={amount} onChange={onChangeAmount} required disabled={isChecked} />
+                        <Input type="number" name="pmInput" id="pmInput" className="form-control mt-1" placeholder="Amount"  value={amount} onChange={onChangeAmount} disabled={!isChecked} required />
                         <label htmlFor="mpinput">Would you like to place a bid? Check box if yes. <b> Warning!</b> Action is irreversible!</label>
                         <Input type="checkbox" id="mpCheckbox" onChange={(e) => setIsChecked(e.target.checked)} />
-                    </FormGroup>
-                    </div>
-                    <div className="form-group mt-3">
                         <button type="submit" className="form-control btn btn-dark btn-block mt-1"> Submit Bid </button>
-                    </div>
+                      </FormGroup>
                     </div>
                     )}
 
