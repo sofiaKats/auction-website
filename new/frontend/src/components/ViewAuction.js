@@ -109,9 +109,9 @@ const ViewAuction = () => {
 
     return(
         <div className="card">
-            {/* <div className="align-div">
-                <img src={Barbie} className="img"></img>
-            </div> */}
+            <div className="align-div">
+                <img src="http://localhost:8080/images/files/2/cliff1.jpg" className="img" alt="visual representation of item to be sold."></img>
+            </div>
             <div className="container">
                 <h2><b>{AuctionInfo.name}</b></h2>
                 <p></p>
