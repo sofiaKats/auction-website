@@ -43,6 +43,7 @@ public class Item {
     String Description;
     Boolean isActive; // check if user started listing
     Boolean hasBids;  // check if listing has any bids
+    //Boolean hasImages;
 
     public Item(Long Id, String name, Double buy_Price, String location, String country, String description, Long user_id,String categories, String latitude, String longitude) {
         this.id = Id;

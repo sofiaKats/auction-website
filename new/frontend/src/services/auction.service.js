@@ -32,6 +32,10 @@ const findAuctionById = (id) => {
     return axios.get(API_URL + '/find/' + id);
 }
 
+const getAllImages = (id) => {
+    return axios.get('http://localhost:8080/images/AllFiles/' + id);
+}
+
 const deleteItemById = (id) => {
     return axios.delete(API_URL + '/delete/' + id);
 }
@@ -87,6 +91,7 @@ const AuctionService = {
     addBid,
     getAllActivePagedItems,
     getAllCategories,
+    getAllImages,
   };
   
   export default AuctionService;

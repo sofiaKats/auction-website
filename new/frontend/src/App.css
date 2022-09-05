@@ -488,3 +488,12 @@ a .uil {
 .section-dropdown-sub a .uil {
   font-size: 20px;
 }
+
+.row2 {
+  display: flex;
+}
+
+.column2 {
+  flex: 33.33%;
+  padding: 5px;
+}
