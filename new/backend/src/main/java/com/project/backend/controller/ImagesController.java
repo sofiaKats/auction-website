@@ -3,7 +3,7 @@ package com.project.backend.controller;
 
 import com.project.backend.exception.ResponseMessage;
 import com.project.backend.model.Image;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.project.backend.model.Item;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -26,17 +26,32 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/images")
 public class ImagesController {
-
     private final Path root = Paths.get("uploads");
+    private Path ItemDir;
 
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload/{item_id}")
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("item_id") Long item_id) {
+
         // if directory 'uploads' doesn't exist, create it
         if (!Files.exists(root)) {
             try {
                 Files.createDirectory(root);
             } catch (IOException e) {
-                throw new RuntimeException("Could not initialize folder for upload!");
+                throw new RuntimeException("Could not initialize root folder for upload!");
+            }
+        }
+        // for each item that has pictures, i create a new directory inside the "uploads" directory
+        // with item_id as name, e.g.  uploads/1     -> folder with images of item with id=1
+        //                             uploads/12    -> folder with images of item with id=12
+        //                               ...
+        String uploadDir = root.toString() + "/" + item_id;
+        ItemDir = Paths.get(uploadDir);
+        // if directory 'uploads/item_id' doesn't exist, create it
+        if (!Files.exists(ItemDir)) {
+            try {
+                Files.createDirectory(ItemDir);
+            } catch (IOException e) {
+                throw new RuntimeException("Could not initialize item_id folder for upload!");
             }
         }
 
@@ -44,7 +59,7 @@ public class ImagesController {
         try {
             // saving file to the existing directory
             try {
-                Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+                Files.copy(file.getInputStream(), this.ItemDir.resolve(file.getOriginalFilename()));
             } catch (Exception e) {
                 throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
             }
@@ -57,19 +72,22 @@ public class ImagesController {
         }
     }
 
-    @GetMapping("/files")
-    public ResponseEntity<List<Image>> getListFiles() {
+    @GetMapping("/AllFiles/{item_id}")
+    public ResponseEntity<List<Image>> getListFiles(@PathVariable("item_id") Long item_id) {
         Stream<Path> AllFiles;
+
         try {
-            AllFiles =  Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
+            String uploadDir = root.toString() + "/" + item_id;
+            ItemDir = Paths.get(uploadDir);
+            AllFiles =  Files.walk(this.ItemDir, 1).filter(path -> !path.equals(this.ItemDir)).map(this.ItemDir::relativize);
         } catch (IOException e) {
             throw new RuntimeException("Could not load the files!");
         }
 
-        List<Image> fileInfos = AllFiles.map(this.root::relativize).map(path -> {
+        List<Image> fileInfos = AllFiles.map(this.ItemDir::relativize).map(path -> {
             String filename = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
-                    .fromMethodName(ImagesController.class, "getFile", path.getFileName().toString()).build().toString();
+                    .fromMethodName(ImagesController.class, "getFile",  item_id, path.getFileName().toString()).build().toString();
 
             return new Image(filename, url);
         }).collect(Collectors.toList());
@@ -77,12 +95,14 @@ public class ImagesController {
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
     }
 
-    @GetMapping("/files/{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+    @GetMapping("/files/{item_id}/{filename:.+}")
+    public ResponseEntity<Resource> getFile(@PathVariable Long item_id, @PathVariable String filename) {
         // load image
         Resource image;
         try {
-            Path file = root.resolve(filename);
+            String uploadDir = root.toString() + "/" + item_id;
+            ItemDir = Paths.get(uploadDir);
+            Path file = ItemDir.resolve(filename);
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
