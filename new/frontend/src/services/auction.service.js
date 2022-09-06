@@ -1,4 +1,5 @@
 import axios from "axios";
+import http from "../http-common";
 
 const API_URL = "http://localhost:8080/api/auction";
 
@@ -61,6 +62,29 @@ const addAuction = (name, buy_Price, location, country, description, UserId, cat
       });
 };
 
+const uploadPicture = (id, file, onUploadProgress)  => {
+    // let formData = new FormData();
+
+    // console.log("MPHKA!!");
+
+    // formData.append("file", file);
+    // const config = {     
+    //     headers: { "Content-Type": "multipart/form-data", }
+    // }
+
+    // return axios.post("http://localhost:8080/images/upload/" + id , formData, config, onUploadProgress);
+    let formData = new FormData();
+
+    formData.append("file", file);
+
+    return http.post("/upload/" + id, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress,
+    });
+}
+
 const startAuction = (id) => {
     return axios.put(API_URL + '/start/' + id);
 }
@@ -92,6 +116,7 @@ const AuctionService = {
     getAllActivePagedItems,
     getAllCategories,
     getAllImages,
+    uploadPicture,
   };
   
   export default AuctionService;

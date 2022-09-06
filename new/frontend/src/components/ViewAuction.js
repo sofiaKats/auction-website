@@ -21,6 +21,10 @@ const ViewAuction = () => {
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
     const [images, setImages] = useState([]);
+    const [selectedFiles, setSelectedFiles] = useState(undefined);
+    const [currentFile, setCurrentFile] = useState(undefined);
+    const [progress, setProgress] = useState(0);
+    const [imageMessage, setImageMessage] = useState("");
     // flag to check if owner of item has given longitude and latitude
     const [hasLongitudeAndLatitude, setHasLongitudeAndLatitude] = useState(false);
     const { id } = useParams();  //fetch auction id parameter from url
@@ -84,6 +88,36 @@ const ViewAuction = () => {
         
     }, [id, AuctionInfo]);
 
+    ////////////////////////////////////////////////////////////////
+    ///////// Select file and upload pictures on listing //////////
+    const selectFile = (e) => {
+        // const selectedFiles = e.target.files;
+        setSelectedFiles(e.target.files);
+    };
+
+    const upload = (id) => {
+      let currentFile = selectedFiles[0];
+      setProgress(0);
+      setCurrentFile(currentFile);
+
+      AuctionService.uploadPicture(id, currentFile, (event) => {
+          setProgress(Math.round((100 * event.loaded) / event.total));
+      })
+      .then((response) => {
+        setImageMessage(response.data.message);
+        return AuctionService.getAllImages(id);
+      })
+      .then((files) => {
+        setImages(files.data);
+      })
+      .catch(() => {
+        setProgress(0);
+        setImageMessage("Could not upload the file!");
+        setCurrentFile(undefined);
+      })
+      setSelectedFiles(undefined);
+    }
+    ////////////////////////////////////////////////////////////////
 
     const handleDelete = (AuctionInfo, id, user_id) => {
         // console.log('AuctionInfo.isActive: ', AuctionInfo.isActive);
@@ -122,6 +156,38 @@ const ViewAuction = () => {
 
     return(
         <div className="card">
+            {/* JSX expression */}
+                {/* if the user is not a visitor allow bids/start auction etc */}
+                {registeredUser && (
+                    <div>
+                        {sameIdFlag && (
+                            // if the person who visited auction details, is the creator of the auction 
+                            // allow this user to upload images 
+                            <div>
+                                {currentFile && (
+                                <div className="progress">
+                                    <div
+                                    className="progress-bar progress-bar-info progress-bar-striped"
+                                    role="progressbar"
+                                    aria-valuenow={progress}
+                                    aria-valuemin="0"
+                                    aria-valuemax="100"
+                                    style={{ width: progress + "%" }}
+                                    >
+                                    {progress}%
+                                    </div>
+                                </div>
+                                )}
+
+                                <label className="btn btn-default">
+                                    <input type="file" onChange={selectFile} />
+                                </label>
+                                <button className="btn btn-success" disabled={!selectedFiles} onClick={() => { upload(id); }} > Upload </button>
+                                <div className="alert alert-light" role="alert"> {imageMessage} </div>
+                            </div>
+                        )}
+                    </div>
+                )}
             <ul className="list-group-flush">
                 {images &&
                 images.map((image, index) => (
