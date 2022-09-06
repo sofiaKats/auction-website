@@ -20,7 +20,7 @@ const ViewAuction = () => {
     const [sameIdFlag, setsameIdFlag] = useState(false);
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
-    // const [images, setImages] = useState([]);
+    const [images, setImages] = useState([]);
     // flag to check if owner of item has given longitude and latitude
     const [hasLongitudeAndLatitude, setHasLongitudeAndLatitude] = useState(false);
     const { id } = useParams();  //fetch auction id parameter from url
@@ -71,15 +71,16 @@ const ViewAuction = () => {
             })
         }
 
-
-        //making sure item listing has pictures if(AuctionInfo.hasImages) 
-        // AuctionService.getAllImages(id)
-        // .then(response => {
-        //     setImages(response.data);
-        // })
-        // .catch(error => {
-        //     console.log('Something went wrong while getting images', error);
-        // })
+        //making sure item listing has pictures
+        if(AuctionInfo.hasImages) {
+            AuctionService.getAllImages(id)
+            .then(response => {
+                setImages(response.data);
+            })
+            .catch(error => {
+                console.log('Something went wrong while getting images', error);
+            })
+        }
         
     }, [id, AuctionInfo]);
 
@@ -121,7 +122,7 @@ const ViewAuction = () => {
 
     return(
         <div className="card">
-            {/* <ul className="list-group-flush">
+            <ul className="list-group-flush">
                 {images &&
                 images.map((image, index) => (
                     <li className="list-group-item" key={index}>
@@ -130,7 +131,7 @@ const ViewAuction = () => {
                         </a>
                     </li>
                 ))}
-            </ul> */}
+            </ul>
             {/* <div className="slide-container">
                 <Slide>
                 {images.map((image, index)=> (
