@@ -1,12 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect} from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import AuctionService from "../services/auction.service";
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+// import { Slide } from "react-slideshow-image";
+import 'react-slideshow-image/dist/styles.css'
 // import worldGeoJSON from 'geojson-world-map';
-// import Barbie from "../images/barbie.jpg";
 
 
 
@@ -19,12 +20,12 @@ const ViewAuction = () => {
     const [sameIdFlag, setsameIdFlag] = useState(false);
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
-    const [images, setImages] = useState([]);
+    // const [images, setImages] = useState([]);
     // flag to check if owner of item has given longitude and latitude
     const [hasLongitudeAndLatitude, setHasLongitudeAndLatitude] = useState(false);
-    // const [image, setImage] = useState("");
     const { id } = useParams();  //fetch auction id parameter from url
     let navigate = useNavigate();
+
 
     useEffect(() => {
         // get current user to check if certain button should be displayed
@@ -72,17 +73,17 @@ const ViewAuction = () => {
 
 
         //making sure item listing has pictures if(AuctionInfo.hasImages) 
-        AuctionService.getAllImages(id)
-        .then(response => {
-            setImages(response.data);
-        })
-        .catch(error => {
-            console.log('Something went wrong while getting images', error);
-        })
+        // AuctionService.getAllImages(id)
+        // .then(response => {
+        //     setImages(response.data);
+        // })
+        // .catch(error => {
+        //     console.log('Something went wrong while getting images', error);
+        // })
+        
     }, [id, AuctionInfo]);
-    
 
-    
+
     const handleDelete = (AuctionInfo, id, user_id) => {
         // console.log('AuctionInfo.isActive: ', AuctionInfo.isActive);
         // console.log('AuctionInfo.hasBids: ', AuctionInfo.hasBids);
@@ -120,7 +121,7 @@ const ViewAuction = () => {
 
     return(
         <div className="card">
-            <ul className="list-group-flush">
+            {/* <ul className="list-group-flush">
                 {images &&
                 images.map((image, index) => (
                     <li className="list-group-item" key={index}>
@@ -129,7 +130,19 @@ const ViewAuction = () => {
                         </a>
                     </li>
                 ))}
-            </ul>
+            </ul> */}
+            {/* <div className="slide-container">
+                <Slide>
+                {images.map((image, index)=> (
+                    <div className="each-slide" key={index}>
+                    <div style={{'backgroundImage': `url(${image.url})`}}>
+                        <span>rgsrtt</span>
+                    </div>  
+                        <img src={image.url} className="img" alt="visual representation of item to be sold." /> 
+                    </div>
+                ))} 
+                </Slide>
+            </div> */}
             <div className="container">
                 <h2><b>{AuctionInfo.name}</b></h2>
                 <p></p>

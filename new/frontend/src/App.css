@@ -254,7 +254,7 @@ th {
 }
 
 .img {
-  width:20%;
+  width:50%;
 }
 
 .align-div{
@@ -489,11 +489,29 @@ a .uil {
   font-size: 20px;
 }
 
-.row2 {
+/* .each-slide-effect > div {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  height: 350px;
 }
 
-.column2 {
-  flex: 33.33%;
-  padding: 5px;
+.each-slide-effect span {
+  padding: 20px;
+  font-size: 20px;
+  background: #efefef;
+  text-align: center;
+} */
+
+
+/* .each-slide-effect > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+
+.img {
+  /* position: absolute; */
 }
