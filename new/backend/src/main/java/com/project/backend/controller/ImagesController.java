@@ -1,9 +1,11 @@
 package com.project.backend.controller;
 
 
+import com.project.backend.Repo.ItemRepository;
 import com.project.backend.exception.ResponseMessage;
 import com.project.backend.model.Image;
 import com.project.backend.model.Item;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +30,13 @@ import java.util.stream.Stream;
 public class ImagesController {
     private final Path root = Paths.get("uploads");
     private Path ItemDir;
+
+    @Autowired
+    ItemRepository itemRepository;
+
+    public ImagesController(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
     @PostMapping("/upload/{item_id}")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("item_id") Long item_id) {
@@ -59,6 +68,9 @@ public class ImagesController {
         try {
             // saving file to the existing directory
             try {
+                Item current_listing = itemRepository.getById(item_id);
+                current_listing.setHasImages(true); //from now on item has pictures
+
                 Files.copy(file.getInputStream(), this.ItemDir.resolve(file.getOriginalFilename()));
             } catch (Exception e) {
                 throw new RuntimeException("Could not store the file. Error: " + e.getMessage());

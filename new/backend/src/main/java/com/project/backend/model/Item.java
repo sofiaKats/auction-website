@@ -43,7 +43,7 @@ public class Item {
     String Description;
     Boolean isActive; // check if user started listing
     Boolean hasBids;  // check if listing has any bids
-    //Boolean hasImages;
+    Boolean hasImages; //check if listing has any images to display
 
     public Item(Long Id, String name, Double buy_Price, String location, String country, String description, Long user_id,String categories, String latitude, String longitude) {
         this.id = Id;
@@ -63,5 +63,6 @@ public class Item {
         this.Longitude = longitude;
         this.isActive = false;
         this.hasBids = false;
+        this.hasImages = false;
     }
 }
