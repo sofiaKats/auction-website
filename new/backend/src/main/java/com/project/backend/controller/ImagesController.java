@@ -39,6 +39,7 @@ public class ImagesController {
     }
 
     @PostMapping("/upload/{item_id}")
+//    @RequestMapping(value = "/upload/{item_id}", method = RequestMethod.POST, consumes = "multipart/form-data")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("item_id") Long item_id) {
 
         // if directory 'uploads' doesn't exist, create it
@@ -70,6 +71,7 @@ public class ImagesController {
             try {
                 Item current_listing = itemRepository.getById(item_id);
                 current_listing.setHasImages(true); //from now on item has pictures
+                itemRepository.save(current_listing);
 
                 Files.copy(file.getInputStream(), this.ItemDir.resolve(file.getOriginalFilename()));
             } catch (Exception e) {
