@@ -172,7 +172,8 @@ public class AuctionController {
         Timestamp time = new Timestamp(System.currentTimeMillis());
         Bid newBid = new Bid(bid.getId(), item_id, user_id, time, bid.getAmount(), bid.getUsername());
         bidRepository.save(newBid);
-        item.setCurrently(bid.getAmount());                   //updating current highest bid in auction
+        //updating current highest bid in auction
+        if(item.getCurrently() < bid.getAmount()) item.setCurrently(bid.getAmount());
         item.setNumber_of_Bids(item.getNumber_of_Bids() + 1); // one more bid is added to the auction lisitng
         itemRepository.save(item);
         return new ResponseEntity<>(bid, HttpStatus.OK);
@@ -197,6 +198,11 @@ public class AuctionController {
         itemRepository.save(oldItem);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
+
+//    @PutMapping("/die/{id}")
+//    public ResponseEntity<Item> timeForAuctionToDie(@RequestBody Item item, @PathVariable("id") Long id) {
+//
+//    }
 
     // DELETE FUNCTIONS (DELETE)
 
