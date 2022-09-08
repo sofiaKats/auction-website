@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useRef, useEffect} from "react";
 import { useParams, Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import AuctionService from "../services/auction.service";
@@ -8,10 +8,17 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 // import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 // import worldGeoJSON from 'geojson-world-map';
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import { FormGroup } from "react-bootstrap";
 
 
 
 const ViewAuction = () => {
+    const form = useRef();
+    const checkBtn = useRef();
+
     const [currentUserId, setCurrentUserId] = useState(undefined);
     const [registeredUser, setRegisteredUser] = useState(undefined);
     const [userInfo, setUserInfo] = useState("");
@@ -25,11 +32,22 @@ const ViewAuction = () => {
     const [currentFile, setCurrentFile] = useState(undefined);
     const [progress, setProgress] = useState(0);
     const [imageMessage, setImageMessage] = useState("");
+    const [bids, setBids] = useState([]);
+    // const [userInfo, setUserInfo] = useState("");
+    const [amount, setAmount] = useState("");
+    const [username, setUsername] = useState("");
+    const [isCheckedBid, setIsCheckedBid] = useState(false);
+    const [successfulBid, setSuccessfulBid] = useState(false);
+    const [messageBid, setMessageBid] = useState("");
     // flag to check if owner of item has given longitude and latitude
     const [hasLongitudeAndLatitude, setHasLongitudeAndLatitude] = useState(false);
     const { id } = useParams();  //fetch auction id parameter from url
     let navigate = useNavigate();
 
+    const onChangeAmount = (e) => {
+        const amount = e.target.value;
+        setAmount(amount);
+    };
 
     useEffect(() => {
         // get current user to check if certain button should be displayed
@@ -37,6 +55,7 @@ const ViewAuction = () => {
         if (currentUser) { 
             setCurrentUserId(currentUser.id);
             setRegisteredUser(currentUser);
+            setUsername(currentUser.username);
             // if the id of the current user is the same as userId from auction
             // if the auction is from the same user who is viewing the auction details at the moment
             if(currentUser.id === AuctionInfo.userId) 
@@ -85,6 +104,16 @@ const ViewAuction = () => {
                 console.log('Something went wrong while getting images', error);
             })
         }
+
+        ////////////////////////////////////////////////////////////////
+        ////////////////////////// BIDS ///////////////////////////////
+        AuctionService.getAllBids(id)
+        .then(response => {
+            setBids(response.data);
+        })
+        .catch(error => {
+            console.log('Something went wrong', error);
+        })
         
     }, [id, AuctionInfo]);
 
@@ -154,7 +183,44 @@ const ViewAuction = () => {
         })
     }
 
+    const handlePlaceBid  = currentUserId => event => {
+        event.preventDefault();
+    
+        setMessageBid("");
+        setSuccessfulBid(false);
+
+        form.current.validateAll();
+        //if all the input is given by the user, and amount is not null
+        if ((checkBtn.current.context._errors.length === 0) && amount) {
+          AuctionService.addBid (
+            amount,
+            id,
+            currentUserId,
+            username
+          ).then(
+            (response) => {
+              setMessageBid("Bid Placed Successfully!");
+              setSuccessfulBid(true);
+              window.location.reload();
+            },
+            (error) => {
+              const resMessage =
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString();
+    
+              setMessageBid(resMessage);
+              setSuccessfulBid(false);
+            }
+          );
+        }
+      }
+
     return(
+        <div>
+        {/* start of product card */}
         <div className="card">
             {/* JSX expression */}
                 {/* if the user is not a visitor allow bids/start auction etc */}
@@ -270,7 +336,7 @@ const ViewAuction = () => {
                 {/* if the user is not a visitor allow bids/start auction etc */}
                 {registeredUser && (
                     <div>
-                        {sameIdFlag ? (
+                        {/* {sameIdFlag ? (
                             // if the person who visited auction details, is the creator of the auction 
                             <div>
                                 <button className="btn btn-success " onClick={() => { handleStartAuction(id); }}>Start Auction</button>
@@ -279,6 +345,14 @@ const ViewAuction = () => {
                             </div>
                         ) : (
                             <Link to={`/bid/${id}/${currentUserId}`} className="btn btn-primary btn-info">Bid</Link>
+                        )} */}
+                         {sameIdFlag && (
+                            // if the person who visited auction details, is the creator of the auction 
+                            <div>
+                                <button className="btn btn-success " onClick={() => { handleStartAuction(id); }}>Start Auction</button>
+                                <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
+                                <button className="btn btn-danger btn-info" onClick={() => { handleDelete(AuctionInfo , id, AuctionInfo.userId); }}>Delete Listing</button>
+                            </div>
                         )}
                     </div>
                 )}
@@ -299,8 +373,82 @@ const ViewAuction = () => {
                 )}
             </div>
         </div>
-    );
+        {/* end of product card */}
+        {/* start of bid card */}
+        <div>
+        {!sameIdFlag && (
+            <div>
+            <div className="Auth-form-container">
+            <div className="Auth-form">
+            <Form onSubmit={handlePlaceBid(currentUserId)} ref={form}>
+                <h3 className="Auth-form-title">Bid</h3>
+                {!successfulBid && (
+                    <div className="form-group mt-3">
+                      <FormGroup>
+                        <label>Amount</label>
+                        <Input type="number" name="pmInput" id="pmInput" className="form-control mt-1" placeholder="Amount"  value={amount} onChange={onChangeAmount} disabled={!isCheckedBid} required />
+                        <label htmlFor="mpinput">Would you like to place a bid? Check box if yes. <b> Warning!</b> Action is irreversible!</label>
+                        <Input type="checkbox" id="mpCheckbox" onChange={(e) => setIsCheckedBid(e.target.checked)} />
+                        <button type="submit" className="form-control btn btn-dark btn-block mt-1"> Submit Bid </button>
+                      </FormGroup>
+                    </div>
+                    )}
 
+                    {/* check if the registration request is successful, and if not print corresponding message */}
+                    {messageBid && (
+                    <div className="form-group">
+                        <div
+                        className={
+                            successfulBid
+                            ? "alert alert-success"
+                            : "alert alert-danger"
+                        }
+                        role="alert"
+                        >
+                        {messageBid}
+                        </div>
+                    </div>
+                    )}
+                <CheckButton style={{ display: "none" }} ref={checkBtn} />
+            </Form>    
+            </div>
+            </div>
+            </div>
+        )}
+        {/* end of bid card */}
+        {/* start of bids list */}
+        <div className="AdminBoard-container">
+            <h3>All Bids</h3>
+            <hr/>
+            <div className="custom-table">
+                <table className="table table-bordered table-striped">
+                <thead className="thead-light">
+                    <tr>
+                    <th>Bid Id:</th>
+                    <th>Bid Placed By:</th>
+                    <th>Time:</th>
+                    <th>Amount:</th>
+                    </tr>
+                </thead>
+                <tbody className="tbody-custom">
+                {
+                    bids.map(bid => (
+                    <tr key={bid.id}>
+                        <td>{bid.id}</td>
+                        <td>{bid.username}</td>
+                        <td>{bid.time}</td>
+                        <td>{bid.amount}</td>
+                    </tr>
+                    ))
+                }
+                </tbody>
+                </table> 
+            </div>
+        </div>
+        {/* end of bids list */}
+        </div> {/* bid div */}
+        </div> // render div 
+    );
 };
 
 export default ViewAuction;

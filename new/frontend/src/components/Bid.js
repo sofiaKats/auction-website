@@ -15,9 +15,9 @@ function Bid() {
     // const [userInfo, setUserInfo] = useState("");
     const [amount, setAmount] = useState("");
     const [username, setUsername] = useState("");
-    const [isChecked, setIsChecked] = useState(false);
-    const [successful, setSuccessful] = useState(false);
-    const [message, setMessage] = useState("");
+    const [isCheckedBid, setIsCheckedBid] = useState(false);
+    const [successfulBid, setSuccessfulBid] = useState(false);
+    const [messageBid, setMessageBid] = useState("");
     const { item_id, user_id } = useParams();  //fetch user_id and item_id parameter from url
 
     const onChangeAmount = (e) => {
@@ -48,8 +48,8 @@ function Bid() {
       const handlePlaceBid  = (e) => {
         e.preventDefault();
     
-        setMessage("");
-        setSuccessful(false);
+        setMessageBid("");
+        setSuccessfulBid(false);
 
         form.current.validateAll();
         //if all the input is given by the user, and amount is not null
@@ -61,8 +61,8 @@ function Bid() {
             username
           ).then(
             (response) => {
-              setMessage("Bid Placed Successfully!");
-              setSuccessful(true);
+              setMessageBid("Bid Placed Successfully!");
+              setSuccessfulBid(true);
               window.location.reload();
             },
             (error) => {
@@ -73,8 +73,8 @@ function Bid() {
                 error.message ||
                 error.toString();
     
-              setMessage(resMessage);
-              setSuccessful(false);
+              setMessageBid(resMessage);
+              setSuccessfulBid(false);
             }
           );
         }
@@ -87,30 +87,30 @@ function Bid() {
             <div className="Auth-form">
             <Form onSubmit={handlePlaceBid} ref={form}>
                 <h3 className="Auth-form-title">Bid</h3>
-                {!successful && (
+                {!successfulBid && (
                     <div className="form-group mt-3">
                       <FormGroup>
                         <label>Amount</label>
-                        <Input type="number" name="pmInput" id="pmInput" className="form-control mt-1" placeholder="Amount"  value={amount} onChange={onChangeAmount} disabled={!isChecked} required />
+                        <Input type="number" name="pmInput" id="pmInput" className="form-control mt-1" placeholder="Amount"  value={amount} onChange={onChangeAmount} disabled={!isCheckedBid} required />
                         <label htmlFor="mpinput">Would you like to place a bid? Check box if yes. <b> Warning!</b> Action is irreversible!</label>
-                        <Input type="checkbox" id="mpCheckbox" onChange={(e) => setIsChecked(e.target.checked)} />
+                        <Input type="checkbox" id="mpCheckbox" onChange={(e) => setIsCheckedBid(e.target.checked)} />
                         <button type="submit" className="form-control btn btn-dark btn-block mt-1"> Submit Bid </button>
                       </FormGroup>
                     </div>
                     )}
 
                     {/* check if the registration request is successful, and if not print corresponding message */}
-                    {message && (
+                    {messageBid && (
                     <div className="form-group">
                         <div
                         className={
-                            successful
+                            successfulBid
                             ? "alert alert-success"
                             : "alert alert-danger"
                         }
                         role="alert"
                         >
-                        {message}
+                        {messageBid}
                         </div>
                     </div>
                     )}
