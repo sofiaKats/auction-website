@@ -6,7 +6,7 @@ import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 // import { Slide } from "react-slideshow-image";
-import 'react-slideshow-image/dist/styles.css'
+import "react-slideshow-image/dist/styles.css";
 // import worldGeoJSON from 'geojson-world-map';
 
 
@@ -200,11 +200,12 @@ const ViewAuction = () => {
             </ul>
             {/* <div className="slide-container">
                 <Slide>
-                {images.map((image, index)=> (
+                {images && 
+                images.map((image, index)=> (
                     <div className="each-slide" key={index}>
-                    <div style={{'backgroundImage': `url(${image.url})`}}>
+                    {/* <div style={{'backgroundImage': `url(${image.url})`}}>
                         <span>rgsrtt</span>
-                    </div>  
+                    </div> 
                         <img src={image.url} className="img" alt="visual representation of item to be sold." /> 
                     </div>
                 ))} 

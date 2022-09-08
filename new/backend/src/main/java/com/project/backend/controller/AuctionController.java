@@ -133,7 +133,7 @@ public class AuctionController {
         // need to use calendar in order to add time to a timestamp value
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.HOUR, 168); // every auction listing last for 7 days
+        calendar.add(Calendar.MINUTE, 5); // every auction listing last for 5 minutes
         Timestamp ends = new Timestamp(calendar.getTimeInMillis());
         item.setEnds(ends);
 
