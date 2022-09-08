@@ -114,6 +114,16 @@ const ViewAuction = () => {
         .catch(error => {
             console.log('Something went wrong', error);
         })
+
+        if(AuctionInfo.isActive) {
+            AuctionService.KillAuctionListing(id)
+            .then(response => {
+                console.log("called killAuction successfully");
+            })
+            .catch(error => {
+                console.log('Something went wrong', error);
+            })
+        }
         
     }, [id, AuctionInfo]);
 
@@ -282,6 +292,9 @@ const ViewAuction = () => {
                 <p></p>
                 <p></p>
                 <p></p>
+                {AuctionInfo.started && !AuctionInfo.isActive && (
+                    <p><h2>LISITNG HAS EXPIRED</h2></p>
+                )}
                 <h4>Auction Listing Details:</h4>
                 <p><strong><b>Listing Created By:</b> {userInfo.username}</strong></p>
                 <p><b>Item Id:</b> {AuctionInfo.id}</p>
@@ -376,7 +389,8 @@ const ViewAuction = () => {
         {/* end of product card */}
         {/* start of bid card */}
         <div>
-        {!sameIdFlag && (
+        {/* Creator of listing is not allowed to bid  */}
+        {!sameIdFlag && AuctionInfo.isActive && (
             <div>
             <div className="Auth-form-container">
             <div className="Auth-form">

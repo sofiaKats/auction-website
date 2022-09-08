@@ -101,6 +101,9 @@ const updateAuction = (name, buy_Price, location, country, description, categori
         longitude
       });
 };
+const KillAuctionListing = (id) => {
+    return axios.put(API_URL + '/die/'+ id);
+};
 
 const AuctionService = {
     getAllItemsWithUserId,
@@ -117,6 +120,7 @@ const AuctionService = {
     getAllCategories,
     getAllImages,
     uploadPicture,
+    KillAuctionListing,
   };
   
   export default AuctionService;

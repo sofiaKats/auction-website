@@ -199,10 +199,18 @@ public class AuctionController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-//    @PutMapping("/die/{id}")
-//    public ResponseEntity<Item> timeForAuctionToDie(@RequestBody Item item, @PathVariable("id") Long id) {
-//
-//    }
+    @PutMapping("/die/{id}")
+    public ResponseEntity<Item> timeForAuctionToDie(@PathVariable("id") Long id) {
+        Item item = itemRepository.getById(id);
+        Date ends_stamp = new Date(item.getEnds().getTime());
+        Date now = new Date();
+        if(now.after(ends_stamp)) {
+            item.setIsActive(false);
+            itemRepository.save(item);
+        }
+
+        return new ResponseEntity<>(item, HttpStatus.OK);
+    }
 
     // DELETE FUNCTIONS (DELETE)
 
