@@ -39,6 +39,7 @@ const ViewAuction = () => {
     const [isCheckedBid, setIsCheckedBid] = useState(false);
     const [successfulBid, setSuccessfulBid] = useState(false);
     const [messageBid, setMessageBid] = useState("");
+    const [auctionWinnerUser, setAuctionWinnnerUser] = useState(undefined);
     // flag to check if owner of item has given longitude and latitude
     const [hasLongitudeAndLatitude, setHasLongitudeAndLatitude] = useState(false);
     const { id } = useParams();  //fetch auction id parameter from url
@@ -122,6 +123,20 @@ const ViewAuction = () => {
             })
             .catch(error => {
                 console.log('Something went wrong', error);
+            })
+        }
+
+        // if auction is no longer active but once was active
+        if(!AuctionInfo.isActive && AuctionInfo.ends) {
+            AuctionService.getWinnerOfAuction(id)
+            .then(response => {
+                setAuctionWinnnerUser(response.data);
+                // if(auctionWinnerUser) {
+                //     console.log("winner of auction is", auctionWinnerUser.username);
+                // }
+            })
+            .catch(error => {
+                console.log('Something went wrong finding the winner of auction', error);
             })
         }
         
@@ -293,7 +308,12 @@ const ViewAuction = () => {
                 <p></p>
                 <p></p>
                 {AuctionInfo.started && !AuctionInfo.isActive && (
-                    <p><h2>LISITNG HAS EXPIRED</h2></p>
+                    <b><h2>LISITNG HAS EXPIRED</h2></b>
+                )}
+                {auctionWinnerUser ? (
+                    <b><h3>Winner of Auction is: {auctionWinnerUser.username}, won for: {AuctionInfo.currently}$</h3></b>
+                ):(
+                    <b><h3>No one won the auction</h3></b>
                 )}
                 <h4>Auction Listing Details:</h4>
                 <p><strong><b>Listing Created By:</b> {userInfo.username}</strong></p>

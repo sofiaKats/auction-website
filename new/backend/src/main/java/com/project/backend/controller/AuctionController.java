@@ -2,9 +2,11 @@ package com.project.backend.controller;
 
 import com.project.backend.Repo.BidRepository;
 import com.project.backend.Repo.ItemRepository;
+import com.project.backend.Repo.UserRepository;
 import com.project.backend.exception.ResourceNotFoundException;
 import com.project.backend.model.Bid;
 import com.project.backend.model.Item;
+import com.project.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,10 +27,13 @@ public class AuctionController {
     private ItemRepository itemRepository;
     @Autowired
     private BidRepository bidRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public AuctionController(ItemRepository itemRepository, BidRepository bidRepository) {
+    public AuctionController(ItemRepository itemRepository, BidRepository bidRepository, UserRepository userRepository) {
         this.itemRepository = itemRepository;
         this.bidRepository = bidRepository;
+        this.userRepository = userRepository;
     }
 
     // PRINT DATA FUNCTIONS (GET)
@@ -69,6 +74,27 @@ public class AuctionController {
 //        }
         List<Item> active_items = itemRepository.findAllActiveItems();
         return new ResponseEntity<>(active_items, HttpStatus.OK);
+    }
+
+    @GetMapping("/winner/{item_id}")
+    public ResponseEntity<?> getWinnerOfAuction(@PathVariable("item_id") Long item_id) {
+        // get all bids of particular item
+        List<Bid> allBids = bidRepository.findByItemId(item_id);
+        // making sure item has bids
+        if(allBids!=null) {
+            Bid maxBid = new Bid();
+            // find max bidding
+            Double max = -1.0;
+            for (int i=0; i<allBids.size(); i++) {
+                if(max < allBids.get(i).getAmount()) {
+                    max = allBids.get(i).getAmount();
+                    maxBid = allBids.get(i);
+                }
+            }
+            User winnerUser = userRepository.getByUsername(maxBid.getUsername());
+            return new ResponseEntity<>(winnerUser, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/search/categories")

@@ -11,6 +11,10 @@ const getAllBids = (item_id) => {
     return axios.get(API_URL + '/bids/all/'+ item_id);
 }
 
+const getWinnerOfAuction = (item_id) => {
+    return axios.get(API_URL  + '/winner/' + item_id);
+}
+
 const getAllItems = () => {
     return axios.get(API_URL + '/all');
 }
@@ -121,6 +125,7 @@ const AuctionService = {
     getAllImages,
     uploadPicture,
     KillAuctionListing,
+    getWinnerOfAuction,
   };
   
   export default AuctionService;

@@ -14,6 +14,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByUsername(String username);
     //    Boolean existsByEmail(String email);
 
+    @Query("SELECT record FROM User record WHERE record.username=?1")
+    User getByUsername(String username);
+
     //iterate through all users in database and list
     // all users that the admin hasn't accepted yet on admin page
     @Query("SELECT record FROM User record WHERE record.admin_accepted=false")
