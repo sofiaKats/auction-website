@@ -44,6 +44,7 @@ public class Item {
     Boolean isActive; // check if user started listing
     Boolean hasBids;  // check if listing has any bids
     Boolean hasImages; //check if listing has any images to display
+    Boolean boughtFlag; //check if someone has bought the lisitng
 
     public Item(Long Id, String name, Double buy_Price, String location, String country, String description, Long user_id,String categories, String latitude, String longitude) {
         this.id = Id;
@@ -64,5 +65,6 @@ public class Item {
         this.isActive = false;
         this.hasBids = false;
         this.hasImages = false;
+        this.boughtFlag = false;
     }
 }

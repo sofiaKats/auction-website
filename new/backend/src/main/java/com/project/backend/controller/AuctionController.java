@@ -225,6 +225,16 @@ public class AuctionController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
+    @PutMapping("/buy/{item_id}")
+    public ResponseEntity<Item> buyAuctionListing(@PathVariable("item_id") Long item_id) {
+        Item item = itemRepository.getById(item_id);
+        // user has pressed buy button, listing is done
+//        item.setIsActive(false);
+        item.setBoughtFlag(true);
+        itemRepository.save(item);
+        return new ResponseEntity<>(item, HttpStatus.OK);
+    }
+
     @PutMapping("/die/{id}")
     public ResponseEntity<Item> timeForAuctionToDie(@PathVariable("id") Long id) {
         Item item = itemRepository.getById(id);
