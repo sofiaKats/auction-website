@@ -93,6 +93,10 @@ const startAuction = (id) => {
     return axios.put(API_URL + '/start/' + id);
 }
 
+const buyAuctionListing = (id) => {
+    return axios.put(API_URL + '/buy/' + id);
+}
+
 const updateAuction = (name, buy_Price, location, country, description, categories, latitude, longitude, id) => {
     return axios.put(API_URL + '/update/'+ id , {
         name,
@@ -126,6 +130,7 @@ const AuctionService = {
     uploadPicture,
     KillAuctionListing,
     getWinnerOfAuction,
+    buyAuctionListing,
   };
   
   export default AuctionService;

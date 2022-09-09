@@ -126,8 +126,8 @@ const ViewAuction = () => {
             })
         }
 
-        // if auction is no longer active but once was active
-        if(!AuctionInfo.isActive && AuctionInfo.ends) {
+        // if auction is no longer active but once was active or someone bought it
+        if((!AuctionInfo.isActive && AuctionInfo.ends) || AuctionInfo.boughtFlag) {
             AuctionService.getWinnerOfAuction(id)
             .then(response => {
                 setAuctionWinnnerUser(response.data);
@@ -202,6 +202,30 @@ const ViewAuction = () => {
         AuctionService.startAuction(id)
         .then(response => {
             console.log('auction listing started successfully', response.data);
+        })
+        .catch(error => {
+            console.log('Something went wrong', error);
+        })
+    }
+
+    const handleBuyAuction = (item_id, user) => {
+        // user bought the item, add it as bid
+        AuctionService.addBid (
+            AuctionInfo.buy_Price,
+            item_id,
+            user.id,
+            user.username
+        ).then( (response) => {
+            // window.location.reload();
+        })
+        .catch(error => {
+            console.log('Something went wrong while buying listing', error);
+        })
+
+        // update active listing flag to false
+        AuctionService.buyAuctionListing(item_id)
+        .then(response => {
+            console.log('Listing was bought successfully', response.data);
         })
         .catch(error => {
             console.log('Something went wrong', error);
@@ -308,10 +332,10 @@ const ViewAuction = () => {
                 <p></p>
                 <p></p>
                 {AuctionInfo.started && !AuctionInfo.isActive && (
-                    <b><h2>LISITNG HAS EXPIRED</h2></b>
+                    <b><h2 className="expiredAuction">LISITNG HAS EXPIRED</h2></b>
                 )}
                 {auctionWinnerUser ? (
-                    <b><h3>Winner of Auction is: {auctionWinnerUser.username}, won for: {AuctionInfo.currently}$</h3></b>
+                    <b><h3 className="winnerAuction">Winner of Auction is: {auctionWinnerUser.username}, won for: {AuctionInfo.currently}$</h3></b>
                 ):(
                     <b><h3>No one won the auction</h3></b>
                 )}
@@ -369,16 +393,6 @@ const ViewAuction = () => {
                 {/* if the user is not a visitor allow bids/start auction etc */}
                 {registeredUser && (
                     <div>
-                        {/* {sameIdFlag ? (
-                            // if the person who visited auction details, is the creator of the auction 
-                            <div>
-                                <button className="btn btn-success " onClick={() => { handleStartAuction(id); }}>Start Auction</button>
-                                <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
-                                <button className="btn btn-danger btn-info" onClick={() => { handleDelete(AuctionInfo , id, AuctionInfo.userId); }}>Delete Listing</button>
-                            </div>
-                        ) : (
-                            <Link to={`/bid/${id}/${currentUserId}`} className="btn btn-primary btn-info">Bid</Link>
-                        )} */}
                          {sameIdFlag && (
                             // if the person who visited auction details, is the creator of the auction 
                             <div>
@@ -386,6 +400,12 @@ const ViewAuction = () => {
                                 <Link to={`/edit-auction/${id}`} className="btn btn-dark btn-info">Edit Listing</Link>
                                 <button className="btn btn-danger btn-info" onClick={() => { handleDelete(AuctionInfo , id, AuctionInfo.userId); }}>Delete Listing</button>
                             </div>
+                        )}
+                        {/* if the person who visited auction details has not created the auction
+                            if listing has a buy price
+                            if no one has won the auction yet  */}
+                        {!sameIdFlag && AuctionInfo.buy_Price && !auctionWinnerUser && (
+                            <button className="btn btn-primary btn-info" onClick={() => { handleBuyAuction(id, registeredUser); }} >Buy Item</button>
                         )}
                     </div>
                 )}

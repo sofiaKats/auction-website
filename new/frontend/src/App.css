@@ -510,3 +510,11 @@ a .uil {
   align-items: center;
   justify-content: center;
 } */
+
+.expiredAuction {
+  color: red;
+}
+
+.winnerAuction {
+  color: green;
+}
