@@ -7,7 +7,6 @@ import UserService from "../services/user.service";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 // import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
-// import worldGeoJSON from 'geojson-world-map';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
@@ -42,6 +41,11 @@ const ViewAuction = () => {
     const [auctionWinnerUser, setAuctionWinnnerUser] = useState(undefined);
     // flag to check if owner of item has given longitude and latitude
     const [hasLongitudeAndLatitude, setHasLongitudeAndLatitude] = useState(false);
+    const [mapPosition, setMapPosition] = useState([]); // used for map
+    const [MapJSONData, setMapJSONData] = useState([]);
+    const [address, setAddress] = useState([]);
+    const [fetchedNominatim, setFetchNominatim] = useState(false); //using this flag because nominatim page thinks im attacking it when i 
+    // when i call function inside useEffect that lead to continuous GET requests from nominatim page
     const { id } = useParams();  //fetch auction id parameter from url
     let navigate = useNavigate();
 
@@ -72,6 +76,13 @@ const ViewAuction = () => {
           if(AuctionInfo.longitude) {
                 setHasLongitudeAndLatitude(true);
           }
+
+          // find longitude and latitude from item's location and country
+          if(AuctionInfo && !fetchedNominatim) {
+            fetchCoordinates(AuctionInfo.location, AuctionInfo.country, mapPosition, address, MapJSONData );
+            setFetchNominatim(true); // dont re-call function, nominatim thinks i'm attacking the page
+        }
+            
 
           // a boolean in sql database is stored as bit(1) type with values either 0x00 or 0x01
           // thus cannot be displayed as string, so we use another variable to display the value
@@ -140,7 +151,8 @@ const ViewAuction = () => {
             })
         }
         
-    }, [id, AuctionInfo]);
+        
+    }, [id, AuctionInfo, mapPosition, address, MapJSONData, fetchedNominatim]);
 
     ////////////////////////////////////////////////////////////////
     ///////// Select file and upload pictures on listing //////////
@@ -197,6 +209,72 @@ const ViewAuction = () => {
             })
         }
     }
+
+    const fetchCoordinates = (location, country, mapPosition, address, MapJSONData) => { 
+        // split string and keep only words in indexes of array
+        const locationArray = location.split(" ");
+        var locationString = locationArray[0]; // first word doesn't need a '+' on the link
+
+        // if item's    location=Los Angeles CA  and   Country=USA    then the link will look like this
+        // https://nominatim.openstreetmap.org/search?q=los+angeles+CA+USA&format=json&polygon=1&addressdetails=1
+        for (let i = 1; i < locationArray.length; i++) {
+            locationString += "+"; locationString += locationArray[i];
+        }
+        setAddress(locationString);
+
+        AuctionService.getCoordinates(address, country)
+        .then(response => {
+            console.log("response.data: ", response.data, "  mapJSONData: ", MapJSONData);
+            // setMapJSONData([]);
+            console.log("lat and lon from data:", response.data[0].lat, response.data[0].lon);
+            // setMapPosition([response.data[0].lat, response.data[0].lon]);
+
+            setMapJSONData(response.data);
+            if (MapJSONData[0] !== undefined) 
+            // fetching latitude and longitude from JSON object, converting to Float and setting position
+                setMapPosition([parseFloat(MapJSONData[0].lat), parseFloat(MapJSONData[0].lon)]);
+            else 
+                console.log("MapJsonData[0] is undefined for some reason");
+                
+            console.log("LONGITUDE AND LATITUDE NEWWW", mapPosition);
+        })
+        .catch(error => {
+            console.log('Something went wrong', error);
+        })
+    }
+
+    // const fetchCoordinates = useCallback( () => {
+    //     const location = AuctionInfo.location;
+    //     const country = AuctionInfo.country;
+    //     // split string and keep only words in indexes of array
+    //     const locationArray = location.split(" ");
+    //     var locationString = locationArray[0]; // first word doesn't need a '+' on the link
+
+    //     // if item's    location=Los Angeles CA  and   Country=USA    then the link will look like this
+    //     // https://nominatim.openstreetmap.org/search?q=los+angeles+CA+USA&format=json&polygon=1&addressdetails=1
+    //     for (let i = 1; i < locationArray.length; i++) {
+    //         locationString += "+"; locationString += locationArray[i];
+    //     }
+    //     setAddress(locationString);
+
+    //     AuctionService.getCoordinates(address, country)
+    //     .then(response => {
+    //         console.log('found location succesfully', response.data);
+    //         setMapJSONData(response.data);
+
+    //         if (MapJSONData[0] !== undefined) 
+    //         // fetching latitude and longitude from JSON object, converting to Float and setting position
+    //             setMapPosition([parseFloat(MapJSONData[0].lat), parseFloat(MapJSONData[0].lon)]);
+    //         else 
+    //             console.log("MapJsonData[0] is undefined for some reason");
+    //         console.log("LONGITUDE AND LATITUDE NEWWW", mapPosition);
+    //     })
+    //     .catch(error => {
+    //         console.log('Something went wrong', error);
+    //     })
+    // }, [AuctionInfo, mapPosition, address, MapJSONData],);
+
+
 
     const handleStartAuction = (id) => { 
         AuctionService.startAuction(id)
@@ -281,16 +359,9 @@ const ViewAuction = () => {
                             <div>
                                 {currentFile && (
                                 <div className="progress">
-                                    <div
-                                    className="progress-bar progress-bar-info progress-bar-striped"
-                                    role="progressbar"
-                                    aria-valuenow={progress}
-                                    aria-valuemin="0"
-                                    aria-valuemax="100"
-                                    style={{ width: progress + "%" }}
-                                    >
-                                    {progress}%
-                                    </div>
+                                    <div className="progress-bar progress-bar-info progress-bar-striped"
+                                    role="progressbar" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"
+                                    style={{ width: progress + "%" }} > {progress}% </div>
                                 </div>
                                 )}
 
@@ -359,16 +430,9 @@ const ViewAuction = () => {
                 {hasLongitudeAndLatitude && (
                     <MapContainer
                       center={[AuctionInfo.longitude, AuctionInfo.latitude]}
-                      zoom={6}
-                      maxZoom={10}
-                      attributionControl={true}
-                      zoomControl={true}
-                      doubleClickZoom={true}
-                      scrollWheelZoom={true}
-                      dragging={true}
-                      animate={true}
-                      easeLinearity={0.35}
-                    >
+                      zoom={6} maxZoom={10} attributionControl={true} zoomControl={true}
+                      doubleClickZoom={true} scrollWheelZoom={true} dragging={true}
+                      animate={true} easeLinearity={0.35} >
                       {/* <GeoJSON
                       data={worldGeoJSON}
                         style={() => ({
