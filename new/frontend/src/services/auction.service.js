@@ -7,6 +7,12 @@ const getAllItemsWithUserId = (UserId) => {
     return axios.get(API_URL + '/all/' + UserId);
 }
 
+const getCoordinates = (address, country) => {
+    return axios.get("https://nominatim.openstreetmap.org/search?q=" +
+    address + "+" + country + "&format=json&polygon=1&addressdetails=1");
+}
+
+
 const getAllBids = (item_id) => {
     return axios.get(API_URL + '/bids/all/'+ item_id);
 }
@@ -131,6 +137,7 @@ const AuctionService = {
     KillAuctionListing,
     getWinnerOfAuction,
     buyAuctionListing,
+    getCoordinates,
   };
   
   export default AuctionService;

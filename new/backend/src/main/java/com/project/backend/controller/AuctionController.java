@@ -249,7 +249,6 @@ public class AuctionController {
     }
 
     // DELETE FUNCTIONS (DELETE)
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteAuction(@PathVariable("id") Long id) {
         itemRepository.deleteById(id);

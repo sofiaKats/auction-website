@@ -41,8 +41,6 @@ const ViewAuction = () => {
     const [auctionWinnerUser, setAuctionWinnnerUser] = useState(undefined);
     // flag to check if owner of item has given longitude and latitude
     const [hasLongitudeAndLatitude, setHasLongitudeAndLatitude] = useState(false);
-    const [mapPosition, setMapPosition] = useState([]); // used for map
-    const [MapJSONData, setMapJSONData] = useState([]);
     const [address, setAddress] = useState([]);
     const [fetchedNominatim, setFetchNominatim] = useState(false); //using this flag because nominatim page thinks im attacking it when i 
     // when i call function inside useEffect that lead to continuous GET requests from nominatim page
@@ -79,7 +77,7 @@ const ViewAuction = () => {
 
           // find longitude and latitude from item's location and country
           if(AuctionInfo && !fetchedNominatim) {
-            fetchCoordinates(AuctionInfo.location, AuctionInfo.country, mapPosition, address, MapJSONData );
+            fetchCoordinates(AuctionInfo.location, AuctionInfo.country, address, AuctionInfo);
             setFetchNominatim(true); // dont re-call function, nominatim thinks i'm attacking the page
         }
             
@@ -152,7 +150,7 @@ const ViewAuction = () => {
         }
         
         
-    }, [id, AuctionInfo, mapPosition, address, MapJSONData, fetchedNominatim]);
+    }, [id, AuctionInfo, address, fetchedNominatim]);
 
     ////////////////////////////////////////////////////////////////
     ///////// Select file and upload pictures on listing //////////
@@ -210,7 +208,8 @@ const ViewAuction = () => {
         }
     }
 
-    const fetchCoordinates = (location, country, mapPosition, address, MapJSONData) => { 
+    const fetchCoordinates = (location, country, address, AuctionInfo) => { 
+        // format string to suit url
         // split string and keep only words in indexes of array
         const locationArray = location.split(" ");
         var locationString = locationArray[0]; // first word doesn't need a '+' on the link
@@ -224,56 +223,32 @@ const ViewAuction = () => {
 
         AuctionService.getCoordinates(address, country)
         .then(response => {
-            console.log("response.data: ", response.data, "  mapJSONData: ", MapJSONData);
-            // setMapJSONData([]);
+            console.log("response.data: ", response.data);
             console.log("lat and lon from data:", response.data[0].lat, response.data[0].lon);
-            // setMapPosition([response.data[0].lat, response.data[0].lon]);
 
-            setMapJSONData(response.data);
-            if (MapJSONData[0] !== undefined) 
-            // fetching latitude and longitude from JSON object, converting to Float and setting position
-                setMapPosition([parseFloat(MapJSONData[0].lat), parseFloat(MapJSONData[0].lon)]);
-            else 
-                console.log("MapJsonData[0] is undefined for some reason");
-                
-            console.log("LONGITUDE AND LATITUDE NEWWW", mapPosition);
+
+            AuctionService.updateAuction (
+                AuctionInfo.name,
+                AuctionInfo.buy_Price,
+                AuctionInfo.location,
+                AuctionInfo.country,
+                AuctionInfo.description,
+                AuctionInfo.categories, 
+                response.data[0].lat,
+                response.data[0].lon, 
+                AuctionInfo.id
+            ).then(res => {
+                console.log("edited item successfully @ getCoordinates", res.data);
+            })
+            .catch(error => {
+                console.log('Could not update listing while fetching coordinates', error);
+            })
+
         })
         .catch(error => {
             console.log('Something went wrong', error);
         })
     }
-
-    // const fetchCoordinates = useCallback( () => {
-    //     const location = AuctionInfo.location;
-    //     const country = AuctionInfo.country;
-    //     // split string and keep only words in indexes of array
-    //     const locationArray = location.split(" ");
-    //     var locationString = locationArray[0]; // first word doesn't need a '+' on the link
-
-    //     // if item's    location=Los Angeles CA  and   Country=USA    then the link will look like this
-    //     // https://nominatim.openstreetmap.org/search?q=los+angeles+CA+USA&format=json&polygon=1&addressdetails=1
-    //     for (let i = 1; i < locationArray.length; i++) {
-    //         locationString += "+"; locationString += locationArray[i];
-    //     }
-    //     setAddress(locationString);
-
-    //     AuctionService.getCoordinates(address, country)
-    //     .then(response => {
-    //         console.log('found location succesfully', response.data);
-    //         setMapJSONData(response.data);
-
-    //         if (MapJSONData[0] !== undefined) 
-    //         // fetching latitude and longitude from JSON object, converting to Float and setting position
-    //             setMapPosition([parseFloat(MapJSONData[0].lat), parseFloat(MapJSONData[0].lon)]);
-    //         else 
-    //             console.log("MapJsonData[0] is undefined for some reason");
-    //         console.log("LONGITUDE AND LATITUDE NEWWW", mapPosition);
-    //     })
-    //     .catch(error => {
-    //         console.log('Something went wrong', error);
-    //     })
-    // }, [AuctionInfo, mapPosition, address, MapJSONData],);
-
 
 
     const handleStartAuction = (id) => { 
@@ -429,7 +404,7 @@ const ViewAuction = () => {
                 <p><b>Item's Location:</b></p>
                 {hasLongitudeAndLatitude && (
                     <MapContainer
-                      center={[AuctionInfo.longitude, AuctionInfo.latitude]}
+                      center={[AuctionInfo.latitude, AuctionInfo.longitude]}
                       zoom={6} maxZoom={10} attributionControl={true} zoomControl={true}
                       doubleClickZoom={true} scrollWheelZoom={true} dragging={true}
                       animate={true} easeLinearity={0.35} >
@@ -446,7 +421,7 @@ const ViewAuction = () => {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                        <Marker position={[AuctionInfo.longitude, AuctionInfo.latitude]}>
+                        <Marker position={[AuctionInfo.latitude, AuctionInfo.longitude]}>
                           <Popup>
                               Popup for any custom information.
                           </Popup>
