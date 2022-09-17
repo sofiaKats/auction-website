@@ -6,6 +6,7 @@ import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 // import { Slide } from "react-slideshow-image";
+// import { Carousel } from 'react-responsive-carousel';
 import "react-slideshow-image/dist/styles.css";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -27,6 +28,8 @@ const ViewAuction = () => {
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
     const [images, setImages] = useState([]);
+    // flag to insure images are getting fetched only once from database
+    const [fetchedAllImages, setFetchedAllImages] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState(undefined);
     const [currentFile, setCurrentFile] = useState(undefined);
     const [progress, setProgress] = useState(0);
@@ -105,10 +108,12 @@ const ViewAuction = () => {
         }
 
         //making sure item listing has pictures
-        if(AuctionInfo.hasImages) {
+        if(AuctionInfo.hasImages && !fetchedAllImages) {
             AuctionService.getAllImages(id)
             .then(response => {
                 setImages(response.data);
+                console.log("images: ", response.data, " image 0 url:", response.data[0].url);
+                setFetchedAllImages(true);
             })
             .catch(error => {
                 console.log('Something went wrong while getting images', error);
@@ -150,7 +155,7 @@ const ViewAuction = () => {
         }
         
         
-    }, [id, AuctionInfo, address, fetchedNominatim]);
+    }, [id, AuctionInfo, address, fetchedNominatim, fetchedAllImages]);
 
     ////////////////////////////////////////////////////////////////
     ///////// Select file and upload pictures on listing //////////
@@ -364,14 +369,23 @@ const ViewAuction = () => {
                 {images && 
                 images.map((image, index)=> (
                     <div className="each-slide" key={index}>
-                    {/* <div style={{'backgroundImage': `url(${image.url})`}}>
-                        <span>rgsrtt</span>
+                     <div style={{'backgroundImage': `url(${image.url})`}}>
+                        <span>{image.name}</span>
                     </div> 
-                        <img src={image.url} className="img" alt="visual representation of item to be sold." /> 
+                         <img src={image.url} className="img" alt="visual representation of item to be sold." /> 
                     </div>
                 ))} 
                 </Slide>
             </div> */}
+            {/* <ImageGallery items={images} /> */}
+            {/* <Carousel showArrows={true} >
+                {images && 
+                    images.map((image, index)=> (
+                        <div key={index}>
+                        <img src={image.url} className="img" alt="visual representation of item to be sold." /> 
+                        </div>
+                     ))} 
+            </Carousel> */}
             <div className="container">
                 <h2><b>{AuctionInfo.name}</b></h2>
                 <p></p>

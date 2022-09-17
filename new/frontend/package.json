@@ -27,6 +27,7 @@
     "react-image-gallery": "^1.2.9",
     "react-leaflet": "^4.0.2",
     "react-map-gl": "^7.0.19",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-slideshow-image": "^4.0.5",
