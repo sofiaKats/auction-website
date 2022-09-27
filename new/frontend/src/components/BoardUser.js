@@ -1,39 +1,8 @@
 import React from "react";
 
-// , { useState, useEffect }
-// import TestService from "../services/test.service";
-// import EventBus from "../common/EventBus";
-
 const BoardUser = () => {
-  // const [content, setContent] = useState("");
-
-  // useEffect(() => {
-  //   TestService.getUserBoard().then(
-  //     (response) => {
-  //       setContent(response.data);
-  //     },
-  //     (error) => {
-  //       const _content =
-  //         (error.response &&
-  //           error.response.data &&
-  //           error.response.data.message) ||
-  //         error.message ||
-  //         error.toString();
-
-  //       setContent(_content);
-
-  //       if (error.response && error.response.status === 401) {
-  //         EventBus.dispatch("logout");
-  //       }
-  //     }
-  //   );
-  // }, []);
-
   return (
     <div className="BoardUser-container lineUp">
-      {/* <header className="jumbotron">
-        <h3>{content}</h3>
-      </header> */}
       <div className="jumbotron">
         <div className="container">
           <h1 className="display-3">Welcome to Auction Bay!</h1>
