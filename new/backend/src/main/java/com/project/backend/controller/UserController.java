@@ -7,6 +7,7 @@ import com.project.backend.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -41,6 +42,7 @@ public class UserController {
 
     //return all users
     @GetMapping("/users/custom/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getAllUsersCustom() {
 //        List<User> users = userRepository.findAll();
 //        List<User> customUsers = new ArrayList<User>();
@@ -60,6 +62,7 @@ public class UserController {
 
     // get user by id rest api
     @GetMapping("/users/find/{id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not exist with id :" + id));

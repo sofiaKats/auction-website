@@ -1,10 +1,11 @@
 import axios from "axios";
+import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:8080/api/v1/users";
 
 
 const getUserById = (UserId) => {
-    return axios.get(API_URL + '/find/' + UserId);
+    return axios.get(API_URL + '/find/' + UserId, { headers: authHeader() });
 };
 
 const getAllUsers = () => {
@@ -12,7 +13,7 @@ const getAllUsers = () => {
 }
 
 const getAllUsersCustom = () => {
-    return axios.get(API_URL + '/custom/all');
+    return axios.get(API_URL + '/custom/all', { headers: authHeader() });
 }
 
 const deleteUserById = (UserId) => {
