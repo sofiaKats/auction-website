@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import AuctionService from "../services/auction.service";
+import EventBus from "../common/EventBus";
 
 const ManageAuctions = () => {
 
@@ -34,9 +35,9 @@ const ManageAuctions = () => {
 
         console.log('Something went wrong', _items);
 
-          // if (error.response && error.response.status === 401) {
-          //         EventBus.dispatch("logout");
-          //       }
+          if (error.response && error.response.status === 401) {
+                  EventBus.dispatch("logout");
+                }
       }
     )
   }, [id, items]);

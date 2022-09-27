@@ -1,10 +1,11 @@
 import axios from "axios";
 import http from "../http-common";
+import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:8080/api/auction";
 
 const getAllItemsWithUserId = (UserId) => {
-    return axios.get(API_URL + '/all/' + UserId);
+    return axios.get(API_URL + '/all/' + UserId, { headers: authHeader() });
 }
 
 const getCoordinates = (address, country) => {
