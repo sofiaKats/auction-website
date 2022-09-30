@@ -22,7 +22,6 @@ import Bid from "./components/Bid";
 import EventBus from "./common/EventBus";
 
 const App = () => {
-  // const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
 
@@ -31,7 +30,6 @@ const App = () => {
 
     if (user) {
       setCurrentUser(user);
-      // setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
       setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
 
@@ -46,7 +44,6 @@ const App = () => {
 
   const logOut = () => {
     AuthService.logout();
-    // setShowModeratorBoard(false);
     setShowAdminBoard(false);
     setCurrentUser(undefined);
   };
@@ -56,9 +53,6 @@ const App = () => {
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">Auction Bay</Link>
         <div className="navbar-nav mr-auto">
-          {/* mporei kai na to kaneis delete auto */}
-          {/* <li className="nav-item"> <Link to={"/home"} className="nav-link"> Home </Link> </li> */}
-
           {showAdminBoard && (
             <li className="nav-item"> <Link to={"/admin"} className="nav-link"> Admin Board </Link> </li>
           )}
