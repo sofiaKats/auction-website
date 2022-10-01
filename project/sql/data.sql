@@ -1,29 +1,33 @@
 -- admin password: letmein user password:letuserin
--- source C:\Users\sofia\Desktop\auction-website\new\sql\auctionWebsite.sql
+-- source C:\Users\sofia\Desktop\auction-website\project\sql\auctionWebsite.sql
 INSERT INTO roles (id, name) VALUES (1 , 'ROLE_USER'); 
 INSERT INTO roles (id, name) VALUES (2 , 'ROLE_ADMIN'); 
-INSERT INTO users (id , email, first_name, last_name, username, password, phone, address, geographical_location, tax_identification_number, admin_accepted) VALUES (1,'ozzyosbourne@gmail.com', 'ozzy', 'osbourne', '@ozzyosbourne', '$2a$10$JxK1WXYzMV.IoY4UhlJ7KuxzVG75z7VN12CylUxLMnCNeBrcJExba', '698346683', '58 hollywood blvd', 'Los Angeles CA','21325535', true );
+INSERT INTO users (id , email, first_name, last_name, username, password, phone, address, geographical_location, tax_identification_number, admin_accepted) VALUES (1,'admin@gmail.com', 'ad', 'min', '@admin', '$2a$10$JxK1WXYzMV.IoY4UhlJ7KuxzVG75z7VN12CylUxLMnCNeBrcJExba', '698346683', '58 hollywood blvd', 'Los Angeles CA','21325535', true );
 INSERT INTO user_roles (user_id, role_id) VALUES (1 , 2);
 INSERT INTO users (id , email, first_name, last_name, username, password, phone, address, geographical_location, tax_identification_number, admin_accepted) VALUES (2,'madelinependleton@gmail.com', 'madeline', 'pendleton', '@madelinependleton', '$2a$10$DAAuwrPD/aCsUpRUy/t80eukONp/HKAQLloJp7orl7hzFqL8X.14K', '23456543', '4507 Brunswick Avenue', 'Los Angeles CA 90039','2345676', false );
 INSERT INTO user_roles (user_id, role_id) VALUES (2 , 1);
-INSERT INTO users (id , email, first_name, last_name, username, password, phone, address, geographical_location, tax_identification_number, admin_accepted) VALUES (3,'noahcarlos@gmail.com', 'noah', 'carlos', '@lsrthrift', '$2a$10$DAAuwrPD/aCsUpRUy/t80eukONp/HKAQLloJp7orl7hzFqL8X.14K', '233475643', 'Orange County', 'Los Angeles CA','2345746', false );
+INSERT INTO users (id , email, first_name, last_name, username, password, phone, address, geographical_location, tax_identification_number, admin_accepted) VALUES (3,'noahcarlos@gmail.com', 'noah', 'carlos', '@noahcarlos', '$2a$10$DAAuwrPD/aCsUpRUy/t80eukONp/HKAQLloJp7orl7hzFqL8X.14K', '233475643', 'Orange County', 'Los Angeles CA','2345746', false );
 INSERT INTO user_roles (user_id, role_id) VALUES (3 , 1);
 INSERT INTO users (id , email, first_name, last_name, username, password, phone, address, geographical_location, tax_identification_number, admin_accepted) VALUES (4,'annacoleman@gmail.com', 'Anna', 'Coleman', '@annacoleman', '$2a$10$DAAuwrPD/aCsUpRUy/t80eukONp/HKAQLloJp7orl7hzFqL8X.14K', '23987655', '732 Chapala Drive', 'Los Angeles CA','223464', false );
 INSERT INTO user_roles (user_id, role_id) VALUES (4 , 1);
-INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids, has_images, bought_flag) VALUES (1, 1, 20.78, 'USA', 0.01, 'im a Teenage Frankenstein', 0.01,'Alice Cooper Constictor Pic Picture Disc LP Teenage Frankenstein He’s Back 12”', 0, null, null, null, null, 'album, music, alice cooper', 'Los Angeles CA', false, false, false, false);
+INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids, has_images, bought_flag) VALUES (1, 1, 20.78, 'usa', 0.01, 'stunning with a deep glossy like new rainbow sheen to the vinyl surfaces which are clean and bright.', 0.01,'LED ZEPPELIN PHYSICAL GRAFFITI 1975 1ST EVER UK PRESS VINYL LP', 0, null, null, null, null, 'album, music, led zeppelin, vinyl, collectable', 'los angeles california', false, false, false, false);
 INSERT INTO category (item_id, category) VALUES (1, 'album');
 INSERT INTO category (item_id, category) VALUES (1, 'music');
-INSERT INTO category (item_id, category) VALUES (1, 'alice cooper');
-INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids, has_images, bought_flag) VALUES (2, 2, null, 'USA', 0.01, 'Ivory rie top with empire waist, high slits, and lace trim!', 0.01,'Babydoll Lingerie Top', 0, null, null, '34.052235', '-118.243683', 'babydoll, dress, vintage, shop tunnel vision', 'Los Angeles CA', false, false, false, false);
-INSERT INTO category (item_id, category) VALUES (2, 'babydoll');
+INSERT INTO category (item_id, category) VALUES (1, 'led zeppelin');
+INSERT INTO category (item_id, category) VALUES (1, 'vinyl');
+INSERT INTO category (item_id, category) VALUES (1, 'collectable');
+INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids, has_images, bought_flag) VALUES (2, 2, null, 'uae', 0.01, 'fully working and in very good condition', 0.01,'Vintage Adjustable Anglepoise Type Desk Lamp MCM Retro 1960/70s 99p no reserve', 0, null, null, null, null, 'vintage, lamp, black, steel', 'dubai', false, false, false, false);
 INSERT INTO category (item_id, category) VALUES (2, 'vintage');
-INSERT INTO category (item_id, category) VALUES (2, 'shop tunnel vision');
-INSERT INTO category (item_id, category) VALUES (2, 'dress');
-INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids, has_images, bought_flag) VALUES (3, 1, 134.67, 'USA', 0.01, 'VINTAGE BARBIE DOLL 1961 #5 FIRST TITIAN REDHEADS MADE.', 0.01,'Vintage Barbie Doll First Issue Titian Ponytail', 0, null, null, '38.246639', '21.734573', 'barbie, vintage, dolls', 'Los Angeles CA', false, false, false, false);
+INSERT INTO category (item_id, category) VALUES (2, 'lamp');
+INSERT INTO category (item_id, category) VALUES (2, 'black');
+INSERT INTO category (item_id, category) VALUES (2, 'steel');
+INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids, has_images, bought_flag) VALUES (3, 1, 134.67, 'greece', 0.01, 'VINTAGE BARBIE DOLL 1961 #5 FIRST TITIAN REDHEADS MADE.', 0.01,'Vintage Barbie Doll First Issue Titian Ponytail', 0, null, null, null, null, 'barbie, vintage, dolls, collectable', 'trikala', false, false, false, false);
 INSERT INTO category (item_id, category) VALUES (3, 'vintage');
 INSERT INTO category (item_id, category) VALUES (3, 'barbie');
 INSERT INTO category (item_id, category) VALUES (3, 'dolls');
-INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids, has_images, bought_flag) VALUES (4, 2, null, 'Germany', 0.01, 'Good Condition, has some years, of use, color has faded some places but not noticable.', 0.01,'Black Bike', 0, null, null, '52.520008', '13.404954', 'bicycle, bike, black', 'Berlin', false, false, false, false);
+INSERT INTO category (item_id, category) VALUES (3, 'collectable');
+INSERT INTO item (id, user_id, buy_price, country, currently, description, first_bid, name, number_of_bids, started, ends, longitude, latitude, categories, location, is_active, has_bids, has_images, bought_flag) VALUES (4, 2, null, 'germany', 0.01, 'Good Condition, has some years, of use, color has faded some places but not noticable.', 0.01,'Black Bike', 0, null, null, '52.520008', '13.404954', 'bicycle, bike, black', 'berlin', false, false, false, false);
 INSERT INTO category (item_id, category) VALUES (4, 'bicycle');
 INSERT INTO category (item_id, category) VALUES (4, 'bike');
 INSERT INTO category (item_id, category) VALUES (4, 'black');
+INSERT INTO category (item_id, category) VALUES (4, 'steel');

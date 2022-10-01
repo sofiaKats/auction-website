@@ -32,7 +32,7 @@ const Login = () => {
 
     setMessage("");
 
-    // if(username !== "@ozzyosbourne") {
+    // if(username !== "@admin") {
     //   UserService.getAllUsers();
     // }
 
@@ -41,7 +41,7 @@ const Login = () => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(username, password).then(
         () => {
-          if(username === "@ozzyosbourne")
+          if(username === "@admin")
             navigate("/admin");
           else 
             navigate("/frontpage");
